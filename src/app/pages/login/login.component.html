@@ -1,0 +1,110 @@
+<section class="bg-gray-800 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+  <div class="flex flex-col items-center justify-center px-6 py-8 w-full">
+    <div class="w-full bg-gray-900 rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        
+        <!-- Mostrar solo el spinner mientras isLoading es true -->
+        <div *ngIf="isLoading; else formContent" class="flex flex-col items-center justify-center">
+          <svg
+            class="w-12 h-12 mr-2 text-gray-200 animate-spin fill-blue-600 dark:text-gray-600"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C6.477 0 2 4.477 2 10h2zm2 5.291V14H4v3a8.001 8.001 0 003.291-5.709H6z"
+            ></path>
+          </svg>
+          <p class="mt-4 text-white text-lg font-medium">Cargando...</p>
+        </div>
+
+        <!-- Contenido del formulario -->
+        <ng-template #formContent>
+          <a (click)="navigateTo('#')" class="font-medium text-primary-600 hover:underline cursor-pointer">Regresar al Inicio</a>
+
+          <h2 class="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl dark:text-white">
+            Inicia Sesión
+          </h2>
+          <form class="space-y-4 md:space-y-6" (ngSubmit)="mode == 0 ? login() : secondAuth()">
+            
+            <!-- Email & Password Fields - First Step -->
+            <div *ngIf="mode === 0">
+              <div>
+                <label for="email" class="block mb-2 text-sm font-medium text-white dark:text-white">Tu Correo</label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  [(ngModel)]="theUser.email"
+                  class="bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="name@company.com"
+                  required
+                />
+              </div>
+              <div>
+                <label for="password" class="block mb-2 text-sm font-medium text-white dark:text-white">Contraseña</label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  [(ngModel)]="theUser.password"
+                  placeholder="••••••••"
+                  class="bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Token Field - Second Step -->
+            <div *ngIf="mode === 1">
+              <!-- Mensaje indicando que se envió un código -->
+              <div class="mb-4">
+                <p class="text-sm text-gray-400">
+                  Se ha enviado un código a su correo. Por favor, revíselo y escriba el token a continuación.
+                </p>
+              </div>
+            
+              <!-- Campo de entrada para el token -->
+              <div>
+                <label for="token" class="block mb-2 text-sm font-medium text-white dark:text-white">Token</label>
+                <input
+                  type="text"
+                  name="token"
+                  id="token"
+                  [(ngModel)]="token"
+                  placeholder="Ingrese el token"
+                  class="bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                />
+              </div>
+            </div>
+            
+            
+            <button
+              type="submit"
+              class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            >
+              {{ mode === 0 ? 'Inicio Sesión' : 'Validar Token' }}
+            </button>
+            <li>
+              <p class="text-sm font-light text-gray-400">
+                ¿Ya tienes cuenta? 
+                <a (click)="navigateTo('register')" class="font-medium text-primary-600 hover:underline cursor-pointer">Regístrate</a>
+              </p>
+            </li>
+          </form>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,185 @@
+<body class="font-roboto text-gray-700 text-[2.5vh] m-0 h-full">
+
+  <!-- Título -->
+  <section class="relative flex justify-center items-center h-[20rem] w-full bg-cover bg-center bg-no-repeat" style="background-image: url('/assets/img/dash/fondo.jpg');">
+    <div class="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
+    <div class="relative z-10 text-center">
+      <h2 class="text-white text-2xl lg:text-3xl font-bold drop-shadow-md">BPM VALENCIA</h2>
+      <hr class="border-0 h-[2px] bg-black w-[80%] mx-auto my-2">
+    </div>
+  </section>
+
+  <!-- Introducción -->
+  <div class="flex flex-wrap justify-between mt-5">
+    <section class="flex-1 flex justify-center items-center px-5 min-w-[350px]">
+      <img src="assets/img/dash/doctora.png" alt="modulos" class="max-w-full h-auto object-cover flex-shrink-0">
+    </section>
+    <aside class="flex-1 text-center px-5 min-w-[350px]">
+      <div>
+        <h2 class="text-[6vh] font-bold text-gray-700">CURSO MANIPULACION <br> DE ALIMENTOS VIRTUAL</h2>
+        <br>
+        <h3 class="text-[4vh] border-solid border text-gray-700">Puedes realizarlo desde la comodidad de tu casa <br> FACIL Y RAPIDO</h3>
+        <h4 class="text-[3vh] mt-4">Recibiras el certificado una vez completes el 100% del curso</h4>
+        <div *ngIf="!isPaid">
+          <h4 class="mt-4 text-[3vh]">Presiona aquí y comenzarás el curso</h4>
+          <button type="button" class="btn-primary bg-blue-500 text-white py-2 px-4 rounded mt-2" (click)="module()">Comenzar</button>
+        </div>
+        <br>
+        <div *ngIf="isPaid">
+          <p>...Aunque antes, tenemos que realizar el pago  💲😁</p>
+          <img src="assets/img/dash/pagar.png" alt="modulos" class="w-64 h-auto mx-auto object-cover">
+        </div>
+
+      </div>
+    </aside>
+  </div>
+
+  <!-- Contenido principal -->
+  <section class="max-w-4xl mx-auto mt-10 mb-8 p-4 bg-white shadow-lg rounded-lg">
+
+    <!-- Título y Botón de Pago -->
+    <div class="text-center mb-6">
+      <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-700">
+        Curso VIRTUAL para Manipuladores 
+        <br>
+        de Alimentos 
+      </h2>
+      <div *ngIf="isPaid">
+      <button 
+        class="btn btn-success mt-4 px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 text-sm sm:text-base lg:text-lg"
+        (click)="pay()">
+        Realizar el Pago
+      </button>
+      </div>
+ 
+      
+
+    </div>
+  
+    <!-- Sección del precio (20,000 pesos) con funcionalidad de acordeón -->
+    <div class="mt-6">
+      <div class="flex items-center justify-between cursor-pointer"
+           (click)="toggleInfo('price')">
+        <h3 class="text-base sm:text-lg lg:text-xl font-medium text-gray-700">
+          Precio del Curso: 20,000 Pesos
+        </h3>
+        <svg *ngIf="!isPriceInfoOpen" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+        <svg *ngIf="isPriceInfoOpen" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+        </svg>
+      </div>
+  
+      <div *ngIf="isPriceInfoOpen" class="mt-2 text-sm sm:text-base lg:text-lg text-gray-600">
+        <p>
+          Este curso te proporciona todo el conocimiento necesario para convertirte en un experto en la manipulación de alimentos, garantizando tu seguridad y la de los demás durante todo el proceso de producción y manejo alimentario.
+        </p>
+      </div>
+    </div>
+  
+    <!-- Sección del tiempo del curso (1 año) con funcionalidad de acordeón -->
+    <div class="mt-6">
+      <div class="flex items-center justify-between cursor-pointer"
+           (click)="toggleInfo('duration')">
+        <h3 class="text-base sm:text-lg lg:text-xl font-medium text-gray-700">
+          Duración del CERTIFICADO del Curso: 1 Año
+        </h3>
+        <svg *ngIf="!isDurationInfoOpen" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+        <svg *ngIf="isDurationInfoOpen" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+        </svg>
+      </div>
+  
+      <div *ngIf="isDurationInfoOpen" class="mt-2 text-sm sm:text-base lg:text-lg text-gray-600">
+        <p>
+          Este curso abala un año completo de formación para que puedas trabajar con total confianza en la manipulación de alimentos. El título que recibirás es válido por todo un año.
+        </p>
+      </div>
+    </div>
+  
+
+
+    <div class="mt-6">
+      <div class="flex items-center justify-between cursor-pointer"
+           (click)="toggleInfo('tipo')">
+        <h3 class="text-base sm:text-lg lg:text-xl font-medium text-gray-700">
+          Vendedores Ambulantes
+        </h3>
+        <svg *ngIf="!isTypeInfoOpen" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+        <svg *ngIf="isTypeInfoOpen" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+        </svg>
+      </div>
+  
+      <div *ngIf="isTypeInfoOpen" class="mt-2 text-sm sm:text-base lg:text-lg text-gray-600">
+        <p>
+          Para los vendedores Ambulantes, restaurantes y cafeterias que requieran del curso
+        </p>
+      </div>
+    </div>
+  </section>
+  <!-- Servicios -->
+  <section class="flex flex-wrap justify-around items-center p-10 bg-white">
+    <div class="text-center max-w-xs flex flex-col items-center">
+      <img src="assets/img/dash/ensalada.png" alt="Icono 1" class="w-[16vh] h-auto">
+      <h3 class="text-2xl mt-4 text-blue-600">Curso de manipulación de alimentos</h3>
+      <p class="text-gray-600 text-lg mt-2">El curso contara con toda información Vital para ser Certificado como Manipulador de Alimentos</p>
+    </div>
+    <div class="text-center max-w-xs flex flex-col items-center">
+      <img src="assets/img/dash/certificado.png" alt="Icono 2" class="w-[16vh] h-auto">
+      <h3 class="text-2xl mt-4 text-blue-600">Curso Virtual para la facilidad de cualquiera</h3>
+      <p class="text-gray-600 text-lg mt-2">El curso se puede realizar en un maximo aproximado de 3 horas con almenos 10 minutos por modulo</p>
+    </div>
+    <div class="text-center max-w-xs flex flex-col items-center">
+      <img src="assets/img/dash/multitud.png" alt="Icono 3" class="w-[16vh] h-auto">
+      <h3 class="text-2xl mt-4 text-blue-600">Con la Aprobación de expertos en el area para tu mejor entendimiento</h3>
+      <p class="text-gray-600 text-lg mt-2">No dudes, gente preparada fue la que preparo estos cursos</p>
+    </div>
+  </section>
+
+  <div class="flex flex-wrap gap-24 px-8">
+    <!-- Columna izquierda -->
+    <section class="w-full lg:w-[55%] px-8 py-4 ml-8">
+      <div>
+        <h2 class="text-4xl font-semibold text-gray-900 text-center">B.P.M.</h2>
+        <hr class="border-gray-500 w-4/5 mx-auto my-4">
+        <h3 class="text-2xl text-blue-600">Manipulación de alimentos y certificación</h3>
+        <p class="text-gray-600 leading-6 mt-4">
+          Las Buenas Prácticas de Manufactura (BPM), son las normas establecidas oficialmente que actualmente regulan a las plantas procesadoras de alimentos en particular, en cuanto a los procedimientos de fabricación, limpieza y desinfección, la higiene personal, la manipulación, los controles, registros, almacenamiento, que garantizan calidad y seguridad alimentaria. Además: Contribuyen al aseguramiento de una producción de alimentos seguros, saludables e inocuos para el consumo humano. Son útiles para el diseño y funcionamiento de los establecimientos, y para el desarrollo de procesos y productos relacionados con la alimentación. Se asocian con el Control a través de inspecciones del establecimiento.
+        </p>
+      </div>
+      <section class="max-w-4xl mx-auto mt-10 mb-8 p-4 bg-white shadow-lg rounded-lg">
+        <!-- Imagen ajustada para dispositivos móviles -->
+        <img 
+          src="assets/img/dash/laboratorio.jpg" 
+          alt="laboratorio" 
+          class="w-full max-w-full h-auto object-cover"
+        >
+      </section>
+    </section>
+
+    <!-- Columna derecha -->
+    <aside class="w-full lg:w-[30%] px-8 py-4 bg-white shadow">
+      <div class="max-w-sm w-full mx-auto text-center max-w-xs flex flex-col items-center">
+        <h3 class="text-2xl text-blue-600">Horario del Laboratorio Clinico</h3>
+        <h4 class="text-blue-600">Para cualquier examen que necesites</h4>
+        <img src="assets/img/dash/horarios.png" alt="Horario" class="w-full h-auto object-contain">
+      </div>
+      <div class="max-w-sm w-full mx-auto">
+        <img src="assets/img/dash/lavado.png" alt="Lavado" class="w-full h-auto object-contain">
+      </div>
+      <div class="max-w-sm w-full mx-auto">
+        <img src="assets/img/dash/autorizacion.jpg" alt="Autorizacion" class="w-full h-auto object-contain">
+      </div>
+      <p class="text-gray-600 text-sm leading-6">
+        Resolución No. AC0011 de octubre 30 de 2023: por medio de la cual estamos autorizados para dictar cursos de manipulación sobre carne y productos cárnicos comestibles, leche cruda para consumo humano directo comercializada de manera ambulante, alimentos comercializados en vía pública en ventas autorizadas y objetos, envases, materiales y equipamientos en contacto directo con alimentos.
+      </p>
+    </aside>
+  </div>
+
+</body>

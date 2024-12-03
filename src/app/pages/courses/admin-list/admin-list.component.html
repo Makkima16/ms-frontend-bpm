@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+<div class="container mx-auto mt-10">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-red-500 to-red-700 text-white py-6 px-4 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold">Clientes</h2>
+        <p class="text-sm mt-1">Lista completa de Modulos registrados.</p>
+    </div>
+
+    <!-- Table -->
+    <div class="mt-6 bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="overflow-x-auto"> <!-- Contenedor para barra de desplazamiento -->
+            <table class="min-w-full table-auto text-left text-gray-700">
+                <thead class="bg-gray-100 border-b">
+                    <tr>
+                        <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">ID</th>
+                        <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">Titulo</th>
+                        <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">Link</th>
+                        <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let actual of modulo" class="border-b hover:bg-gray-50 transition">
+                        <td class="px-4 py-3 text-sm">{{actual.id}}</td>
+                        <td class="px-4 py-3 text-sm">{{actual.titulo}}</td>
+                        <td class="px-4 py-3 text-sm">{{actual.link}}</td>
+                        <td class="px-4 py-3 text-sm">
+                            <div class="flex space-x-2">
+                                <button 
+                                    (click)="delete(actual.id)" 
+                                    class="bg-red-500 text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-red-600">
+                                    Eliminar
+                                </button>
+                                <button
+                                    (click)="goToUpdate(actual.id)"
+                                    class="px-3 py-1 text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 rounded shadow">
+                                    Editar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+.video-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente */
+  }
+  
+.video-container iframe {
+    margin-top: 15px; /* Añade un margen superior para separarlo del título */
+  }
+.boton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20%;
+
+}

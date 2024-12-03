@@ -1,0 +1,45 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="max-w-3xl mx-auto bg-gray-50 p-8 shadow-lg rounded-lg">
+    <h2 class="text-3xl font-bold mb-6 text-gray-900">Actualizar Modulo</h2>
+  
+    <!-- Título -->
+    <div class="mb-6">
+      <label class="block text-lg font-medium">Título del Modulo:</label>
+      <input formControlName="titulo" type="text" class="w-full border" placeholder="titulo" />
+    </div>
+  
+    <!-- link -->
+
+    <div class="mb-6">
+        <label class="block text-lg font-medium">Link:</label>
+        <textarea formControlName="link" rows="4" class="w-full border" placeholder="link"></textarea>
+      </div>
+
+    <!-- Introduccion -->
+    <div class="mb-6">
+      <label class="block text-lg font-medium">Introduccion:</label>
+      <textarea formControlName="introduccion" rows="4" class="w-full border" placeholder="introduccion"></textarea>
+    </div>
+
+    <!-- Informacion -->
+
+    <div class="mb-6">
+        <label class="block text-lg font-medium">Información:</label>
+        <textarea formControlName="informacion" rows="4" class="w-full border" placeholder="Información"></textarea>
+    </div>
+
+
+      <div class="mb-6">
+        <label class="block text-lg font-medium">Conclusion:</label>
+        <textarea formControlName="conclusion" rows="4" class="w-full border" placeholder="conclusion"></textarea>
+    </div>
+
+    <div class="mb-6">
+      <label class="block text-lg font-medium">imagen_url:</label>
+      <textarea formControlName="imagen_url" rows="4" class="w-full border" placeholder="imagen_url"></textarea>
+  </div>
+
+
+  
+    <button type="submit" class="bg-green-500 text-white w-full py-2 rounded">Actualizar Examen</button>
+  </form>
+  

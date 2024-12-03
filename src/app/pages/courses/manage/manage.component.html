@@ -1,0 +1,71 @@
+<div *ngIf="!course.link" class="alert alert-warning">
+  No video link available.
+</div>
+
+<!-- Incrustar video si está disponible -->
+<div *ngIf="course.link" class="card">
+  <div class="card-body video-container"> <!-- Clase añadida -->
+
+    <!-- Mostrar el video en un iframe con la URL sanitizada -->
+    <iframe [src]="safeVideoUrl" width="560" height="315" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+
+  </div>
+
+</div>
+<section class="max-w-4xl mx-auto mt-10 p-4 bg-white shadow-lg rounded-lg">
+
+
+  <!-- Sección Título -->
+  <div class="mt-6">
+    <div class="flex items-center justify-between cursor-pointer" (click)="toggleInfo(course.titulo)">
+      <h2 class="text-2xl font-semibold text-gray-700 text-center">{{ course.titulo }}</h2>
+    </div>
+
+  </div>
+
+  <!-- Sección Introducción -->
+  <div class="mt-6">
+    <div class="flex items-center justify-between cursor-pointer" (click)="toggleInfo('introduccion')">
+      <h3 class="text-lg font-medium text-gray-700">Introducción</h3>
+      <svg *ngIf="!isIntroduccionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      <svg *ngIf="isIntroduccionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+    </div>
+    <div *ngIf="isIntroduccionOpen" class="mt-2 text-gray-600">
+      <p [innerHTML]="formatText(course.introduccion)"></p>
+    </div>
+  </div>
+
+  <!-- Sección Información -->
+  <div class="mt-6">
+    <div class="flex items-center justify-between cursor-pointer" (click)="toggleInfo('informacion')">
+      <h3 class="text-lg font-medium text-gray-700">Contenido</h3>
+      <svg *ngIf="!isInformacionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      <svg *ngIf="isInformacionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+    </div>
+    <div *ngIf="isInformacionOpen" class="mt-2 text-gray-600">
+      <p [innerHTML]="formatText(course.informacion)"></p>
+    </div>
+  </div>
+
+  <!-- Sección Conclusión -->
+  <div class="mt-6">
+    <div class="flex items-center justify-between cursor-pointer" (click)="toggleInfo('conclusion')">
+      <h3 class="text-lg font-medium text-gray-700">Conclusión</h3>
+      <svg *ngIf="!isConclusionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      <svg *ngIf="isConclusionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+    </div>
+    <div *ngIf="isConclusionOpen" class="mt-2 text-gray-600">
+      <p [innerHTML]="formatText(course.conclusion)"></p>
+    </div>
+  </div>
+  <div class="text-center mb-6">
+    <button 
+      class="btn btn-success mt-4 px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+      (click)="examen(course.id)">
+      Realizar Examen
+    </button>
+  </div>
+</section>

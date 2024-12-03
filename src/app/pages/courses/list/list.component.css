@@ -1,0 +1,57 @@
+h2, h3 {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.modulos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 5%;
+    margin-bottom: 10%;
+}
+
+.seleccionables {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 2%; /* Espacio horizontal entre columnas */
+    row-gap: 2%; /* Espacio vertical entre filas */
+    justify-items: center;
+    align-items: center;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.img-button {
+    border: none;  /* Sin borde */
+    padding: 0;    /* Sin padding */
+    background: none;  /* Sin color de fondo */
+    cursor: pointer;  /* El cursor cambia a 'puntero' */
+    outline: none; /* Evita la línea alrededor del botón al enfocarlo */
+    text-align: center; /* Centra el texto debajo de la imagen */
+}
+
+.img-button:focus {
+    outline: none; /* Evita la línea alrededor del botón al seleccionarlo */
+}
+
+.seleccionables img {
+    max-width: 100%; /* Tamaño máximo para las imágenes */
+    height: auto; /* Mantener la relación de aspecto */
+    transition: transform 0.3s ease; /* Efecto al pasar el mouse */
+
+}
+
+.img-button:hover img {
+    transform: scale(1.05); /* Agrandar imagen en hover */
+}
+
+.img-button h4 {
+    margin-top: 5%; /* Espacio entre la imagen y el texto */
+    font-size: 3vh;
+    font-weight: bold;
+    margin-bottom: 16%;
+
+}

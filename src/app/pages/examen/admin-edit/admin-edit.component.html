@@ -1,0 +1,43 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="max-w-3xl mx-auto bg-gray-50 p-8 shadow-lg rounded-lg">
+    <h2 class="text-3xl font-bold mb-6 text-gray-900">Actualizar Examen</h2>
+  
+    <!-- Título -->
+    <div class="mb-6">
+      <label class="block text-lg font-medium">Título del examen:</label>
+      <input formControlName="title" type="text" class="w-full border" placeholder="Título del examen" />
+    </div>
+  
+    <!-- Información -->
+    <div class="mb-6">
+      <label class="block text-lg font-medium">Información:</label>
+      <textarea formControlName="information" rows="4" class="w-full border" placeholder="Información"></textarea>
+    </div>
+  
+    <!-- Preguntas -->
+    <div formArrayName="questions" class="mb-8">
+      <h3 class="text-2xl font-semibold">Preguntas</h3>
+      <div *ngFor="let question of questionsArray.controls; let i = index" [formGroupName]="i" class="mb-4">
+        <label class="block font-medium">Pregunta:</label>
+        <input formControlName="text" type="text" class="w-full border" />
+  
+        <label class="block font-medium">Opción 1:</label>
+        <input formControlName="choice_one" type="text" class="w-full border" />
+  
+        <label class="block font-medium">Opción 2:</label>
+        <input formControlName="choice_two" type="text" class="w-full border" />
+  
+        <label class="block font-medium">Opción 3:</label>
+        <input formControlName="choice_three" type="text" class="w-full border" />
+  
+        <label class="block font-medium">Respuesta Correcta:</label>
+        <input formControlName="correct_choice" type="text" class="w-full border" />
+  
+        <button type="button" (click)="removeQuestion(i)" class="text-red-500 mt-2">Eliminar</button>
+      </div>
+  
+      <button type="button" (click)="addQuestion()" class="bg-blue-500 text-white px-4 py-2 rounded">Agregar Pregunta</button>
+    </div>
+  
+    <button type="submit" class="bg-green-500 text-white w-full py-2 rounded">Actualizar Examen</button>
+  </form>
+  
