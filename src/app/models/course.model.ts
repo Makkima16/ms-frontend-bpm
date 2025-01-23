@@ -6,7 +6,7 @@ export class Course {
     informacion?:string
     conclusion?:string
     imagen_url?: string;  // Nueva propiedad para la imagen
-
+    pdf_name?:string;
 
 
 }

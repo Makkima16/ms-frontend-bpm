@@ -1,0 +1,50 @@
+<section class="bg-gray-800 dark:bg-gray-900">
+    <div class="max-w-4xl mx-auto p-6 bg-gray-900 text-white rounded-lg shadow-lg">
+      <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <!-- Contenedor del estado de pago -->
+        <div class="bg-gray-800 p-6 rounded-lg mb-6">
+          <p class="text-lg font-semibold text-gray-300">Estado del pago: 
+            <span class="text-xl font-bold text-green-400" id="paymentStatus">{{ paymentStatus }}</span>
+          </p>
+        </div>
+  
+        <!-- Información del cliente -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+          <!-- Numero De Quotas -->
+          <div class="bg-gray-700 p-4 rounded-lg shadow-md">
+            <h3 class="text-xl font-semibold text-gray-300 mb-2">Número de Quotas</h3>
+            <p class="text-gray-200" id="quotas">{{ paymentQuotas }}</p>
+          </div>
+          
+          <!-- Correo del cliente -->
+          <div class="bg-gray-700 p-4 rounded-lg shadow-md">
+            <h3 class="text-xl font-semibold text-gray-300 mb-2">Correo del Cliente</h3>
+            <p class="text-gray-200" id="customerEmail">{{ paymentEmail }}</p>
+          </div>
+        </div>
+  
+        <!-- Información de la factura -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+          <!-- Factura -->
+          <div class="bg-gray-700 p-4 rounded-lg shadow-md">
+            <h3 class="text-xl font-semibold text-gray-300 mb-2">Número de Factura</h3>
+            <p class="text-gray-200" id="invoiceNumber">{{ refPayco }}</p>
+          </div>
+          
+          <!-- Valor pagado -->
+          <div class="bg-gray-700 p-4 rounded-lg shadow-md">
+            <h3 class="text-xl font-semibold text-gray-300 mb-2">Valor Pagado</h3>
+            <p class="text-gray-200" id="amountPaid">{{ paymentAmount }}</p>
+          </div>
+        </div>
+  
+        <!-- Mensaje adicional -->
+        <div class="text-center mt-6">
+          <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 focus:outline-none" onclick="window.location.href='/home'">
+            Regresar al inicio
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  

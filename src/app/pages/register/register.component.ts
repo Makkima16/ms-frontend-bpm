@@ -5,6 +5,7 @@ import { User } from '../../models/user.model';
 import { SecurityService } from '../../services/security.service';
 import { ClientsService } from '../../services/clients.service';
 import { AdminService } from '../../services/admin.service';
+import { Client } from '../../models/client.model';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,7 @@ import { AdminService } from '../../services/admin.service';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   theUser: User;
+  clientes:Client
   mode: number; // 0: normal user, 1: admin user
   token: string;
   isLoading: boolean = false; // Estado de carga agregado
@@ -30,6 +32,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       name: '',
       token: '' // Inicializa el token vacío
     };
+    this.clientes={
+      tel:'',
+      cedula:''
+    }
   }
 
   ngOnInit() {}
@@ -60,7 +66,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
               const newClient = {
                 email: this.theUser.email,
                 name: this.theUser.name,
-                user_id: response._id
+                user_id: response._id,
+                tel:this.clientes.tel,
+                cedula:this.clientes.cedula
               };
   
               this.cliente.create(newClient).subscribe({
@@ -102,7 +110,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
               const newAdmin = {
                 email: this.theUser.email,
                 name: this.theUser.name,
-                user_id: response._id
+                user_id: response._id,
+                tel:this.clientes.tel,
+                cedula:this.clientes.cedula
               };
               this.cliente.create(newAdmin).subscribe()
               this.admin.create(newAdmin).subscribe({

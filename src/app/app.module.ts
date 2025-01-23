@@ -1,7 +1,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -19,10 +19,8 @@ import { PayService } from './services/pay.service';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { WebSocketService } from './services/web-socket.service';
-import { ListCComponent } from './pages/list-c/list-c.component';
 import { ListRComponent } from './pages/list-r/list-r.component';
-import { CreateEComponent } from './pages/create-e/create-e.component';
-import { CreateCComponent } from './pages/create-c/create-c.component';
+import { httpInterceptor } from './core/http.interceptor';
 
 
 @NgModule({
@@ -42,18 +40,20 @@ import { CreateCComponent } from './pages/create-c/create-c.component';
     AdminLayoutComponent,
     AuthLayoutComponent,
     RegisterComponent,
-    ListCComponent,
     ListRComponent,
-    CreateEComponent,
-    CreateCComponent,
       ],
     providers: [PayService,
       AuthGuard,
+      
       WebSocketService,{
         provide: HTTP_INTERCEPTORS,
         useClass: AuthInterceptor,
+
         multi: true
-      }
+      },
+      provideHttpClient(
+        withInterceptors([httpInterceptor])
+      )
     ],
     bootstrap: [AppComponent]
 })

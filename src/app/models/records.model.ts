@@ -9,5 +9,7 @@ export class Records {
     examen_id?:number;
     aprobacion:boolean;
     client_id:number;
-
+    clientName?: string; // Nombre del cliente
+    examenTitle?: string; // Nombre del curso
+    aprobacionSymbol?: string; // Símbolo de aprobación
 }

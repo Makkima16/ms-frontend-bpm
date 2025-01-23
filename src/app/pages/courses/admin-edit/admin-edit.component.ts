@@ -39,6 +39,7 @@ export class AdminEditComponent implements OnInit {
       informacion: ['', [Validators.required, Validators.minLength(10)]],
       conclusion: ['', [Validators.required, Validators.minLength(10)]],
       imagen_url: ['', [Validators.required, Validators.pattern('https?://.+')]], // Validación para URL de imagen
+      pdf_name: ['', [Validators.required, Validators.pattern('https?://.+')]], // Validación para URL de imagen
 
 
     });
@@ -62,6 +63,7 @@ export class AdminEditComponent implements OnInit {
           informacion: modulo.informacion,
           conclusion: modulo.conclusion,
           imagen_url:modulo.imagen_url,
+          pdf_name:modulo.pdf_name
         });
       },
       error: (err) => {
@@ -92,6 +94,7 @@ export class AdminEditComponent implements OnInit {
       conclusion: this.form.value.conclusion,
       link: this.form.value.link,
       imagen_url:this.form.value.imagen_url,
+      pdf_name:this.form.value.pdf_name
 
     };
 

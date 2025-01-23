@@ -1,31 +1,35 @@
-<body>
-  <div class="container px-6 py-6 mx-auto max-w-full sm:max-w-7xl">
-    <h2 class="text-center text-2xl font-semibold my-6">Módulos Interactivos</h2>
-    <h3 class="text-center text-lg mb-4">Selecciona el módulo, recuerda que debes completarlos consecutivamente para seguir con el siguiente</h3>
-
-    <!-- Contenedor con scroll horizontal -->
-    <div class="mx-auto mt-10 mb-8 p-4 bg-white shadow-lg rounded-lg">
-      <section style="min-width: 100%; white-space: nowrap;">
-        <!-- Mostrar cada curso -->
-        <div *ngFor="let course of courses" class="course-card bg-white shadow-lg rounded-lg p-4 flex flex-col items-center mb-8">
-          <img 
-            *ngIf="course.imagen_url" 
-            [src]="course.imagen_url" 
-            alt="{{ course.titulo }}" 
-            class="w-full max-h-48 object-contain rounded-md mb-4"
-          />
-          
-          <h4 class="text-xl font-semibold text-gray-800 text-center max-w-xs sm:text-lg lg:text-xl">{{ course.titulo }}</h4>
-          
-          <!-- Botón para acceder al módulo del curso (no ocupa todo el ancho) -->
-          <button 
-            (click)="module(course.id)" 
-            class="mt-4 w-1/2 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            Iniciar módulo
-          </button>
+<!-- Contenedor con scroll horizontal -->
+<div class="mx-auto mt-10 mb-8 p-4 bg-white shadow-lg rounded-lg">
+  <section style="min-width: 100%; white-space: nowrap;">
+        <!-- Mensaje de felicitaciones cuando todos los módulos estén completos -->
+        <div *ngIf="allModulesCompleted" class="mt-6 p-4 bg-green-500 text-white rounded-lg shadow-md text-center">
+          ¡Felicidades! Has completado todos los módulos del curso.
+          <br>
+          Se te estara Enviando el certificado a tu correo asociado
         </div>
-      </section>
+    <!-- Mostrar cada curso -->
+    <div *ngFor="let course of courses" class="course-card bg-white shadow-lg rounded-lg p-4 flex flex-col items-center mb-8">
+      <img 
+        *ngIf="course.imagen_url" 
+        [src]="course.imagen_url" 
+        alt="{{ course.titulo }}" 
+        class="w-full max-h-48 object-contain rounded-md mb-4"
+      />
+      <h4 class="text-xl font-semibold text-gray-800 text-center max-w-xs sm:text-lg lg:text-xl">{{ course.titulo }}</h4>
+      <button 
+        (click)="module(course.id)" 
+        class="mt-4 w-1/2 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Iniciar módulo
+      </button>
+
+      <!-- Mostrar el chulito o X según si el módulo está aprobado -->
+      <div *ngIf="course.isApproved !== undefined">
+        <span *ngIf="course.isApproved" class="text-green-500">✔️ Aprobado</span>
+        <span *ngIf="!course.isApproved" class="text-red-500">❌ No Aprobado</span>
+      </div>
     </div>
-  </div>
-</body>
+
+
+  </section>
+</div>

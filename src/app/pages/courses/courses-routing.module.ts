@@ -5,6 +5,7 @@ import { ListComponent } from './list/list.component';
 import { AdminListComponent } from './admin-list/admin-list.component';
 import { AdminEditComponent } from './admin-edit/admin-edit.component';
 import { AuthGuard } from '../../guards/auth.guard';
+import { AdminCreateComponent } from './admin-create/admin-create.component';
 
 const routes: Routes = [
 
@@ -18,7 +19,8 @@ const routes: Routes = [
   },
   {
     path : 'admin-list',
-    component : AdminListComponent
+    component : AdminListComponent,
+    canActivate:[AuthGuard]
 
   },
   {
@@ -27,6 +29,13 @@ const routes: Routes = [
     canActivate:[AuthGuard]
 
   },
+
+  { 
+    path: 'admin-crearCursos',
+    canActivate:[AuthGuard],
+    component: AdminCreateComponent },
+
+
 
 ];
 

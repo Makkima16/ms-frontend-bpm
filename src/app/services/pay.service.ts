@@ -21,4 +21,8 @@ export class PayService {
   update(payment: Payments): Observable<Payments> {
     return this.http.put<Payments>(`${environment.url_ms_modulos}payments/${12}`, payment);
   }
+
+  list(): Observable<Payments[]> {
+    return this.http.get<Payments[]>(`${environment.url_ms_modulos}payments`);
+  }
 }

@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import axios from 'axios';
-import { ClientsService } from '../../services/clients.service';
 import Swal from 'sweetalert2';
-import { PayService } from '../../services/pay.service';
+import { ClientsService } from '../../../services/clients.service';
+import { PayService } from '../../../services/pay.service';
+
 
 @Component({
-  selector: 'app-payments',
-  standalone: true,
-  imports: [],
-  templateUrl: './payments.component.html',
-  styleUrls: ['./payments.component.css']
+  selector: 'app-manage',
+
+  templateUrl: './manage.component.html',
+  styleUrl: './manage.component.css'
 })
-export class PaymentsComponent implements OnInit {
+export class ManageComponent implements OnInit{
   paymentStatus: string = ''; // Mensaje para mostrar en el HTML
   refPayco: string = ''; // Referencia del pago
   paymentType: string = ''; // Referencia del pago

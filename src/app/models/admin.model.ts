@@ -4,4 +4,6 @@ export class Admin {
     email?: string
     password?: string
     user_id?: string
+    tel?:string
+    cedula?:string
 }

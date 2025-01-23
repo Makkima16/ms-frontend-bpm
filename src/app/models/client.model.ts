@@ -6,4 +6,6 @@ export class Client {
     email?: string
     password?: string
     user_id?: string
+    tel?:string
+    cedula?:string
 }

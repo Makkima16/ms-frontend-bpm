@@ -1,0 +1,91 @@
+<div class="max-w-lg mx-auto p-6 bg-white shadow-lg rounded-lg mt-8">
+  <h2 class="text-2xl font-semibold text-center mb-6">Enviar Correo</h2>
+  <form (ngSubmit)="onSubmit()" #emailForm="ngForm" class="space-y-4">
+    <!-- Campo para el correo del cliente -->
+    <div>
+      <label for="email" class="block text-sm font-medium text-gray-700">Correo del cliente:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="email"
+        required
+        placeholder="example@domain.com"
+        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        #emailInput="ngModel"
+      />
+      <!-- Mensaje de error -->
+      <div *ngIf="emailInput.invalid && emailInput.touched" class="text-red-500 text-sm mt-1">
+        Por favor, introduce un correo válido.
+      </div>
+    </div>
+
+    <!-- Campo para el cuerpo del correo -->
+    <div>
+      <label for="body" class="block text-sm font-medium text-gray-700">Cuerpo del correo:</label>
+      <textarea
+        id="body"
+        name="body"
+        [(ngModel)]="body"
+        required
+        placeholder="Escribe aquí el contenido del correo..."
+        rows="4"
+        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        #bodyInput="ngModel"
+      ></textarea>
+      <!-- Mensaje de error -->
+      <div *ngIf="bodyInput.invalid && bodyInput.touched" class="text-red-500 text-sm mt-1">
+        El cuerpo del correo no puede estar vacío.
+      </div>
+    </div>
+
+    <!-- Campo para subir archivo -->
+    <div>
+      <label for="file" class="block text-sm font-medium text-gray-700">Adjuntar archivo:</label>
+      <input
+        type="file"
+        id="file"
+        (change)="onFileSelected($event)"
+        required
+        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+      />
+    </div>
+
+    <!-- Botón para enviar -->
+    <div>
+      <button
+        type="submit"
+        [disabled]="!emailForm.form.valid || isLoading"
+        class="relative w-full py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-300"
+      >
+        <!-- Spinner y texto del botón -->
+        <span *ngIf="isLoading" class="inline-flex items-center justify-center mr-2">
+          <svg
+            class="animate-spin h-5 w-5 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path
+              d="M4 12a8 8 0 0 1 8-8V4m0 16v-2a8 8 0 0 1-8-8"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="4"
+            ></path>
+          </svg>
+        </span>
+        <span>Enviar Correo</span>
+      </button>
+    </div>
+  </form>
+
+  <!-- Mensaje de retroalimentación -->
+  <div *ngIf="message" class="mt-4 text-center">
+    <p class="text-sm text-gray-700">{{ message }}</p>
+  </div>
+</div>

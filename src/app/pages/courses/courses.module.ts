@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminListComponent } from './admin-list/admin-list.component';
 import { AdminEditComponent } from './admin-edit/admin-edit.component';
 import { ListComponent } from './list/list.component';
+import { AdminCreateComponent } from './admin-create/admin-create.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ListComponent } from './list/list.component';
     ManageComponent,
     AdminListComponent,
     AdminEditComponent, 
-    ListComponent
+    ListComponent,
+    AdminCreateComponent
   ],
   imports: [
     CommonModule,

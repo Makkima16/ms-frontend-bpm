@@ -54,7 +54,6 @@ export class DashboardComponent implements OnInit {
     this.initializeEpaycoButton();
 
 
-
   }
   initializeEpaycoButton(): void {
     if ((window as any).ePayco) {
@@ -172,17 +171,16 @@ export class DashboardComponent implements OnInit {
       this.email_client = decodedToken.email;
       this.name = decodedToken.name;
       this.role = decodedToken?.role?.name;
-  
+      
       if (this.email_client) {
         this.service.list().subscribe(data => {
           const cliente = data['data'];
           cliente.password = ''; 
           const ClienteEncontrado = cliente.find(cliente => cliente.email === this.email_client);
-  
           if (ClienteEncontrado) {
             this.email_client = this.email_client;
             this.cliente_id = ClienteEncontrado.id;
-  
+
             // Verificar si el cliente ha pagado
             this.service.checkIfClientPaid({ id: this.cliente_id }).subscribe(
               (response) => {

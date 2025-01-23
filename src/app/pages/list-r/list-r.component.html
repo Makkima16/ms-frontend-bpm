@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+
 <body class="bg-gray-100 text-gray-900">
 
 <div class="container mx-auto mt-10">
@@ -19,28 +13,23 @@
         <table class="min-w-full table-auto text-left text-gray-700">
             <thead class="bg-gray-100 border-b">
                 <tr>
-                    <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">ID</th>
-                    <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">examen</th>
-                    <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">cliente</th>
-                    <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">aprobacion</th>
+                  <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">ID</th>
+                  <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">Curso</th>
+                  <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">Cliente</th>
+                  <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">Aprobación</th>
                 </tr>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody>
                 <tr *ngFor="let actual of registro" class="border-b hover:bg-gray-50 transition">
-                    <td class="px-4 py-3 text-sm">{{actual.id}}</td>
-                    <td class="px-4 py-3 text-sm">{{actual.examen_id}}</td>
-                    <td class="px-4 py-3 text-sm">{{actual.client_id}}</td>
-                    <td class="px-4 py-3 text-sm">{{actual.aprobacion}}</td>
-
-                    <td class="px-4 py-3 text-sm">
-                        <div class="flex space-x-2">
-                        </div>
-                    </td>
+                  <td class="px-4 py-3 text-sm">{{ actual.id }}</td>
+                  <td class="px-4 py-3 text-sm">{{ actual.examenTitle }}</td>
+                  <td class="px-4 py-3 text-sm">{{ actual.clientName }}</td>
+                  <td class="px-4 py-3 text-sm">{{ actual.aprobacionSymbol }}</td>
                 </tr>
-            </tbody>
+              </tbody>
+              
         </table>
     </div>
 </div>
 
 </body>
-</html>

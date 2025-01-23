@@ -1,0 +1,117 @@
+<div class="max-w-3xl mx-auto py-8">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Crear Modulo</h2>
+  
+    <form (ngSubmit)="createCourse()" [formGroup]="courseForm" class="space-y-6 bg-white p-6 rounded-lg shadow-md">
+      <!-- Título -->
+      <div>
+        <label for="titulo" class="block text-sm font-medium text-gray-700">Título</label>
+        <input
+          type="text"
+          id="titulo"
+          formControlName="titulo"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Ingresa el título del curso"
+        />
+        <small *ngIf="courseForm.get('titulo')?.invalid && courseForm.get('titulo')?.touched" class="text-red-500">
+          Título es obligatorio.
+        </small>
+      </div>
+  
+      <!-- Introducción -->
+      <div>
+        <label for="introduccion" class="block text-sm font-medium text-gray-700">Introducción</label>
+        <textarea
+          id="introduccion"
+          formControlName="introduccion"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          rows="3"
+          placeholder="Escribe una introducción"
+        ></textarea>
+        <small *ngIf="courseForm.get('introduccion')?.invalid && courseForm.get('introduccion')?.touched" class="text-red-500">
+          Introducción es obligatoria.
+        </small>
+      </div>
+  
+      <!-- Información -->
+      <div>
+        <label for="informacion" class="block text-sm font-medium text-gray-700">Información</label>
+        <textarea
+          id="informacion"
+          formControlName="informacion"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          rows="3"
+          placeholder="Escribe la información del curso"
+        ></textarea>
+        <small *ngIf="courseForm.get('informacion')?.invalid && courseForm.get('informacion')?.touched" class="text-red-500">
+          Información es obligatoria.
+        </small>
+      </div>
+  
+      <!-- Conclusión -->
+      <div>
+        <label for="conclusion" class="block text-sm font-medium text-gray-700">Conclusión</label>
+        <textarea
+          id="conclusion"
+          formControlName="conclusion"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          rows="3"
+          placeholder="Escribe la conclusión"
+        ></textarea>
+      </div>
+  
+      <!-- Link -->
+      <div>
+        <label for="link" class="block text-sm font-medium text-gray-700">Enlace</label>
+        <input
+          type="url"
+          id="link"
+          formControlName="link"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          placeholder="https://example.com"
+        />
+      </div>
+  
+      <!-- URL de la imagen -->
+      <div>
+        <label for="imagen_url" class="block text-sm font-medium text-gray-700">Imagen URL</label>
+        <input
+          type="url"
+          id="imagen_url"
+          formControlName="imagen_url"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          placeholder="https://ejemplo.com/imagen.jpg"
+        />
+        <small *ngIf="courseForm.get('imagen_url')?.invalid && courseForm.get('imagen_url')?.touched" class="text-red-500">
+          Debes ingresar una URL de imagen válida.
+        </small>
+      </div>
+  
+
+      <!-- URL del PDF -->
+      <div>
+        <label for="pdf_name" class="block text-sm font-medium text-gray-700">PDF</label>
+        <input
+          type="url"
+          id="pdf_name"
+          formControlName="pdf_name"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          placeholder="https://link_pdf"
+        />
+        <small *ngIf="courseForm.get('pdf_name')?.invalid && courseForm.get('pdf_name')?.touched" class="text-red-500">
+          Debes ingresar una URL de PDF válida.
+        </small>
+      </div>
+
+      <!-- Botón para enviar -->
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          [disabled]="courseForm.invalid"
+          class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Crear Modulo
+        </button>
+      </div>
+    </form>
+  </div>
+  

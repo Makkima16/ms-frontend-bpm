@@ -7,10 +7,11 @@ import { ManageComponent } from './manage/manage.component';
 import { ListComponent } from './list/list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminEditComponent } from './admin-edit/admin-edit.component';
+import { AdminCreateComponent } from './admin-create/admin-create.component';
 
 
 @NgModule({
-  declarations: [ManageComponent, ListComponent, AdminEditComponent],
+  declarations: [ManageComponent, ListComponent, AdminEditComponent, AdminCreateComponent],
   imports: [
     CommonModule,
     ExamenRoutingModule,

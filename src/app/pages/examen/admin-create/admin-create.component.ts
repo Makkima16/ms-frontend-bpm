@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Course } from '../../models/course.model';
-import { Questions } from '../../models/questions.model';
-import { ExamService } from '../../services/exam.service';
-import { QuestionService } from '../../services/question.service';
-import { CourseService } from '../../services/course.service';
+
 import Swal from 'sweetalert2';
-import { ModulesClients } from '../../models/modules-clients.model';
+import { ExamService } from '../../../services/exam.service';
+import { QuestionService } from '../../../services/question.service';
+import { CourseService } from '../../../services/course.service';
+import { Course } from '../../../models/course.model';
+import { ModulesClients } from '../../../models/modules-clients.model';
+import { Questions } from '../../../models/questions.model';
 
 @Component({
-  selector: 'app-create-e',
-  templateUrl: './create-e.component.html',
-  styleUrls: ['./create-e.component.css']
+  selector: 'app-admin-create',
+
+  templateUrl: './admin-create.component.html',
+  styleUrl: './admin-create.component.css'
 })
-export class CreateEComponent implements OnInit {
+export class AdminCreateComponent implements OnInit {
   form: FormGroup;
   courses: Course[] = [];
   trySend: boolean = false;

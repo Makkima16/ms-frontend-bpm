@@ -1,0 +1,35 @@
+<div class="container mx-auto p-4">
+    <h2 class="text-2xl font-bold mb-4 text-gray-800">Lista de Pagos</h2>
+    <div class="overflow-x-auto">
+      <table class="table-auto w-full border-collapse border border-gray-200">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="border border-gray-200 px-4 py-2 text-left text-gray-700">ID</th>
+            <th class="border border-gray-200 px-4 py-2 text-left text-gray-700">Email</th>
+            <th class="border border-gray-200 px-4 py-2 text-left text-gray-700">Nombre</th>
+            <th class="border border-gray-200 px-4 py-2 text-left text-gray-700">ID Cliente</th>
+            <th class="border border-gray-200 px-4 py-2 text-left text-gray-700">Monto</th>
+            <th class="border border-gray-200 px-4 py-2 text-left text-gray-700">Producto</th>
+            <th class="border border-gray-200 px-4 py-2 text-left text-gray-700">Estado</th>
+            <th class="border border-gray-200 px-4 py-2 text-left text-gray-700">Referencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr 
+            *ngFor="let payment of payments"
+            class="hover:bg-gray-50"
+          >
+            <td class="border border-gray-200 px-4 py-2 text-gray-800">{{ payment.id }}</td>
+            <td class="border border-gray-200 px-4 py-2 text-gray-800">{{ payment.email }}</td>
+            <td class="border border-gray-200 px-4 py-2 text-gray-800">{{ payment.name }}</td>
+            <td class="border border-gray-200 px-4 py-2 text-gray-800">{{ payment.client_id }}</td>
+            <td class="border border-gray-200 px-4 py-2 text-gray-800">{{ formatCurrency(payment.amount) }}</td>
+            <td class="border border-gray-200 px-4 py-2 text-gray-800">{{ payment.product }}</td>
+            <td class="border border-gray-200 px-4 py-2 text-gray-800">{{ payment.state }}</td>
+            <td class="border border-gray-200 px-4 py-2 text-gray-800">{{ payment.ref }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

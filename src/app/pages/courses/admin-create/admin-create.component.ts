@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { CourseService } from '../../services/course.service';
+import { CourseService } from '../../../services/course.service';
 
 @Component({
-  selector: 'app-create-course',
-  templateUrl: './create-c.component.html',
-  styleUrls: ['./create-c.component.css'],
+  selector: 'app-admin-create',
+  templateUrl: './admin-create.component.html',
+  styleUrl: './admin-create.component.css'
 })
-export class CreateCComponent implements OnInit {
+export class AdminCreateComponent implements OnInit {
   courseForm: FormGroup;
   isImageValid = true; // Verificación para la imagen (en este caso, URL)
 
@@ -22,6 +22,7 @@ export class CreateCComponent implements OnInit {
       conclusion: [''],
       link: ['', [Validators.pattern('https?://.+')]], // Validación para URL
       imagen_url: ['', [Validators.required, Validators.pattern('https?://.+')]], // Validación para URL de imagen
+      pdf_name:['', [Validators.required, Validators.pattern('https?://.+')]], // Validacion para el URL del PDF
     });
   }
 
@@ -38,6 +39,7 @@ export class CreateCComponent implements OnInit {
     formData.append('conclusion', this.courseForm.get('conclusion')?.value);
     formData.append('link', this.courseForm.get('link')?.value);
     formData.append('imagen_url', this.courseForm.get('imagen_url')?.value); // Aquí agregamos la URL de la imagen
+    formData.append('pdf_name', this.courseForm.get('pdf_name')?.value); // Aquí agregamos la URL de la imagen
 
     this.courseService.create(formData).subscribe({
       next: (response) => {

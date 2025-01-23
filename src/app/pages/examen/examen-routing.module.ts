@@ -4,6 +4,7 @@ import { ManageComponent } from './manage/manage.component';
 import { ListComponent } from './list/list.component';
 import { AdminEditComponent } from './admin-edit/admin-edit.component';
 import { AuthGuard } from '../../guards/auth.guard';
+import { AdminCreateComponent } from './admin-create/admin-create.component';
 
 const routes: Routes = [
 
@@ -24,6 +25,12 @@ const routes: Routes = [
     path : 'update-exam/:id',
     component: AdminEditComponent,
     canActivate:[AuthGuard]
+  },
+
+  { 
+    path: 'admin-createExamen',
+    canActivate:[AuthGuard],           
+    component: AdminCreateComponent 
   },
 ];
 

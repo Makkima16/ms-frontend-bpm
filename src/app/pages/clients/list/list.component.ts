@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { ClientsService } from '../../services/clients.service';
-import { Client } from '../../models/client.model';
+import { Client } from '../../../models/client.model';
+import { ClientsService } from '../../../services/clients.service';
 
 @Component({
   selector: 'app-list',
-  templateUrl: './list-c.component.html',
-  styleUrls: ['./list-c.component.scss']
+  templateUrl: './list.component.html',
+  styleUrl: './list.component.css'
 })
-export class ListCComponent implements OnInit {
+export class ListComponent implements OnInit{
   cliente: Client[];
 
 

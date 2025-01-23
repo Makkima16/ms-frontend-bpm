@@ -40,7 +40,7 @@ export class ManageComponent implements OnInit {
   ) { 
     this.trySend = false;
     this.mode = 1;
-    this.course = { id: 0, link: '', titulo: '', introduccion: '', informacion: '', conclusion: '' };
+    this.course = { id: 0, link: '', titulo: '', introduccion: '', informacion: '', conclusion: '', pdf_name:'' };
 
   }
 
@@ -69,7 +69,7 @@ export class ManageComponent implements OnInit {
     // Verificar el módulo después de cargar la información del curso
     //this.haspaid();
     this.list();
-    this.verifyModule(this.courseId);
+    //this.verifyModule(this.courseId);
     this.loadAndSelectRandomExam(this.courseId);
 
   }
@@ -80,7 +80,6 @@ export class ManageComponent implements OnInit {
         if (exams.length > 0) {
           const randomIndex = Math.floor(Math.random() * exams.length);
           this.selectedExamId = exams[randomIndex].id; // Selecciona un examen al azar
-          console.log(this.selectedExamId)
         } else {
           console.error("No hay exámenes disponibles para este módulo.");
         }
@@ -113,18 +112,34 @@ export class ManageComponent implements OnInit {
     this.service.getVideo(id).subscribe(data => {
       this.course = data;
       this.course.id = id;
-
+  
       if (this.course.link.includes('watch?v=')) {
+        // Lógica para YouTube
         const videoId = this.course.link.split('watch?v=')[1];
         this.safeVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoId}`);
+      } else if (this.course.link.includes('drive.google.com')) {
+        // Lógica para Google Drive
+        const fileId = this.extractDriveFileId(this.course.link);
+        if (fileId) {
+          this.safeVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://drive.google.com/file/d/${fileId}/preview`);
+        } else {
+          console.error('No se pudo extraer el ID del archivo de Drive');
+        }
       } else {
+        // Enlace genérico (otros casos)
         this.safeVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.course.link);
       }
-
+  
       this.theFormGroup.patchValue({
         link: this.course.link
       });
     });
+  }
+  
+  // Método para extraer el ID del archivo de Google Drive
+  extractDriveFileId(link: string): string | null {
+    const match = link.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    return match ? match[1] : null;
   }
 
   toggleInfo(section: string): void {
