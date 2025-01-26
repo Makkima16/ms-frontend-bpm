@@ -1,0 +1,15 @@
+{
+    "routes": [
+      {
+        "route": "/api/*",
+        "allowedOrigins": [
+          "https://ms-security-bpm-production.up.railway.app"
+        ],
+        "headers": {
+          "Access-Control-Allow-Origin": "https://witty-ground-0ecb8f40f.4.azurestaticapps.net",
+          "Access-Control-Allow-Credentials": true
+        }
+      }
+    ]
+  }
+  
