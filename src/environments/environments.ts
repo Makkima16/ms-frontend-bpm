@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    url_ms_security:"http://localhost:8181",
-    url_ms_modulos:"http://127.0.0.1:3333/",
+    url_ms_security:"ms-security-bpm-production.up.railway.app",
+    url_ms_modulos:"ms-negocio-bpm-production.up.railway.app/",
     url_ms_correos:"http://localhost:3000/",
 
     epayco_public_key:"2dc7c0f531e3a8dcd6b58cedafb75f51"
