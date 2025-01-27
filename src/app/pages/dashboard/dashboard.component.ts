@@ -81,6 +81,7 @@ export class DashboardComponent implements OnInit {
         mobilephone_billing: '',
         number_doc_billing: '',
         email_billing: this.email_client,
+        extra1: this.cliente_id // Asegúrate de que se almacene como string en el pago
       };
     } else {
       console.error('ePayco script no cargó correctamente');
