@@ -16,7 +16,7 @@
                     <tr>
                         <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">ID</th>
                         <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">Titulo</th>
-                        <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">Link</th>
+                        <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">Tipo Curso</th>
                         <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">Acciones</th>
                     </tr>
                 </thead>
@@ -24,7 +24,7 @@
                     <tr *ngFor="let actual of modulo" class="border-b hover:bg-gray-50 transition">
                         <td class="px-4 py-3 text-sm">{{actual.id}}</td>
                         <td class="px-4 py-3 text-sm">{{actual.titulo}}</td>
-                        <td class="px-4 py-3 text-sm">{{actual.link}}</td>
+                        <td class="px-4 py-3 text-sm">{{actual.curso_tipo}}</td>
                         <td class="px-4 py-3 text-sm">
                             <div class="flex space-x-2">
                                 <button 

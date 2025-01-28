@@ -9,30 +9,60 @@
     </div>
   </section>
 
-  <!-- Introducción -->
-  <div class="flex flex-wrap justify-between mt-5">
-    <section class="flex-1 flex justify-center items-center px-5 min-w-[350px]">
-      <img src="assets/img/dash/doctora.png" alt="modulos" class="max-w-full h-auto object-cover flex-shrink-0">
-    </section>
-    <aside class="flex-1 text-center px-5 min-w-[350px]">
-      <div>
-        <h2 class="text-[6vh] font-bold text-gray-700">Curso Manipulador <br> de Alimentos</h2>
-        <br>
-        <h3 class="text-[4vh] border-solid border text-gray-700">Puedes realizarlo desde la comodidad de tu casa <br> FACIL Y RAPIDO</h3>
-        <h4 class="text-[3vh] mt-4">Recibiras el certificado una vez completes el 100% del curso</h4>
-        <div *ngIf="!isPaid">
-          <h4 class="mt-4 text-[3vh]">Presiona aquí y comenzarás el curso</h4>
-          <button type="button" class="btn-primary bg-blue-500 text-white py-2 px-4 rounded mt-2" (click)="module()">Comenzar</button>
-        </div>
-        <br>
-        <div *ngIf="isPaid">
-          <p>...Aunque antes, tenemos que realizar el pago  💲😁</p>
-          <img src="assets/img/dash/pagar.png" alt="modulos" class="w-64 h-auto mx-auto object-cover">
-        </div>
+<!-- Introducción -->
+<div class="flex flex-wrap justify-between mt-5">
+  <section class="flex-1 flex justify-center items-center px-5 min-w-[350px]">
+    <img src="assets/img/dash/doctora.png" alt="modulos" class="max-w-full h-auto object-cover flex-shrink-0">
+  </section>
+  <aside class="flex-1 text-center px-5 min-w-[350px]">
+    <div>
+      <h2 class="text-[6vh] font-bold text-gray-700">Curso Manipulador <br> de Alimentos</h2>
+      <br>
+      <h3 class="text-[4vh] border-solid border text-gray-700">Puedes realizarlo desde la comodidad de tu casa <br> FACIL Y RAPIDO</h3>
+      <h4 class="text-[3vh] mt-4">Recibirás el certificado una vez completes el 100% del curso</h4>
 
+      <div *ngIf="!isPaid">
+        <h4 class="mt-4 text-[3vh]">Presiona aquí para comenzar el curso</h4>
+        <!-- Botón que abre el modal -->
+        <button type="button" class="btn-primary bg-blue-500 text-white py-2 px-4 rounded mt-2" (click)="openModal()">
+          Comenzar
+        </button>
       </div>
-    </aside>
+
+      <div *ngIf="isPaid">
+        <p>...Aunque antes, tenemos que realizar el pago 💲😁</p>
+        <img src="assets/img/dash/pagar.png" alt="modulos" class="w-64 h-auto mx-auto object-cover">
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- Modal -->
+<div id="courseModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-4/5 max-w-lg text-center">
+    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Elige una opción para continuar</h3>
+    <p class="text-gray-600 mb-6">Selecciona el tipo de Curso al que deseas ingresar:</p>
+    
+    <!-- Opciones de módulos -->
+    <div class="flex flex-col gap-4">
+      <button type="button" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition" (click)="module('Ambulante')">
+        Tipo de Curso: Vendedor Ambulante
+      </button>
+      <button type="button" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition" (click)="module('Carnicos')">
+        Tipo de Curso: Manipulador de Carnicos
+      </button>
+      <button type="button" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition" (click)="module('Estandar')">
+        Tipo de Curso: Curso Estandar
+      </button>
+    </div>
+    
+    <!-- Botón para cerrar el modal -->
+    <button type="button" class="bg-red-500 text-white py-2 px-4 rounded mt-6 hover:bg-red-600 transition" (click)="closeModal()">
+      Cancelar
+    </button>
   </div>
+</div>
+
 
   <!-- Contenido principal -->
   <section class="max-w-4xl mx-auto mt-10 mb-8 p-4 bg-white shadow-lg rounded-lg">

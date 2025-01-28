@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from '../../../models/course.model';
 import { CourseService } from '../../../services/course.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from '../../../services/clients.service';
 import { ExamService } from '../../../services/exam.service';
 import Swal from 'sweetalert2';
@@ -20,12 +20,14 @@ export class ListComponent implements OnInit {
     allModulesCompleted: boolean = false; // Variable para controlar si todos los módulos están aprobados
     cedula:string
     name:string
+    type:string
     constructor(
       private service: CourseService,
       private router: Router,
       private ExamServices: ExamService,
       private clientService: ClientsService,
-      private AprobadosServices: AprobadosService
+      private AprobadosServices: AprobadosService,
+      private route: ActivatedRoute,
     ) {}
   
     ngOnInit(): void {
@@ -35,14 +37,19 @@ export class ListComponent implements OnInit {
         const decodedToken = this.decodeToken(token);
         this.email = decodedToken.email;
       }
+
+      this.route.queryParams.subscribe(params => {
+        this.type = params['type'] || '';
+      });
   
-      this.list(); // Obtener los módulos dinámicamente
+      this.list(this.type); // Obtener los módulos dinámicamente
     }
   
-    list() {
-      this.service.list().subscribe(data => {
-        this.courses = data["data"];
-    
+    list(cursoTipo: string) {
+
+      this.service.listByCursoTipo(cursoTipo).subscribe(data => {
+        this.courses = data;  // Asignar directamente los datos devueltos
+
         if (this.email) {
           this.clientService.buscarPorEmail(this.email).subscribe(client => {
             if (client?.id) {
@@ -64,7 +71,7 @@ export class ListComponent implements OnInit {
                     // Verificar si ya existe un "Aprobado" para el cliente
                     this.AprobadosServices.getAprobadoByClientId(this.clientId).subscribe(aprobado => {
                       if (!aprobado) {
-                        // Si no existe un registro, crear uno con correo en false
+                        // Crear un nuevo registro de "Aprobado"
                         const aprobados: Aprobados = {
                           client_id: this.clientId,
                           correo: false
@@ -72,9 +79,8 @@ export class ListComponent implements OnInit {
     
                         this.AprobadosServices.create(aprobados).subscribe({
                           next: (createdAprobado) => {    
-                            this.AprobadosServices.correos_automaticos(this.name, this.email,this.cedula).subscribe({
+                            this.AprobadosServices.correos_automaticos(this.name, this.email, this.cedula).subscribe({
                               next: () => {
-                                // Actualizar el campo "correo" a true después de enviar el correo
                                 createdAprobado.correo = true;
                                 this.AprobadosServices.update(createdAprobado).subscribe({
                                   error: (error) => {
@@ -92,7 +98,7 @@ export class ListComponent implements OnInit {
                           }
                         });
                       } else {
-                        // Si ya existe un registro, solo verificamos si el correo ya ha sido enviado
+                        // Si ya existe un registro, enviar correo si no se ha enviado
                         if (!aprobado.correo) {
                           this.AprobadosServices.correos_automaticos(this.name, this.email, this.cedula).subscribe({
                             next: () => {
@@ -118,6 +124,7 @@ export class ListComponent implements OnInit {
         }
       });
     }
+    
     
     decodeToken(token: string): any {
       const parts = token.split('.');

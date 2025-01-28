@@ -17,6 +17,21 @@
         </small>
       </div>
   
+      <!-- Tipo -->
+      <div>
+        <label for="curso_tipo" class="block text-sm font-medium text-gray-700">Tipo de Curso</label>
+        <input
+          type="text"
+          id="curso_tipo"
+          formControlName="curso_tipo"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Ingresa el tipo del curso"
+        />
+        <small *ngIf="courseForm.get('curso_tipo')?.invalid && courseForm.get('curso_tipo')?.touched" class="text-red-500">
+          Tipo de curso es obligatorio.
+        </small>
+      </div>
+
       <!-- Introducción -->
       <div>
         <label for="introduccion" class="block text-sm font-medium text-gray-700">Introducción</label>

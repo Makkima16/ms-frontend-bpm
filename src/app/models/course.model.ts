@@ -7,6 +7,8 @@ export class Course {
     conclusion?:string
     imagen_url?: string;  // Nueva propiedad para la imagen
     pdf_name?:string;
+    curso_tipo?:string;
+
 
 
 }

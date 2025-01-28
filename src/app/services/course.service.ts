@@ -38,6 +38,10 @@ export class CourseService {
     return this.http.get<any[]>(`${environment.url_ms_modulos}modulos/${moduleId}/exams`);
   }
 
+  listByCursoTipo(curso_tipo: string): Observable<Course[]> {
+    return this.http.get<Course[]>(`${environment.url_ms_modulos}modulos/tipo/${curso_tipo}`);
+  }
 
+  
 }
 

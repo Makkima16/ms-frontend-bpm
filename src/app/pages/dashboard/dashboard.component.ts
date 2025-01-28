@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   isPriceInfoOpen = false;
   isDurationInfoOpen = false;
   isTypeInfoOpen = false;
+  isModalOpen: boolean = false;
 
   email_client:string;
   cliente_id:number;
@@ -37,6 +38,26 @@ export class DashboardComponent implements OnInit {
     private service: ClientsService,
     private payServices: PayService
   ) {}
+
+  // Abrir modal
+  openModal() {
+    const modal = document.getElementById('courseModal');
+    if (modal) {
+      modal.classList.remove('hidden');
+    }
+  }
+
+
+  // Cerrar modal
+  closeModal() {
+    const modal = document.getElementById('courseModal');
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+  }
+
+
+
 
   toggleInfo(section: string): void {
     if (section === 'price') {
@@ -144,15 +165,14 @@ export class DashboardComponent implements OnInit {
 
 
 
-
   // Esta función se llamaría cuando recibas la respuesta de ePayco con ref_payco
-  module() {
-    const cliente = this.cliente_id;
+  module(courseType: string): void {
 
 
-    if (cliente) {
-      const id = this.cliente_id;
-      this.router.navigate([`courses/list`], { queryParams: { cliente_id: id } });
+    if (this.cliente_id) {
+      this.router.navigate([`courses/list`], { queryParams: { type: courseType  } } );
+      this.closeModal(); // Cerrar el modal después de la selección
+
     } else{
       this.router.navigate([`login`]);
 

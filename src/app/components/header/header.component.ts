@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,19 +17,28 @@ export class HeaderComponent implements OnInit {
   userRole: string | null = null;
   isAdminMode: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     const token = sessionStorage.getItem('sesion') ? JSON.parse(sessionStorage.getItem('sesion')).token : null;
 
     if (token) {
       const decodedToken = this.decodeToken(token);
-      this.userName = decodedToken.name;
+      this.userName = this.decodeUtf8(decodedToken.name); // Transformar el nombre
       this.userRole = decodedToken && decodedToken.role && decodedToken.role.name; // Obtener el nombre del rol del usuario
       this.isAdminMode = this.userRole === 'Administrador'; // Activa el modo admin si el rol es "Administrador"
     }
   }
 
+
+  decodeUtf8(value: string): string {
+    try {
+      return decodeURIComponent(escape(value));
+    } catch {
+      return value; // Retorna el valor original si ocurre un error
+    }
+  }
+  
   decodeToken(token: string): any {
     const parts = token.split('.');
     if (parts.length !== 3) {

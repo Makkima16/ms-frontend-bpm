@@ -23,6 +23,8 @@ export class AdminCreateComponent implements OnInit {
       link: ['', [Validators.pattern('https?://.+')]], // Validación para URL
       imagen_url: ['', [Validators.required, Validators.pattern('https?://.+')]], // Validación para URL de imagen
       pdf_name:['', [Validators.required, Validators.pattern('https?://.+')]], // Validacion para el URL del PDF
+      curso_tipo: ['', [Validators.required, Validators.minLength(3)]],
+
     });
   }
 
@@ -40,6 +42,7 @@ export class AdminCreateComponent implements OnInit {
     formData.append('link', this.courseForm.get('link')?.value);
     formData.append('imagen_url', this.courseForm.get('imagen_url')?.value); // Aquí agregamos la URL de la imagen
     formData.append('pdf_name', this.courseForm.get('pdf_name')?.value); // Aquí agregamos la URL de la imagen
+    formData.append('curso_tipo', this.courseForm.get('curso_tipo')?.value); // Aquí agregamos la URL de la imagen
 
     this.courseService.create(formData).subscribe({
       next: (response) => {
