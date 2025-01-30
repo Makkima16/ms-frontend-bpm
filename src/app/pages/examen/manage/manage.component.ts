@@ -33,6 +33,8 @@ export class ManageComponent implements OnInit {
   cliente_id:number;
   answer:boolean;
   session = JSON.parse(sessionStorage.getItem('sesion'));  // Usamos sessionStorage para la sesión
+  timeLeft: number = 900; // 15 minutos en segundos
+
   constructor(
     private activateRoute: ActivatedRoute,
     private service: ExamService,
@@ -117,18 +119,29 @@ export class ManageComponent implements OnInit {
   }
 
   // Método para iniciar el temporizador
-startTimer(): void {
-  setTimeout(() => {
-    Swal.fire({
-      title: "Tiempo agotado",
-      text: "Superaste el límite de tiempo",
-      icon: "warning",
-      confirmButtonText: "Aceptar"
-    }).then(() => {
-      this.router.navigate(['courses/list']); // Redirige después de la alerta
-    });
-  }, 900000); // 15 minutos = 900,000 ms
-}
+  startTimer(): void {
+    const timerInterval = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;
+      } else {
+        clearInterval(timerInterval);
+        Swal.fire({
+          title: "Tiempo agotado",
+          text: "Superaste el límite de tiempo",
+          icon: "warning",
+          confirmButtonText: "Aceptar"
+        }).then(() => {
+          this.router.navigate(['courses/list']);
+        });
+      }
+    }, 1000);
+  }
+
+  formatTime(): string {
+    const minutes = Math.floor(this.timeLeft / 60);
+    const seconds = this.timeLeft % 60;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
   decodeToken(token: string): any {
     const parts = token.split('.');
     if (parts.length !== 3) {
