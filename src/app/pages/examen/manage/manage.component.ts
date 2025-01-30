@@ -111,7 +111,24 @@ export class ManageComponent implements OnInit {
         console.error('module_id es undefined');
       }
     });
+      // ⏳ **Iniciar el temporizador de 15 minutos**
+    this.startTimer();
+
   }
+
+  // Método para iniciar el temporizador
+startTimer(): void {
+  setTimeout(() => {
+    Swal.fire({
+      title: "Tiempo agotado",
+      text: "Superaste el límite de tiempo",
+      icon: "warning",
+      confirmButtonText: "Aceptar"
+    }).then(() => {
+      this.router.navigate(['courses/list']); // Redirige después de la alerta
+    });
+  }, 900000); // 15 minutos = 900,000 ms
+}
   decodeToken(token: string): any {
     const parts = token.split('.');
     if (parts.length !== 3) {
