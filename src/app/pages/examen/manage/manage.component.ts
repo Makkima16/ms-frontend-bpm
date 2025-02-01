@@ -131,7 +131,7 @@ export class ManageComponent implements OnInit {
           icon: "warning",
           confirmButtonText: "Aceptar"
         }).then(() => {
-          this.router.navigate(['courses/list/'+this.tipo]);
+          this.router.navigate(['courses/list?type='+this.tipo]);
         });
       }
     }, 1000);
@@ -211,7 +211,7 @@ export class ManageComponent implements OnInit {
 
   
       // Redirigir al usuario
-      this.router.navigate([`courses/list`+this.tipo]);
+      this.router.navigate(['courses/list?type='+this.tipo]);
   
       // Guardar el registro usando el servicio
       this.record.create(registro).subscribe({
