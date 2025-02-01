@@ -200,21 +200,18 @@ export class ManageComponent implements OnInit {
           `Respuestas correctas: ${correctAnswersCount}`,
           'success'
         );
-              // Redirigir al usuario
-      this.router.navigate(['courses/list?type='+this.tipo]);
       }else{
         Swal.fire(
           'Fallaste!',
           `Respuestas correctas: ${correctAnswersCount}`,
           'error'
         );
-              // Redirigir al usuario
-      this.router.navigate(['courses/list?type='+this.tipo]);
       }
   
 
   
-
+      // Redirigir al usuario
+      this.router.navigate([`courses/list`], { queryParams: { type: this.tipo}});
   
       // Guardar el registro usando el servicio
       this.record.create(registro).subscribe({
