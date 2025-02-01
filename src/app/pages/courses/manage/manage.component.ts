@@ -40,7 +40,7 @@ export class ManageComponent implements OnInit {
   ) { 
     this.trySend = false;
     this.mode = 1;
-    this.course = { id: 0, link: '', titulo: '', introduccion: '', informacion: '', conclusion: '', pdf_name:'' };
+    this.course = { id: 0, link: '', titulo: '', introduccion: '', informacion: '', conclusion: '', pdf_name:'', curso_tipo:'' };
 
   }
 
@@ -174,7 +174,7 @@ export class ManageComponent implements OnInit {
 
             this.examServices.view(this.selectedExamId).subscribe(
               (response) => {
-                this.router.navigate([`examen/view/${this.selectedExamId}`],  { queryParams: { module_id: this.selectedExamId } }); // Redirigir a la vista del examen
+                this.router.navigate([`examen/view/${this.selectedExamId}`],  { queryParams: { module_id: this.selectedExamId, tipo:this.course.curso_tipo } }); // Redirigir a la vista del examen
               },
               (error) => {
                 console.error("Error creating exam:", error);
@@ -257,7 +257,6 @@ export class ManageComponent implements OnInit {
 
     verifyModule(courseId: number): void {
       if (!this.email) {
-        console.error("No se encontró el cliente activo en SessionStorage.");
         this.router.navigate(['/dashboard']); // Redirigir al dashboard si no hay email
         return; // Evitar que se ejecute el resto del código
       }
