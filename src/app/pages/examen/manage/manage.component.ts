@@ -34,7 +34,7 @@ export class ManageComponent implements OnInit {
   answer:boolean;
   session = JSON.parse(sessionStorage.getItem('sesion'));  // Usamos sessionStorage para la sesión
   timeLeft: number = 900; // 15 minutos en segundos
-
+  tipo:string;
   constructor(
     private activateRoute: ActivatedRoute,
     private service: ExamService,
@@ -71,7 +71,7 @@ export class ManageComponent implements OnInit {
     this.activateRoute.queryParams.subscribe(params => {
       const module_id = params['module_id'];
       const exam_id = this.activateRoute.snapshot.params['id']; // Obtener el id del examen de los parámetros de la ruta
-  
+      this.tipo = params['tipo']
       if (exam_id) {
         // Obtener los datos del examen usando view
         this.service.view(exam_id).subscribe(
@@ -131,7 +131,7 @@ export class ManageComponent implements OnInit {
           icon: "warning",
           confirmButtonText: "Aceptar"
         }).then(() => {
-          this.router.navigate(['courses/list']);
+          this.router.navigate(['courses/list/'+this.tipo]);
         });
       }
     }, 1000);
@@ -211,7 +211,7 @@ export class ManageComponent implements OnInit {
 
   
       // Redirigir al usuario
-      this.router.navigate([`courses/list`]);
+      this.router.navigate([`courses/list`+this.tipo]);
   
       // Guardar el registro usando el servicio
       this.record.create(registro).subscribe({
