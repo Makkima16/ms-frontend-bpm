@@ -7,10 +7,15 @@
   <div class="card-body video-container"> <!-- Clase añadida -->
 
     <!-- Mostrar el video en un iframe con la URL sanitizada -->
-    <iframe [src]="safeVideoUrl" style="width: 35rem; height: 19.6875rem;" frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
+    <div class="relative w-full pt-[56.25%]"> 
+      <iframe 
+        [src]="safeVideoUrl" 
+        class="absolute top-0 left-0 w-full h-full" 
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
 
   </div>
 
