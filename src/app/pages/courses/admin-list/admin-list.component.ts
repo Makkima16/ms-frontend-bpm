@@ -13,6 +13,7 @@ import { Course } from '../../../models/course.model';
 })
 export class AdminListComponent implements OnInit {
   modulo: Course[];
+  isModalOpen: boolean = false;
 
 
 
@@ -21,11 +22,28 @@ export class AdminListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.list();
   }
 
-  list() {
-    this.service.list().subscribe(data => {
+    // Abrir modal
+    openModal() {
+      const modal = document.getElementById('courseModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+      }
+    }
+  
+  
+    // Cerrar modal
+    closeModal() {
+      const modal = document.getElementById('courseModal');
+      if (modal) {
+        modal.classList.add('hidden');
+      }
+    }
+  
+
+  list(cursoTipo: string) {
+      this.service.listByCursoTipo(cursoTipo).subscribe(data => {
       this.modulo = data["data"];
     });
   }
