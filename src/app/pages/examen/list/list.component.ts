@@ -44,6 +44,8 @@ export class ListComponent implements OnInit {
   fetchModules(): void {
     this.courseService.list().subscribe(
       (modules: any) => {
+        console.log('Respuesta de la API (fetchModules):', modules); // <-- Agregar esta línea
+
         // Crear un mapa de module_id a título del módulo
         modules.forEach((module: any) => {
           this.modulesMap.set(module.id, module.titulo);
