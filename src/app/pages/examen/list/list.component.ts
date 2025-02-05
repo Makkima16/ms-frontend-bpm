@@ -26,17 +26,12 @@ export class ListComponent implements OnInit {
     this.loading = true;
     this.examService.list().subscribe(
       (response: any) => {
-        console.log('Respuesta de exámenes:', response); // <-- Depuración
-        if (response.data && Array.isArray(response.data)) {
-          this.exams = response.data.map((exam: any) => ({
-            id: exam.id,
-            title: exam.titulo, // Asegúrate de que coincide con la respuesta del backend
-            information: exam.informacion,
-            module_id: exam.module_id
-          }));
-        } else {
-          console.error('El formato de la respuesta no es el esperado:', response);
-        }
+        this.exams = response.data.map((exam: any) => ({
+          id: exam.id,
+          title: exam.title,
+          information: exam.information,
+          module_id: exam.module_id // Asegúrate de que el backend devuelva module_id
+        }));
         this.loading = false;
       },
       (error) => {
@@ -49,7 +44,6 @@ export class ListComponent implements OnInit {
   fetchModules(): void {
     this.courseService.list().subscribe(
       (response: any) => {
-        console.log('Respuesta de módulos:', response); // <-- Depuración
         if (response.data && Array.isArray(response.data)) {
           response.data.forEach((module: any) => {
             this.modulesMap.set(module.id, module.titulo);
