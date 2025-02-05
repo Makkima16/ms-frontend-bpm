@@ -28,7 +28,7 @@ export class ListComponent implements OnInit {
           id: exam.id,
           title: exam.title,
           information: exam.information,
-          moduleTitle: this.courses.find(course => course.id === exam.module_id)?.titulo || 'Sin curso'
+          courseTitle: this.courses.find(course => course.id === exam.module_id)?.titulo || 'Sin curso'
         }));
         this.loading = false;
       },
