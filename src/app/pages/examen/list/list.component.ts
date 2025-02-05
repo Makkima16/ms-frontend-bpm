@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ExamService } from '../../../services/exam.service';
-import { Course } from '../../../models/course.model';
-import { ModulesClients } from '../../../models/modules-clients.model';
 import { CourseService } from '../../../services/course.service';
+import { ModulesClients } from '../../../models/modules-clients.model';
 
 @Component({
   selector: 'app-list',
@@ -12,19 +11,16 @@ import { CourseService } from '../../../services/course.service';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  exams: any[] = []; // Guardamos los exámenes con el título del módulo
+  exams: ModulesClients[] = []; // Lista de exámenes
+  modulesMap: Map<number, string> = new Map(); // Mapa para relacionar module_id con el título del módulo
   loading: boolean = false;
-  courses: Course[] = [];
 
   constructor(private examService: ExamService, private router: Router, private courseService: CourseService) {}
 
   ngOnInit(): void {
     this.fetchExams();
-
-
+    this.fetchModules(); // Obtener la lista de módulos
   }
-
-
 
   fetchExams(): void {
     this.loading = true;
@@ -34,7 +30,7 @@ export class ListComponent implements OnInit {
           id: exam.id,
           title: exam.title,
           information: exam.information,
-          modulo: exam.modulo // Asegúrate de que el backend devuelva la relación `modulo`
+          module_id: exam.module_id // Asegúrate de que el backend devuelva module_id
         }));
         this.loading = false;
       },
@@ -43,6 +39,24 @@ export class ListComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  fetchModules(): void {
+    this.courseService.list().subscribe(
+      (modules: any) => {
+        // Crear un mapa de module_id a título del módulo
+        modules.forEach((module: any) => {
+          this.modulesMap.set(module.id, module.titulo);
+        });
+      },
+      (error) => {
+        console.error('Error al cargar los módulos:', error);
+      }
+    );
+  }
+
+  getModuleTitle(moduleId: number): string {
+    return this.modulesMap.get(moduleId) || 'Módulo no encontrado'; // Obtener el título del módulo
   }
 
   delete(id: number) {
@@ -66,6 +80,6 @@ export class ListComponent implements OnInit {
   }
 
   goToUpdate(examId: number) {
-+    this.router.navigate(['examen/update-exam/' + examId]); // Redirigir al componente de actualización con el ID del examen
+    this.router.navigate(['examen/update-exam/' + examId]);
   }
 }
