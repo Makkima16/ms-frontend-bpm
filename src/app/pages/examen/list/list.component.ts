@@ -22,7 +22,6 @@ export class ListComponent implements OnInit {
     this.loading = true;
     this.examService.list().subscribe(
       (response: any) => {
-        console.log('Exámenes cargados:', response);
         this.exams = response.data.map((exam: any) => ({
           id: exam.id,
           title: exam.title,
@@ -59,7 +58,6 @@ export class ListComponent implements OnInit {
   }
 
   goToUpdate(examId: number) {
-    console.log(examId);
-    this.router.navigate(['examen/update-exam/' + examId]); // Redirigir al componente de actualización con el ID del examen
++    this.router.navigate(['examen/update-exam/' + examId]); // Redirigir al componente de actualización con el ID del examen
   }
 }

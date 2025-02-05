@@ -57,7 +57,6 @@ export class ManageComponent implements OnInit{
 
       axios.get(`https://secure.epayco.co/validation/v1/reference/${refPayco}`)
       .then(response => {
-        console.log(response)
         const paymentStatus = response.data.data.x_response; // Estado de la transacción
         this.paymentStatus = response.data.data.x_response;
         this.paymentEmail = response.data.data.x_customer_email

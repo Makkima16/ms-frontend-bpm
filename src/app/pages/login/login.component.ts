@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.isLoading = false; // Ocultar el estado de carga
       },
       error: (error) => {
-        console.log("Error" + JSON.stringify(error));
         this.isLoading = false; // Ocultar el estado de carga
         Swal.fire(
           "Autenticación invalida",
@@ -60,7 +59,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl('/dashboard');
       },
       error: (error) => {
-        console.log("Error" + JSON.stringify(error));
         this.isLoading = false; // Ocultar el estado de carga
         Swal.fire(
           "Autenticación invalida",

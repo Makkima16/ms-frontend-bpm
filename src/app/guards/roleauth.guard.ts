@@ -27,13 +27,11 @@ export class RoleauthGuard implements CanActivate {
     this.rolename = decodedToken && decodedToken.role && decodedToken.role.name; // Obtener el nombre del rol del usuario
   
     if (this.rolename == 'administrador') {
-      console.log('Guard is activated for route: ', state.url);  // Agrega esto para verificar si se activa el guardia
 
       return true;
     }
   
     if (this.rolename == 'cliente') {
-      console.log('Guard is activated for route: ', state.url);  // Agrega esto para verificar si se activa el guardia
 
       if (state.url.includes('/admin')) {
         Swal.fire({

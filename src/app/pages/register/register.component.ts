@@ -44,7 +44,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   changeMode(mode: number) {
     this.mode = +mode; // Asegúrate de convertir a número
-    console.log('Mode changed to:', this.mode);
     if (this.mode === 0) {
       this.theUser.token = ''; // Limpia el token si es usuario normal
     }

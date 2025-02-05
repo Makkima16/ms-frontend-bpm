@@ -54,7 +54,6 @@ export class ManageComponent implements OnInit {
       }else{
         
         this.service.login(this.theFormGroup.value).subscribe(data=> {
-          console.log("First Factor Passed");
           this.showTokenInput = true;
           this.id = data.id;
         })
