@@ -88,7 +88,7 @@ export class AdminEditComponent implements OnInit {
     // Actualizar el examen
     const moduloData: Course = {
       id: this.moduloID,
-      titulo: this.form.value.title,
+      titulo: this.form.value.titulo,
       introduccion: this.form.value.introduccion,
       informacion: this.form.value.informacion, 
       conclusion: this.form.value.conclusion,
