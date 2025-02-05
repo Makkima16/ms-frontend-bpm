@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ExamService } from '../../../services/exam.service';
+import { Course } from '../../../models/course.model';
 
 @Component({
   selector: 'app-list',
@@ -11,6 +12,7 @@ import { ExamService } from '../../../services/exam.service';
 export class ListComponent implements OnInit {
   exams: any[] = []; // Guardamos los exámenes con el título del módulo
   loading: boolean = false;
+  courses: Course[] = [];
 
   constructor(private examService: ExamService, private router: Router) {}
 
@@ -26,7 +28,7 @@ export class ListComponent implements OnInit {
           id: exam.id,
           title: exam.title,
           information: exam.information,
-          courseTitle: exam.course ? exam.course.titulo : 'Sin curso'
+          moduleTitle: this.courses.find(course => course.id === exam.module_id)?.titulo || 'Sin curso'
         }));
         this.loading = false;
       },
