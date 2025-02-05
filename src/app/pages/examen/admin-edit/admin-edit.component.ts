@@ -17,6 +17,7 @@ export class AdminEditComponent implements OnInit {
   form: FormGroup;
   examId: number; // ID del examen a actualizar
   trySend: boolean = false;
+  moduleTitle: string = ''; // Nuevo: Nombre del módulo
 
   constructor(
     private fb: FormBuilder,
@@ -50,19 +51,19 @@ export class AdminEditComponent implements OnInit {
   loadExamData() {
     this.examService.view(this.examId).subscribe({
       next: (exam: ModulesClients) => {
-        // Prellenar el formulario con datos del examen
         this.form.patchValue({
           title: exam.title,
           information: exam.information,
         });
 
-        // Cargar preguntas relacionadas con el examID
+        this.moduleTitle = exam.title; // Guardar el título del módulo
+
         this.examService.getQuestionsByModule(this.examId).subscribe({
           next: (questions: Questions[]) => {
             questions.forEach((question) => {
               this.questionsArray.push(
                 this.fb.group({
-                  id: [question.id], // Para diferenciar preguntas existentes
+                  id: [question.id],
                   text: [question.text, Validators.required],
                   choice_one: [question.choice_one, Validators.required],
                   choice_two: [question.choice_two, Validators.required],
@@ -84,6 +85,7 @@ export class AdminEditComponent implements OnInit {
       }
     });
   }
+
 
   // Agregar nueva pregunta al FormArray
   addQuestion() {
