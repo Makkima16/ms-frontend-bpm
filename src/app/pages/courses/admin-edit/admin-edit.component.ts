@@ -103,7 +103,7 @@ export class AdminEditComponent implements OnInit {
     this.services.update(moduloData).subscribe({
       next: () => {
         Swal.fire('Éxito', 'El examen y las preguntas han sido actualizados correctamente', 'success');
-        this.router.navigate(['/course/admin-list']);
+        this.router.navigate(['/courses/admin-list']);
       },
       error: (err) => {
         Swal.fire('Error', 'No se pudo actualizar el examen', 'error');
