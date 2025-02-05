@@ -21,15 +21,11 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
     this.fetchExams();
 
-    this.courseService.list().subscribe(courses => {
-      this.courses = courses;
-    });
+
   }
 
 
-  getModuleTitle(exam: ModulesClients): string {
-    return this.courses.find(course => course.id === exam.module_id)?.titulo || 'Sin curso';
-  }
+
   fetchExams(): void {
     this.loading = true;
     this.examService.list().subscribe(
@@ -38,7 +34,7 @@ export class ListComponent implements OnInit {
           id: exam.id,
           title: exam.title,
           information: exam.information,
-          courseTitle: this.courses.find(course => course.id === exam.module_id)?.titulo || 'Sin curso'
+          modulo: exam.modulo // Asegúrate de que el backend devuelva la relación `modulo`
         }));
         this.loading = false;
       },
