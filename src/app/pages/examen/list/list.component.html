@@ -1,55 +1,61 @@
 <div *ngIf="loading" class="flex items-center justify-center h-32">
-    <p class="text-gray-500 text-lg animate-pulse">Cargando exámenes...</p>
+  <p class="text-gray-500 text-lg animate-pulse">Cargando exámenes...</p>
+</div>
+
+
+    <!-- Header -->
+  <div class="bg-gradient-to-r from-red-500 to-red-700 text-white py-6 px-4 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold">Modulos</h2>
+    <p class="text-sm mt-1">Lista completa de Modulos registrados.</p>
   </div>
-  
-  <div *ngIf="!loading && exams.length > 0" class="overflow-x-auto">
-    <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-gray-50">
-        <tr>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            #
-          </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Título
-          </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Información
-          </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Acciones
-          </th>
-        </tr>
-      </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
-        <tr *ngFor="let exam of exams; let i = index">
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ i + 1 }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ exam.title }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ exam.information }}</td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="flex space-x-2">
-
-
-              <button
-                (click)="delete(exam.id)"
-                class="px-3 py-1 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded shadow"
-              >
-                Eliminar
-              </button>
-              <button
+<div *ngIf="!loading && exams.length > 0" class="overflow-x-auto">
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          #
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Título del Examen
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Información
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Módulo
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Acciones
+        </th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <tr *ngFor="let exam of exams; let i = index">
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ i + 1 }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ exam.title }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ exam.information }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ exam.moduleTitle }}</td>
+        <td class="px-6 py-4 whitespace-nowrap">
+          <div class="flex space-x-2">
+            <button
+              (click)="delete(exam.id)"
+              class="px-3 py-1 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded shadow"
+            >
+              Eliminar
+            </button>
+            <button
               (click)="goToUpdate(exam.id)"
               class="px-3 py-1 text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 rounded shadow"
             >
               Editar
             </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
-  <div *ngIf="!loading && exams.length === 0" class="flex items-center justify-center h-32">
-    <p class="text-gray-500 text-lg">No hay exámenes disponibles.</p>
-  </div>
-  
+<div *ngIf="!loading && exams.length === 0" class="flex items-center justify-center h-32">
+  <p class="text-gray-500 text-lg">No hay exámenes disponibles.</p>
+</div>

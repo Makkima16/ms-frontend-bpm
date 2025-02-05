@@ -7,6 +7,8 @@ import { ExamService } from '../../../services/exam.service';
 import { QuestionService } from '../../../services/question.service';
 import { ModulesClients } from '../../../models/modules-clients.model';
 import { Questions } from '../../../models/questions.model';
+import { CourseService } from '../../../services/course.service';
+import { Course } from '../../../models/course.model';
 
 @Component({
   selector: 'app-admin-edit',
@@ -17,14 +19,15 @@ export class AdminEditComponent implements OnInit {
   form: FormGroup;
   examId: number; // ID del examen a actualizar
   trySend: boolean = false;
-  moduleTitle: string = ''; // Nuevo: Nombre del módulo
+  courseTitle: string = ''; // Nuevo: Nombre del curso
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private examService: ExamService,
-    private questionService: QuestionService
+    private questionService: QuestionService,
+    private courseService: CourseService,
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +59,9 @@ export class AdminEditComponent implements OnInit {
           information: exam.information,
         });
 
-        this.moduleTitle = exam.title; // Guardar el título del módulo
+        if (exam.module_id) {
+          this.loadCourseData(exam.module_id); // Nuevo: Cargar datos del curso
+        }
 
         this.examService.getQuestionsByModule(this.examId).subscribe({
           next: (questions: Questions[]) => {
@@ -86,6 +91,18 @@ export class AdminEditComponent implements OnInit {
     });
   }
 
+  // Nuevo: Obtener el curso usando el module_id del examen
+  loadCourseData(moduleId: number) {
+    this.courseService.view(moduleId).subscribe({
+      next: (course: Course) => {
+        this.courseTitle = course.titulo || 'Curso sin título';
+      },
+      error: (err) => {
+        console.error('Error al cargar el curso:', err);
+        this.courseTitle = 'No se pudo obtener el curso';
+      }
+    });
+  }
 
   // Agregar nueva pregunta al FormArray
   addQuestion() {

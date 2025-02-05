@@ -9,10 +9,10 @@ import { ExamService } from '../../../services/exam.service';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  exams: any[] = []; // Aquí guardaremos los exámenes
+  exams: any[] = []; // Guardamos los exámenes con el título del módulo
   loading: boolean = false;
 
-  constructor(private examService: ExamService, private router:Router) {}
+  constructor(private examService: ExamService, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchExams();
@@ -23,7 +23,12 @@ export class ListComponent implements OnInit {
     this.examService.list().subscribe(
       (response: any) => {
         console.log('Exámenes cargados:', response);
-        this.exams = response.data; // Asegúrate de extraer 'data' del objeto
+        this.exams = response.data.map((exam: any) => ({
+          id: exam.id,
+          title: exam.title,
+          information: exam.information,
+          moduleTitle: exam.module ? exam.module.title : 'Sin módulo' // Agregamos el título del módulo
+        }));
         this.loading = false;
       },
       (error) => {
@@ -35,30 +40,26 @@ export class ListComponent implements OnInit {
 
   delete(id: number) {
     Swal.fire({
-      title: 'Eliminar Clietne',
-      text: "Está seguro que quiere este cliente?",
+      title: 'Eliminar Examen',
+      text: "¿Está seguro de que quiere eliminar este examen?",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, eliminar',
-      cancelButtonText: 'No, Cancelar'
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'No, cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.examService.delete(id).
-          subscribe(data => {
-            Swal.fire(
-              'Eliminado!',
-              'El Departamento ha sido eliminada correctamente',
-              'success'
-            )
-            this.ngOnInit();
-          });
+        this.examService.delete(id).subscribe(() => {
+          Swal.fire('Eliminado!', 'El examen ha sido eliminado correctamente', 'success');
+          this.fetchExams(); // Recargar la lista después de eliminar
+        });
       }
-    })
-  };
+    });
+  }
+
   goToUpdate(examId: number) {
-    console.log(examId)
-    this.router.navigate(['examen/update-exam/'+ examId]); // Redirige al componente de actualización con el ID del examen
+    console.log(examId);
+    this.router.navigate(['examen/update-exam/' + examId]); // Redirigir al componente de actualización con el ID del examen
   }
 }
