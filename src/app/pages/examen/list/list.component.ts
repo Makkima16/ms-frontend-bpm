@@ -26,7 +26,7 @@ export class ListComponent implements OnInit {
           id: exam.id,
           title: exam.title,
           information: exam.information,
-          moduleTitle: exam.module ? exam.module.title : 'Sin módulo' // Agregamos el título del módulo
+          courseTitle: exam.course ? exam.course.titulo : 'Sin curso'
         }));
         this.loading = false;
       },
