@@ -34,7 +34,7 @@
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ i + 1 }}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ exam.title }}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ exam.information }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ exam.courseTitle }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ getModuleTitle(exam)  }}</td>
         <td class="px-6 py-4 whitespace-nowrap">
           <div class="flex space-x-2">
             <button

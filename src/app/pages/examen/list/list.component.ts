@@ -3,6 +3,8 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ExamService } from '../../../services/exam.service';
 import { Course } from '../../../models/course.model';
+import { ModulesClients } from '../../../models/modules-clients.model';
+import { CourseService } from '../../../services/course.service';
 
 @Component({
   selector: 'app-list',
@@ -14,12 +16,20 @@ export class ListComponent implements OnInit {
   loading: boolean = false;
   courses: Course[] = [];
 
-  constructor(private examService: ExamService, private router: Router) {}
+  constructor(private examService: ExamService, private router: Router, private courseService: CourseService) {}
 
   ngOnInit(): void {
     this.fetchExams();
+
+    this.courseService.list().subscribe(courses => {
+      this.courses = courses;
+    });
   }
 
+
+  getModuleTitle(exam: ModulesClients): string {
+    return this.courses.find(course => course.id === exam.module_id)?.titulo || 'Sin curso';
+  }
   fetchExams(): void {
     this.loading = true;
     this.examService.list().subscribe(
