@@ -26,12 +26,17 @@ export class ListComponent implements OnInit {
     this.loading = true;
     this.examService.list().subscribe(
       (response: any) => {
-        this.exams = response.data.map((exam: any) => ({
-          id: exam.id,
-          title: exam.title,
-          information: exam.information,
-          module_id: exam.module_id // Asegúrate de que el backend devuelva module_id
-        }));
+        console.log('Respuesta de exámenes:', response); // <-- Depuración
+        if (response.data && Array.isArray(response.data)) {
+          this.exams = response.data.map((exam: any) => ({
+            id: exam.id,
+            title: exam.titulo, // Asegúrate de que coincide con la respuesta del backend
+            information: exam.informacion,
+            module_id: exam.module_id
+          }));
+        } else {
+          console.error('El formato de la respuesta no es el esperado:', response);
+        }
         this.loading = false;
       },
       (error) => {
@@ -40,22 +45,25 @@ export class ListComponent implements OnInit {
       }
     );
   }
-
+  
   fetchModules(): void {
     this.courseService.list().subscribe(
-      (modules: any) => {
-        console.log('Respuesta de la API (fetchModules):', modules); // <-- Agregar esta línea
-
-        // Crear un mapa de module_id a título del módulo
-        modules.forEach((module: any) => {
-          this.modulesMap.set(module.id, module.titulo);
-        });
+      (response: any) => {
+        console.log('Respuesta de módulos:', response); // <-- Depuración
+        if (response.data && Array.isArray(response.data)) {
+          response.data.forEach((module: any) => {
+            this.modulesMap.set(module.id, module.titulo);
+          });
+        } else {
+          console.error('El formato de la respuesta no es el esperado:', response);
+        }
       },
       (error) => {
         console.error('Error al cargar los módulos:', error);
       }
     );
   }
+  
 
   getModuleTitle(moduleId: number): string {
     return this.modulesMap.get(moduleId) || 'Módulo no encontrado'; // Obtener el título del módulo
