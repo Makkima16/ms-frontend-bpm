@@ -44,7 +44,7 @@ export class AdminListComponent implements OnInit {
 
   list(cursoTipo: string) {
       this.service.listByCursoTipo(cursoTipo).subscribe(data => {
-      this.modulo = data["data"];
+        this.modulo = data;  // Asignar directamente los datos devueltos
     });
   }
 
