@@ -6,7 +6,7 @@ function shuffleArray(array: any[]): any[] {
   return array;
 }
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -22,7 +22,9 @@ import { ClientsService } from '../../../services/clients.service';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.scss']
 })
-export class ManageComponent implements OnInit {
+export class ManageComponent implements OnInit, OnDestroy {
+  private timerInterval: any; // Guarda la referencia del temporizador
+
   mode: number;
   examen: ModulesClients;
   theFormGroup: FormGroup;
@@ -52,6 +54,11 @@ export class ManageComponent implements OnInit {
 
     this.theFormGroup = this.theFormBuilder.group({}); // Inicializa el FormGroup vacío
 
+  }
+  ngOnDestroy(): void {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval); // Detiene el temporizador cuando el usuario se va
+    }
   }
 
   ngOnInit(): void {
@@ -120,18 +127,18 @@ export class ManageComponent implements OnInit {
 
   // Método para iniciar el temporizador
   startTimer(): void {
-    const timerInterval = setInterval(() => {
+    this.timerInterval = setInterval(() => { // Asigna el intervalo a la variable
       if (this.timeLeft > 0) {
         this.timeLeft--;
       } else {
-        clearInterval(timerInterval);
+        clearInterval(this.timerInterval); // Limpia el intervalo cuando el tiempo se acaba
         Swal.fire({
           title: "Tiempo agotado",
           text: "Superaste el límite de tiempo",
           icon: "warning",
           confirmButtonText: "Aceptar"
         }).then(() => {
-          this.router.navigate(['courses/list?type='+this.tipo]);
+          this.router.navigate(['courses/list?type=' + this.tipo]);
         });
       }
     }, 1000);
