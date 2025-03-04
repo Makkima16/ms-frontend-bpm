@@ -5,6 +5,7 @@ import { PayService } from '../../services/pay.service';
 import { v4 as uuidv4 } from 'uuid';
 import { environment } from '../../../environments/environments';
 import Swal from 'sweetalert2';
+import { CourseService } from '../../services/course.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -36,7 +37,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private router: Router,
     private service: ClientsService,
-    private payServices: PayService
+    private CursosServices: CourseService
   ) {}
 
   // Abrir modal
@@ -70,12 +71,21 @@ export class DashboardComponent implements OnInit {
       this.isTypeInfoOpen = !this.isTypeInfoOpen;
     }
   }
+  //Inicializador para guardar el id del cliente, inicializar el boton de epayco y despertar la base de datos si esta en modo sleep
   ngOnInit(): void{
     this.guardarid();
     this.initializeEpaycoButton();
-
-
+    this.wakeUpDatabase();
   }
+
+  wakeUpDatabase(): void {
+    // Llamada a la base de datos para despertarla
+    this.CursosServices.list().subscribe({
+      next: () => console.log("Base de datos activa"),
+      error: () => console.log("Esperando que la base de datos se active...") // Error silencioso
+    });
+  }
+  //función que al momento de inicializar el boton cargara los datos necesarios para el pago por epayco
   initializeEpaycoButton(): void {
     if ((window as any).ePayco) {
       this.handler = (window as any).ePayco.checkout.configure({
@@ -108,13 +118,7 @@ export class DashboardComponent implements OnInit {
       console.error('ePayco script no cargó correctamente');
     }
   }
-
-
-
-
-
-
-
+  // funcion que se encarga de ejecutar la pasarela de pagos de epayco
   pay(): void {
     if(this.cliente_id==undefined){
       Swal.fire({
@@ -161,10 +165,6 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-
-
-
-
   // Esta función se llamaría cuando recibas la respuesta de ePayco con ref_payco
   module(courseType: string): void {
 
@@ -179,11 +179,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-
-
-
-
-
+  //función que se encarga de guardar datos del cliente de manera temporal
   guardarid() {
     const token = sessionStorage.getItem('sesion') ? JSON.parse(sessionStorage.getItem('sesion')).token : null;
   
@@ -222,13 +218,6 @@ export class DashboardComponent implements OnInit {
       console.error('No existe una sesión');
     }
   }
-  
-
-
-
-
-
-
 
   // Función que decodifica el token JWT manualmente
   decodeToken(token: string): any {
@@ -245,7 +234,4 @@ export class DashboardComponent implements OnInit {
     gotopayment(ref:string){
       this.router.navigate([`validation`], { queryParams: { ref_payco: ref } });
     }
-
-  
-
 }
