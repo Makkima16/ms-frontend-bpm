@@ -21,7 +21,8 @@ export class ManageComponent implements OnInit {
   dashboardData: any = null;
   chartData: any[] = [];
   chartDataPersonas: any[] = [];
-  
+  toggleSidebar = false;
+
   colorScheme: Color = {
     name: 'myScheme',
     selectable: true,
