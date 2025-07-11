@@ -26,6 +26,7 @@ export class RegisterComponent {
       email: '',
       password: '',
       name: '',
+      apellido:'',
       token: '' // Inicializa el token vacío
     };
     this.clientes={
@@ -62,6 +63,7 @@ export class RegisterComponent {
               // Crear el cliente asociado al usuario
               const newClient = {
                 email: this.theUser.email,
+                apellido:this.theUser.apellido,
                 name: this.theUser.name,
                 user_id: response._id,
                 tel:this.clientes.tel,
@@ -107,6 +109,7 @@ export class RegisterComponent {
               const newAdmin = {
                 email: this.theUser.email,
                 name: this.theUser.name,
+                apellido:this.theUser.apellido,
                 user_id: response._id,
                 tel:this.clientes.tel,
                 cedula:this.clientes.cedula

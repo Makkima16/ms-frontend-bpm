@@ -52,17 +52,15 @@
               </div>
             </div>
 
-            <!-- Password & Token Fields -->
+            <!-- Password & apellido Fields -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label for="password" class="block mb-2 text-sm font-medium text-gray-300">Contraseña</label>
                 <input type="password" id="password" [(ngModel)]="theUser.password" name="password" class="w-full p-2.5 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-primary-600 focus:border-primary-600" placeholder="••••••••" required>
               </div>
-              <div *ngIf="mode === 1">
-                <label for="token" class="block mb-2 text-sm font-medium text-gray-300">Token de administrador</label>
-                <input type="text" id="token" [(ngModel)]="theUser.token" name="token" class="w-full p-2.5 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-primary-600 focus:border-primary-600" placeholder="Ingrese token de administrador">
+                <label for="apellido" class="block mb-2 text-sm font-medium text-gray-300">Tu Apellido</label>
+                <input type="text" id="apellido" [(ngModel)]="theUser.apellido" name="apellido" class="w-full p-2.5 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-primary-600 focus:border-primary-600" placeholder="Ingrese token de administrador">
               </div>
-            </div>
 
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
