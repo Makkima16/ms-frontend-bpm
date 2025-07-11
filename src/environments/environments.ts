@@ -3,10 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    production: true,
-    url_ms_security:"ms-security-bpm-production.up.railway.app",
-    url_ms_modulos:"ms-negocio-bpm-production.up.railway.app/",
-    url_ms_correos:"ms-correos-production.up.railway.app",
+    production: false,
+    url_ms_security:"https://ms-security-bpm-production.up.railway.app",
+    url_ms_modulos:"https://ms-negocio-bpm-production.up.railway.app/",
+    url_ms_correos:"https://ms-correos-production.up.railway.app",
 
     epayco_public_key:"2dc7c0f531e3a8dcd6b58cedafb75f51"
 
