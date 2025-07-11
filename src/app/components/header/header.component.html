@@ -1,82 +1,73 @@
-<header>
+<header class="fixed top-0 left-0 w-full z-50 bg-custom-pink">
   <nav class="flex justify-between items-center px-4 sm:px-6 w-full">
     <div class="logo">
       <h2 class="text-white text-2xl">BPM Valencia</h2>
     </div>
 
-    <!-- Menú principal -->
+    <!-- Menú principal (escritorio) -->
     <ul class="hidden md:flex list-none space-x-5">
       <li><a href="#" class="text-white text-lg no-underline hover:underline cursor-pointer">Inicio</a></li>
       <li><a href="https://wa.me/+573224783832" class="text-white text-lg no-underline hover:underline cursor-pointer">Contáctanos</a></li>
       <li *ngIf="!userName">
-        <a (click)="goToLogin()" class="text-white text-lg no-underline hover:underline cursor-pointer">Iniciar Sesión</a>
+      <a
+        role="button"
+        tabindex="0"
+        (click)="goToLogin()"
+        (keydown.enter)="goToLogin()"
+        (keydown.space)="goToLogin()"
+        class="text-white text-lg no-underline hover:underline cursor-pointer"
+      >
+        Iniciar Sesión
+      </a>
       </li>
 
-      <!-- Menú del administrador -->
-      <li *ngIf="isAdminMode" class="relative flex items-center gap-2" id="adminMenu">
-        <span 
-          (click)="toggleAdminMenu()" 
-          class="text-white text-lg cursor-pointer flex items-center"
+      <!-- Administrador simple -->
+      <li *ngIf="isAdminMode">
+        <a 
+          (click)="navigateTo('admin/info')" 
+          (keydown.enter)="navigateTo('admin/info')" 
+          tabindex="0" 
+          role="button"
+          class="text-white text-lg no-underline hover:underline cursor-pointer flex items-center"
         >
           Administrador
           <i class="fas fa-cog text-white ml-1"></i>
-        </span>
-      
-        <!-- Menú desplegable de Admin -->
-        <div 
-          *ngIf="isAdminMenuOpen" 
-          class="absolute top-full left-0 w-64 bg-white border rounded shadow-lg mt-2 overflow-y-auto max-h-48 z-50"
-        >
-          <!-- Submenú Crear -->
-          <div class="border-b">
-            <span 
-              (click)="toggleCreateMenu()" 
-              class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer flex items-center justify-between"
-            >
-              Crear
-              <i class="fas fa-chevron-down"></i>
-            </span>
-            <ul *ngIf="isCreateMenuOpen" id="createMenu" class="pl-4">
-              <li><a (click)="navigateTo('examen/admin-createExamen')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Crear Examen</a></li>
-              <li><a (click)="navigateTo('courses/admin-crearCursos')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Crear Modulo</a></li>
-            </ul>
-          </div>
-      
-          <!-- Submenú Listar -->
-          <div class="border-b">
-            <span 
-              (click)="toggleListMenu()" 
-              class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer flex items-center justify-between"
-            >
-              Listar
-              <i class="fas fa-chevron-down"></i>
-            </span>
-            <ul *ngIf="isListMenuOpen" id="listMenu" class="pl-4">
-              <li><a (click)="navigateTo('clients/admin-listClients')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Listar Clientes</a></li>
-              <li><a (click)="navigateTo('admin-listRegistros')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Listar Registros</a></li>
-              <li><a (click)="navigateTo('examen/admin-list')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Listar Exámenes</a></li>
-              <li><a (click)="navigateTo('courses/admin-list')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Listar Modulos</a></li>
-              <li><a (click)="navigateTo('payments/admin-listPay')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Listar Pagos</a></li>
-              <li><a (click)="navigateTo('aprobados/admin-list')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Listar Aprobados</a></li>
-
-            </ul>
-          </div>
-        </div>
+        </a>
       </li>
-      
-      <!-- Menú del usuario -->
-      <li *ngIf="userName" class="relative flex items-center gap-2" id="userMenu" (click)="toggleUserMenu()">
-        <span class="text-white text-lg cursor-pointer">{{ userName }}</span>
-        <i class="fas fa-user text-white"></i>
 
-        <!-- Opciones del menú del usuario -->
+      <!-- Usuario -->
+      <li *ngIf="userName" class="relative flex items-center gap-2" id="userMenu">
+        <button 
+          (click)="toggleUserMenu()" 
+          (keydown.enter)="toggleUserMenu()" 
+          (keydown.space)="toggleUserMenu()"
+          tabindex="0"
+          type="button"
+          class="text-white text-lg cursor-pointer bg-transparent border-none flex items-center gap-2 focus:outline-none"
+        >
+          {{ userName }}
+          <i class="fas fa-user text-white"></i>
+        </button>
+
+        <!-- Menú usuario -->
         <ul *ngIf="isUserMenuOpen" class="absolute top-full left-0 w-64 bg-white border rounded shadow-lg mt-2 overflow-y-auto max-h-24 z-50">
-          <li><a (click)="logout()" class="block px-4 py-2 text-gray-700 text-base hover:bg-gray-200 cursor-pointer">Cerrar Sesión</a></li>
+          <li>
+            <a 
+              (click)="logout()" 
+              (keydown.enter)="logout()"
+              tabindex="0"
+              role="button"
+              class="block px-4 py-2 text-gray-700 text-base hover:bg-gray-200 cursor-pointer"
+            >
+              Cerrar Sesión
+            </a>
+          </li>
         </ul>
       </li>
     </ul>
 
-    <!-- Botón hamburguesa -->
+    <!-- Botón hamburguesa (móvil) -->
+     <!-- eslint-disable @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
     <div class="hamburger flex flex-col cursor-pointer md:hidden" (click)="toggleMenu()">
       <span class="w-6 h-0.5 bg-white my-1 transition-all duration-300 ease"></span>
       <span class="w-6 h-0.5 bg-white my-1 transition-all duration-300 ease"></span>
@@ -84,78 +75,71 @@
     </div>
   </nav>
 
-  <!-- Menú desplegable para móvil -->
+  <!-- Menú desplegable (móvil) -->
   <ul 
     class="dropdown-menu absolute top-14 left-0 w-full bg-custom-pink list-none py-2 space-y-2 md:hidden" 
     [class.block]="isMenuOpen" 
     [class.hidden]="!isMenuOpen"
   >
-    <li class="text-center"><a href="#" class="text-white text-lg no-underline hover:underline">Inicio</a></li>
-    <li class="text-center"><a href="https://wa.me/+573224783832" class="text-white text-lg no-underline hover:underline">Contáctanos</a></li>
-    <li *ngIf="!userName" class="text-center"><a (click)="goToLogin()" class="text-white text-lg no-underline hover:underline">Iniciar Sesión</a></li>
+    <li class="text-center">
+      <a href="#" class="text-white text-lg no-underline hover:underline">Inicio</a>
+    </li>
+    <li class="text-center">
+      <a href="https://wa.me/+573224783832" class="text-white text-lg no-underline hover:underline">Contáctanos</a>
+    </li>
+    <li *ngIf="!userName" class="text-center">
+      <a 
+        (click)="goToLogin()" 
+        (keydown.enter)="goToLogin()"
+        tabindex="0"
+        role="button"
+        class="text-white text-lg no-underline hover:underline cursor-pointer"
+      >
+        Iniciar Sesión
+      </a>
+    </li>
 
-    <!-- Menú del administrador (versión móvil) -->
-    <li *ngIf="isAdminMode" class="relative">
-      <span 
-        (click)="toggleAdminMenu()" 
-        class="text-white text-lg cursor-pointer flex items-center justify-center gap-2"
+    <!-- Administrador simple (móvil) -->
+    <li *ngIf="isAdminMode" class="text-center">
+      <a 
+        (click)="navigateTo('admin-home')" 
+        (keydown.enter)="navigateTo('admin-home')" 
+        tabindex="0"
+        role="button"
+        class="text-white text-lg no-underline hover:underline cursor-pointer flex items-center justify-center gap-2"
       >
         Administrador
         <i class="fas fa-cog"></i>
-      </span>
-
-      <!-- Submenú del Administrador -->
-      <div 
-        *ngIf="isAdminMenuOpen" 
-        class="mt-2 bg-white border rounded shadow-lg w-11/12 mx-auto overflow-y-auto max-h-48"
-      >
-        <!-- Submenú Crear -->
-        <div class="border-b">
-          <span 
-            (click)="toggleCreateMenu()" 
-            class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer flex items-center justify-between"
-          >
-            Crear
-            <i class="fas fa-chevron-down"></i>
-          </span>
-          <ul *ngIf="isCreateMenuOpen" id="createMenuMobile" class="pl-4">
-            <li><a (click)="navigateTo('examen/admin-createExamen')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Crear Examen</a></li>
-            <li><a (click)="navigateTo('courses/admin-crearCursos')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Crear Modulo</a></li>
-          </ul>
-        </div>
-
-        <!-- Submenú Listar -->
-        <div class="border-b">
-          <span 
-            (click)="toggleListMenu()" 
-            class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer flex items-center justify-between"
-          >
-            Listar
-            <i class="fas fa-chevron-down"></i>
-          </span>
-          <ul *ngIf="isListMenuOpen" id="listMenuMobile" class="pl-4">
-            <li><a (click)="navigateTo('clients/admin-listClients')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Listar Clientes</a></li>
-            <li><a (click)="navigateTo('admin-listRegistros')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Listar Registros</a></li>
-            <li><a (click)="navigateTo('examen/admin-list')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Listar Exámenes</a></li>
-            <li><a (click)="navigateTo('courses/admin-list')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Listar Modulos</a></li>
-            <li><a (click)="navigateTo('payments/admin-listPay')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Listar Pagos</a></li>
-            <li><a (click)="navigateTo('aprobados/admin-list')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Listar Aprobados</a></li>
-
-          </ul>
-        </div>
-      </div>
+      </a>
     </li>
 
-    <!-- Menú del usuario (versión móvil) -->
+    <!-- Usuario (móvil) -->
     <li *ngIf="userName" class="text-center flex items-center justify-center gap-2 relative">
-      <span (click)="toggleUserMenu()" class="text-white text-lg cursor-pointer">{{ userName }}</span>
+      <span 
+        (click)="toggleUserMenu()" 
+        (keydown.enter)="toggleUserMenu()"
+        tabindex="0"
+        role="button"
+        class="text-white text-lg cursor-pointer"
+      >
+        {{ userName }}
+      </span>
       <i class="fas fa-user text-white"></i>
 
-      <!-- Opciones del menú del usuario -->
+      <!-- Menú usuario -->
       <ul *ngIf="isUserMenuOpen" class="mt-2 bg-white border rounded shadow-lg w-11/12 mx-auto overflow-y-auto max-h-48">
-        <li><a (click)="logout()" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer flex items-center justify-between">Cerrar Sesión</a></li>
+        <li>
+          <a 
+            (click)="logout()" 
+            (keydown.enter)="logout()"
+            tabindex="0"
+            role="button"
+            class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer flex items-center justify-between"
+          >
+            Cerrar Sesión
+          </a>
+        </li>
       </ul>
     </li>
   </ul>
-
 </header>

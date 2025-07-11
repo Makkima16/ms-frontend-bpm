@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
 
 import Swal from 'sweetalert2';
 import { ExamService } from '../../../services/exam.service';
@@ -19,14 +18,13 @@ import { Questions } from '../../../models/questions.model';
 export class AdminCreateComponent implements OnInit {
   form: FormGroup;
   courses: Course[] = [];
-  trySend: boolean = false;
-  constructor(
-    private fb: FormBuilder,
-    private examService: ExamService,
-    private questionService: QuestionService,
-    private courseService: CourseService
-  ) {}
+  trySend: boolean;
 
+  fb = inject(FormBuilder)
+  examService=inject(ExamService)
+  questionService=inject(QuestionService)
+  courseService=inject(CourseService)
+  
   ngOnInit(): void {
     // Inicializar el formulario
     this.form = this.fb.group({
@@ -45,6 +43,7 @@ export class AdminCreateComponent implements OnInit {
   // Método para cargar los cursos disponibles
   loadCourses() {
     this.courseService.list().subscribe({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       next: (response: any) => {
         if ('data' in response) {
           this.courses = response['data'];
@@ -110,6 +109,7 @@ export class AdminCreateComponent implements OnInit {
         console.log("Examen creado:", createdExam);
         
         // Procesar las preguntas asociadas al examen
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.questionsArray.controls.forEach((questionGroup: any) => {
           const questionData: Questions = {
             module_id: createdExam.id, // Aquí solo pasa el ID del curso

@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environments';
 import { ModulesClients } from '../models/modules-clients.model';
@@ -9,7 +10,7 @@ import { ModulesClients } from '../models/modules-clients.model';
 })
 export class ExamService {
 
-  constructor(private http: HttpClient) {}
+  http = inject(HttpClient)
 
   create(examen: ModulesClients): Observable<ModulesClients> {
     return this.http.post<ModulesClients>(`${environment.url_ms_modulos}examen`, examen);

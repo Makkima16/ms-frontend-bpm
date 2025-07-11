@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 function shuffleArray(array: any[]): any[] {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -6,10 +7,9 @@ function shuffleArray(array: any[]): any[] {
   return array;
 }
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import Swal from 'sweetalert2';
 import { ModulesClients } from '../../../models/modules-clients.model';
 import { RegisterService } from '../../../services/register.service';
@@ -35,17 +35,10 @@ export class ManageComponent implements OnInit, OnDestroy {
   cliente_id:number;
   answer:boolean;
   session = JSON.parse(sessionStorage.getItem('sesion'));  // Usamos sessionStorage para la sesión
-  timeLeft: number = 900; // 15 minutos en segundos
+  timeLeft: 900; // 15 minutos en segundos
   tipo:string;
   constructor(
-    private activateRoute: ActivatedRoute,
-    private service: ExamService,
-    private theFormBuilder: FormBuilder,
-    private router: Router,
-    private record: RegisterService,
-    private clientServices: ClientsService
 
-    
   ) { 
     this.trySend = false;
     this.mode = 1;
@@ -55,6 +48,14 @@ export class ManageComponent implements OnInit, OnDestroy {
     this.theFormGroup = this.theFormBuilder.group({}); // Inicializa el FormGroup vacío
 
   }
+
+  activateRoute=inject(ActivatedRoute)
+  service=inject(ExamService)
+  theFormBuilder=inject(FormBuilder)
+  router=inject(Router)
+  record=inject(RegisterService)
+  clientServices=inject(ClientsService)
+
   ngOnDestroy(): void {
     if (this.timerInterval) {
       clearInterval(this.timerInterval); // Detiene el temporizador cuando el usuario se va
@@ -191,14 +192,13 @@ export class ManageComponent implements OnInit, OnDestroy {
       let correctAnswersCount = 0;
   
       // Comparar las respuestas elegidas con las respuestas correctas
-      for (let i = 0; i < this.questions.length; i++) {
-        const userAnswer = answers[this.questions[i]?.id];
-        const correctAnswer = this.questions[i]?.correct_choice;
+      for (const question of this.questions) {
+        const userAnswer = answers[question?.id];
+        const correctAnswer = question?.correct_choice;
         if (userAnswer === correctAnswer) {
           correctAnswersCount++;
         }
       }
-  
       // Si el número de respuestas correctas es 3, actualizamos 'aprobacion' a true
       if (correctAnswersCount === 3) {
         registro.aprobacion = true;

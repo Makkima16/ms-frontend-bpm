@@ -25,11 +25,9 @@
               "src/assets",
               "src/favicon.ico",
               "src/staticwebapp.config.json"
-
             ],
             "styles": [
               "src/styles.css"
-
             ],
             "scripts": []
           },
@@ -89,11 +87,23 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": [
+      "angular-eslint"
+    ]
   }
 }

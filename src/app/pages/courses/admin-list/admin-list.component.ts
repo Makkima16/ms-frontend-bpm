@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { Client } from '../../../models/client.model';
-import { ClientsService } from '../../../services/clients.service';
+
 import { CourseService } from '../../../services/course.service';
 import { Course } from '../../../models/course.model';
 
@@ -11,18 +10,16 @@ import { Course } from '../../../models/course.model';
   templateUrl: './admin-list.component.html',
   styleUrl: './admin-list.component.css'
 })
-export class AdminListComponent implements OnInit {
+export class AdminListComponent {
   modulo: Course[];
-  isModalOpen: boolean = false;
+  isModalOpen: boolean;
+
+  service = inject(CourseService);
+  router = inject(Router);
+  activateRoute = inject(ActivatedRoute);
+  
 
 
-
-  constructor(private service: CourseService, private router: Router, private activateRoute: ActivatedRoute,) {
-
-  }
-
-  ngOnInit(): void {
-  }
 
     // Abrir modal
     openModal() {
@@ -61,13 +58,12 @@ export class AdminListComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.service.delete(id).
-          subscribe(data => {
+          subscribe(() => {
             Swal.fire(
               'Eliminado!',
               'El modulo ha sido eliminada correctamente',
               'success'
             )
-            this.ngOnInit();
           });
       }
     })

@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import axios from 'axios';
-import Swal from 'sweetalert2';
 import { ClientsService } from '../../../services/clients.service';
 import { PayService } from '../../../services/pay.service';
 
@@ -13,29 +12,28 @@ import { PayService } from '../../../services/pay.service';
   styleUrl: './manage.component.css'
 })
 export class ManageComponent implements OnInit{
-  paymentStatus: string = ''; // Mensaje para mostrar en el HTML
-  refPayco: string = ''; // Referencia del pago
-  paymentType: string = ''; // Referencia del pago
-  paymentQuotas: number = 0;
-  paymentEmail: string = '';
-  paymentAmount: number = 0;
+  paymentStatus: string; // Mensaje para mostrar en el HTML
+  refPayco: string ; // Referencia del pago
+  paymentType: string ; // Referencia del pago
+  paymentQuotas: number ;
+  paymentEmail: string ;
+  paymentAmount: number ;
   paymentProduct:string;
   clientId:number;
   clientName:string;
   email:string;
-  payment:{};
-  constructor(private route: ActivatedRoute,
-              private clientService: ClientsService,
-              private payServices: PayService // Inyecta el servicio
 
-  ) {}
+
+  route=inject(ActivatedRoute)
+  clientService=inject(ClientsService)
+  payServices=inject(PayService)
 
   ngOnInit(): void {
     // Obtener el ref_payco de la URL
 
 
     const token = sessionStorage.getItem('sesion') ? JSON.parse(sessionStorage.getItem('sesion')).token : null;
-    console
+    
     if (token) {
       // Si hay un token, decodificarlo para extraer la información del usuario
       const decodedToken = this.decodeToken(token);
@@ -84,8 +82,7 @@ export class ManageComponent implements OnInit{
           }
         })
         if (paymentStatus === "Aceptada") {
-          
-
+          this.paymentStatus = "Pago Aceptado";
         } else if (paymentStatus === "Rechazada") {
           this.paymentStatus = "Pago rechazado";
 
@@ -108,6 +105,7 @@ export class ManageComponent implements OnInit{
 
 
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     decodeToken(token: string): any {
       const parts = token.split('.');
       if (parts.length !== 3) {

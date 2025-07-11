@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { CourseService } from '../../../services/course.service';
@@ -12,7 +12,8 @@ export class AdminCreateComponent implements OnInit {
   courseForm: FormGroup;
   isImageValid = true; // Verificación para la imagen (en este caso, URL)
 
-  constructor(private fb: FormBuilder, private courseService: CourseService) {}
+  fb = inject(FormBuilder)
+  courseService = inject(CourseService)
 
   ngOnInit(): void {
     this.courseForm = this.fb.group({
@@ -45,7 +46,7 @@ export class AdminCreateComponent implements OnInit {
     formData.append('curso_tipo', this.courseForm.get('curso_tipo')?.value); // Aquí agregamos la URL de la imagen
 
     this.courseService.create(formData).subscribe({
-      next: (response) => {
+      next: () => {
         Swal.fire('Éxito', 'Curso creado correctamente.', 'success');
         this.courseForm.reset();
       },

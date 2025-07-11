@@ -1,5 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,16 +7,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isMenuOpen: boolean = false;
-  isUserMenuOpen: boolean = false;
-  isAdminMenuOpen: boolean = false;
-  isCreateMenuOpen: boolean = false;
-  isListMenuOpen: boolean = false;
+  isMenuOpen: boolean ;
+  isUserMenuOpen: boolean ;
+  isAdminMenuOpen: boolean ;
+  isCreateMenuOpen: boolean ;
+  isListMenuOpen: boolean ;
   userName: string | null = null;
   userRole: string | null = null;
-  isAdminMode: boolean = false;
+  isAdminMode: boolean;
 
-  constructor(private router: Router, private sanitizer: DomSanitizer) {}
+
+
+  router = inject(Router);
+
 
   ngOnInit(): void {
     const token = sessionStorage.getItem('sesion') ? JSON.parse(sessionStorage.getItem('sesion')).token : null;
@@ -38,7 +40,9 @@ export class HeaderComponent implements OnInit {
       return value; // Retorna el valor original si ocurre un error
     }
   }
-  
+
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   decodeToken(token: string): any {
     const parts = token.split('.');
     if (parts.length !== 3) {
@@ -79,7 +83,7 @@ export class HeaderComponent implements OnInit {
     this.userName = null;
     this.userRole = null;
     this.isAdminMode = false;
-    this.router.navigate(['dashboard']);
+    this.router.navigate(['home']);
   }
 
   goToLogin() {

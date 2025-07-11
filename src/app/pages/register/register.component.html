@@ -28,7 +28,14 @@
         </div>
         <!-- Formulario dentro del ng-template -->
         <ng-template #formContent>
-          <a (click)="navigateTo('#')" class="font-medium text-primary-600 hover:underline cursor-pointer">Regresar al Inicio</a>
+        <button
+          (click)="navigateTo('#')"
+          (keydown.enter)="navigateTo('#')"
+          class="font-medium text-primary-600 hover:underline cursor-pointer bg-transparent border-none p-0 focus:outline-none"
+        >
+          Regresar al Inicio
+        </button>
+          
           <h2 class="text-2xl font-bold leading-tight tracking-tight text-white md:text-3xl">
             Regístrate
           </h2>
@@ -79,7 +86,13 @@
             <li>
               <p class="text-sm font-light text-gray-400">
                 ¿Ya tienes cuenta?
-                <a (click)="navigateTo('login')" class="font-medium text-primary-600 hover:underline cursor-pointer">Inicia sesión</a>
+              <button
+                (click)="navigateTo('login')"
+                (keydown.enter)="navigateTo('login')"
+                class="font-medium text-primary-600 hover:underline cursor-pointer bg-transparent border-none p-0 focus:outline-none"
+              >
+                Regresar al Inicio
+              </button>          
               </p>
             </li>
           </form>

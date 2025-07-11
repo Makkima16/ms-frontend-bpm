@@ -1,0 +1,157 @@
+<!-- Pantalla de carga -->
+<div *ngIf="loading" class="flex items-center justify-center h-screen bg-gray-100">
+  <div class="text-center">
+    <div class="animate-spin h-10 w-10 border-4 border-indigo-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+    <p class="text-gray-700 text-lg">Verificando acceso...</p>
+  </div>
+</div>
+
+<!-- Error de acceso -->
+<div *ngIf="!loading && showError" class="flex items-center justify-center h-screen bg-red-50">
+  <div class="text-center">
+    <p class="text-red-600 text-xl font-semibold mb-2">Acceso denegado</p>
+    <p class="text-gray-600">Serás redirigido en unos segundos...</p>
+  </div>
+</div>
+
+<!-- Contenido del dashboard -->
+<div *ngIf="!loading && !showError">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r shadow-md flex flex-col min-h-screen overflow-y-auto">
+      <div class="px-6 py-5 border-b">
+        <p class="text-sm text-gray-500 mb-1">Bienvenido</p>
+        <p class="text-lg font-bold text-indigo-600">Panel de Administrador</p>
+      </div>
+
+      <nav class="flex-1 px-4 py-6 space-y-6 text-sm font-medium text-gray-700">
+        <div>
+          <h2 class="text-xs text-gray-400 uppercase mb-2">Listar</h2>
+          <ul class="space-y-2">
+            <li>
+              <button (click)="navigateTo('cursos')" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-indigo-100 transition w-full text-left">
+                📚 <span>Cursos</span>
+              </button>
+            </li>
+            <li>
+              <button (click)="navigateTo('clientes')" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-indigo-100 transition w-full text-left">
+                👤 <span>Clientes</span>
+              </button>
+            </li>
+            <li>
+              <button (click)="navigateTo('pagos')" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-indigo-100 transition w-full text-left">
+                💳 <span>Pagos</span>
+              </button>
+            </li>
+            <li>
+              <button (click)="navigateTo('examenes')" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-indigo-100 transition w-full text-left">
+                📝 <span>Exámenes</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="text-xs text-gray-400 uppercase mb-2">Crear</h2>
+          <ul class="space-y-2">
+            <li>
+              <button (click)="navigateTo('crear-curso')" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-green-100 transition w-full text-left">
+                ➕ <span>Curso</span>
+              </button>
+            </li>
+            <li>
+              <button (click)="navigateTo('crear-examen')" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-green-100 transition w-full text-left">
+                🧪 <span>Examen</span>
+              </button>
+            </li>
+            <li>
+              <button (click)="navigateTo('recordatorio')" class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-green-100 transition w-full text-left">
+                ⏰ <span>Recordatorio</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Contenido principal -->
+    <div class="flex-1 flex flex-col">
+      <section class="p-6 mt-6 bg-gray-100 flex-1">
+        <h3 class="text-3xl font-semibold mb-6">Dashboard</h3>
+
+        <!-- Estadísticas principales -->
+        <div *ngIf="dashboardData" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+          <div class="bg-white p-6 rounded-2xl shadow-md">
+            <h2 class="text-lg font-medium text-gray-600 mb-2">Pagos este mes</h2>
+            <p class="text-3xl font-bold text-indigo-600">{{ dashboardData.totalPagosMes }}</p>
+          </div>
+          <div class="bg-white p-6 rounded-2xl shadow-md">
+            <h2 class="text-lg font-medium text-gray-600 mb-2">Cursos completados</h2>
+            <p class="text-3xl font-bold text-green-600">{{ dashboardData.totalCompletados }}</p>
+          </div>
+          <div class="bg-white p-6 rounded-2xl shadow-md">
+            <h2 class="text-lg font-medium text-gray-600 mb-2">Total pagos</h2>
+            <p class="text-3xl font-bold text-yellow-500">${{ dashboardData.totalRecaudadoMes | number:'1.0-0' }}</p>
+          </div>
+          <div class="bg-white p-6 rounded-2xl shadow-md">
+            <h2 class="text-lg font-medium text-gray-600 mb-2">Cursos activos</h2>
+            <p class="text-3xl font-bold text-purple-600">{{ dashboardData.cursosActivos }}</p>
+          </div>
+        </div>
+        <!-- Gráficos de cumplimiento -->
+        <div *ngIf="dashboardData" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-10">
+          <!-- Recaudo mensual -->
+          <div class="bg-white p-4 rounded-2xl shadow-md">
+            <h2 class="text-lg font-medium text-gray-700 mb-4">Recaudo mensual</h2>
+            <ngx-charts-bar-vertical
+              [view]="[320, 200]"
+              [scheme]="colorScheme"
+              [results]="chartData"
+              [gradient]="false"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="false"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'Meta vs Recaudado'"
+              [yAxisLabel]="'COP'"
+              [roundEdges]="true"
+            >
+            </ngx-charts-bar-vertical>
+          </div>
+
+          <!-- Meta de personas -->
+          <div class="bg-white p-4 rounded-2xl shadow-md">
+            <h2 class="text-lg font-medium text-gray-700 mb-4">Meta de Personas</h2>
+            <ngx-charts-bar-vertical
+              [view]="[320, 200]"
+              [results]="chartDataPersonas"
+              [scheme]="colorScheme"
+              [gradient]="false"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="false"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'Meta vs Pagos'"
+              [yAxisLabel]="'Cantidad'"
+              [roundEdges]="true"
+            >
+            </ngx-charts-bar-vertical>
+          </div>
+        </div>
+        <!-- Clientes recientes -->
+        <div *ngIf="dashboardData?.ultimosClientes" class="bg-white p-6 rounded-2xl shadow-md">
+          <h2 class="text-lg font-medium text-gray-600 mb-4">Clientes más recientes</h2>
+          <ul class="divide-y divide-gray-200">
+            <li *ngFor="let client of dashboardData.ultimosClientes" class="py-3">
+              <p class="text-base text-gray-800 font-medium">{{ client.name }} {{ client.apellido }}</p>
+              <p class="text-sm text-gray-500">{{ client.email }}</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+      
+    </div>
+  </div>
+</div>

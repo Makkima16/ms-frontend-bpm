@@ -7,7 +7,7 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'dashboard', // Redirige la ruta raíz a 'dashboard'
+        redirectTo: 'home', // Redirige la ruta raíz a 'home'
         pathMatch: 'full',
     },
     {
@@ -32,7 +32,7 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'dashboard'  // Redirige cualquier ruta desconocida a 'dashboard'
+        redirectTo: 'home'  // Redirige cualquier ruta desconocida a 'home'
     }
 ];
 

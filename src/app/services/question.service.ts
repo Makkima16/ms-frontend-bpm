@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Questions } from '../models/questions.model';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environments';
@@ -9,7 +9,7 @@ import { environment } from '../../environments/environments';
 })
 export class QuestionService {
 
-  constructor(private http: HttpClient) { }
+  http = inject(HttpClient)
 
     // Crear Registro Examen
     create(records: Questions): Observable<Questions> {

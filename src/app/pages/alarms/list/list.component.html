@@ -1,0 +1,58 @@
+<div class="container mx-auto mt-10">
+  <!-- Header -->
+  <div class="bg-gradient-to-r from-red-500 to-red-700 text-white py-6 px-4 rounded-lg shadow-md flex items-center justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Alarmas</h2>
+      <p class="text-sm mt-1">Lista completa de Alarmas registradas.</p>
+    </div>
+    <button 
+      (click)="goToCreate()" 
+      class="bg-white text-red-600 px-4 py-2 rounded-md font-semibold hover:bg-red-100 transition">
+      + Nueva Alarma
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="mt-6 bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="overflow-x-auto max-h-96 overflow-y-auto">
+      <table class="min-w-full table-auto text-left text-gray-700">
+        <thead class="bg-gray-100 border-b">
+          <tr>
+            <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">ID</th>
+            <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">Cliente</th>
+            <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">Asunto</th>
+            <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">Contenido</th>
+            <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">Fecha</th>
+            <th class="px-4 py-2 font-semibold text-sm uppercase tracking-wide">Acciones</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr 
+            *ngFor="let actual of alarmas"
+            [ngClass]="{ 'bg-red-100': isNear(actual.date) }"
+            class="border-b hover:bg-gray-50 transition"
+          >
+            <td class="px-4 py-3 text-sm">{{ actual.id }}</td>
+            <td class="px-4 py-3 text-sm">{{ actual.servidor }}</td>
+            <td class="px-4 py-3 text-sm">{{ actual.subject }}</td>
+            <td class="px-4 py-3 text-sm">{{ actual.content }}</td>
+            <td 
+              class="px-4 py-3 text-sm"
+              [ngClass]="{ 'text-red-600 font-semibold': isNear(actual.date) }"
+            >
+              {{ formatDateOnly(actual.date) }}
+            </td>
+            <td class="px-4 py-3 text-sm">
+              <button 
+                (click)="viewAlarm(actual.id)" 
+                class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-sm font-medium transition">
+                Ver Pacientes
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

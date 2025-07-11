@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Admin } from '../models/admin.model';
 import { environment } from '../../environments/environments';
@@ -9,10 +9,7 @@ import { environment } from '../../environments/environments';
 })
 export class AdminService {
 
-  constructor(
-    private http: HttpClient
-  ) { 
-  }
+  http = inject(HttpClient)
 
   list(): Observable<Admin[]> {
     return this.http.get<Admin[]>(`${environment.url_ms_modulos}admin`);
@@ -24,5 +21,10 @@ export class AdminService {
 
   create(titular: Admin): Observable<Admin> {
     return this.http.post<Admin>(`${environment.url_ms_modulos}admin`, titular);
-  }  
+  }
+  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getSummary(): Observable<any> {
+    return this.http.get(`${environment.url_ms_modulos}dashboard/summary`);
+  }
 }

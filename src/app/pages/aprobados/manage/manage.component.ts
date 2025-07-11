@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AprobadosService } from '../../../services/aprobados.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Aprobados } from '../../../models/aprobados.model';
@@ -9,15 +9,17 @@ import { Aprobados } from '../../../models/aprobados.model';
   styleUrls: ['./manage.component.css']
 })
 export class ManageComponent implements OnInit{
-  email: string = ''; // Para el correo del cliente
+  email: string; // Para el correo del cliente
   selectedFile: File | null = null; // Archivo seleccionado
-  message: string = ''; // Mensaje de retroalimentación
-  isLoading: boolean = false; // Indicador de carga
+  message: string; // Mensaje de retroalimentación
+  isLoading: boolean ; // Indicador de carga
   aprobadoId: number;  // ID del aprobado para actualizar
-  body: string = '';  // El cuerpo del correo
+  body: string;  // El cuerpo del correo
 
-  constructor(private emailService: AprobadosService, private route: ActivatedRoute,     private router: Router,) {}
-  
+  emailService = inject(AprobadosService);
+  route = inject(ActivatedRoute);
+  router = inject(Router);
+    
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.email = params['email'] || '';
@@ -26,6 +28,7 @@ export class ManageComponent implements OnInit{
   }
 
   // Manejar la selección del archivo
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -53,7 +56,7 @@ onSubmit() {
 
   // Llama al servicio para enviar el correo
   this.emailService.enviarCorreo(formData).subscribe(
-    response => {
+    () => {
       // Mensaje de éxito y limpieza de los campos
       this.message = 'Correo enviado exitosamente.';
       this.email = ''; // Limpia el campo de correo

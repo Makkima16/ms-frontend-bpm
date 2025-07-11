@@ -14,8 +14,10 @@
   
           <!-- Preguntas del examen -->
           <div *ngFor="let question of questions" class="mb-6">
-            <label class="block mb-2 text-lg font-medium text-gray-700">{{ question.text }}</label>
-            <div *ngFor="let choice of question.shuffledChoices" class="flex items-center mb-2">
+          <p class="block mb-2 text-lg font-medium text-gray-700">
+            {{ question.text }}
+          </p>            
+              <div *ngFor="let choice of question.shuffledChoices" class="flex items-center mb-2">
               <input 
                 type="radio" 
                 [formControlName]="question.id" 

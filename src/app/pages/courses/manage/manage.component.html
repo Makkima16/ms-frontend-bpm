@@ -25,19 +25,30 @@
 
   <!-- Sección Título -->
   <div class="mt-6">
-    <div class="flex items-center justify-between cursor-pointer" (click)="toggleInfo(course.titulo)">
-      <h2 class="text-2xl font-semibold text-gray-700 text-center">Acercamiento hacia: {{ course.titulo }}</h2>
-    </div>
-
+    <button
+      type="button"
+      class="flex items-center justify-between w-full cursor-pointer bg-transparent border-none outline-none"
+      (click)="toggleInfo(course.titulo)"
+    >
+      <h2 class="text-2xl font-semibold text-gray-700 text-center w-full">Acercamiento hacia: {{ course.titulo }}</h2>
+    </button>
   </div>
 
   <!-- Sección Introducción -->
   <div class="mt-6">
-    <div class="flex items-center justify-between cursor-pointer" (click)="toggleInfo('introduccion')">
+    <button
+      type="button"
+      class="flex items-center justify-between w-full cursor-pointer bg-transparent border-none outline-none"
+      (click)="toggleInfo('introduccion')"
+    >
       <h3 class="text-lg font-medium text-gray-700">Una breve Introducción</h3>
-      <svg *ngIf="!isIntroduccionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-      <svg *ngIf="isIntroduccionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
-    </div>
+      <svg *ngIf="!isIntroduccionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+      <svg *ngIf="isIntroduccionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+      </svg>
+    </button>
     <div *ngIf="isIntroduccionOpen" class="mt-2 text-gray-600">
       <p [innerHTML]="formatText(course.introduccion)"></p>
     </div>
@@ -45,11 +56,19 @@
 
   <!-- Sección Información -->
   <div class="mt-6">
-    <div class="flex items-center justify-between cursor-pointer" (click)="toggleInfo('informacion')">
+    <button
+      type="button"
+      class="flex items-center justify-between w-full cursor-pointer bg-transparent border-none outline-none"
+      (click)="toggleInfo('informacion')"
+    >
       <h3 class="text-lg font-medium text-gray-700">Puntos clave</h3>
-      <svg *ngIf="!isInformacionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-      <svg *ngIf="isInformacionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
-    </div>
+      <svg *ngIf="!isInformacionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+      <svg *ngIf="isInformacionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+      </svg>
+    </button>
     <div *ngIf="isInformacionOpen" class="mt-2 text-gray-600">
       <p [innerHTML]="formatText(course.informacion)"></p>
     </div>
@@ -57,15 +76,24 @@
 
   <!-- Sección Conclusión -->
   <div class="mt-6">
-    <div class="flex items-center justify-between cursor-pointer" (click)="toggleInfo('conclusion')">
+    <button
+      type="button"
+      class="flex items-center justify-between w-full cursor-pointer bg-transparent border-none outline-none"
+      (click)="toggleInfo('conclusion')"
+    >
       <h3 class="text-lg font-medium text-gray-700">Primeras Conclusiones</h3>
-      <svg *ngIf="!isConclusionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-      <svg *ngIf="isConclusionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
-    </div>
+      <svg *ngIf="!isConclusionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+      <svg *ngIf="isConclusionOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+      </svg>
+    </button>
     <div *ngIf="isConclusionOpen" class="mt-2 text-gray-600">
       <p [innerHTML]="formatText(course.conclusion)"></p>
     </div>
   </div>
+
 
     <!-- Enlace al PDF -->
     <div *ngIf="course.pdf_name" class="text-center mt-6">
@@ -77,7 +105,7 @@
   <div class="text-center mb-6">
     <button 
       class="btn btn-success mt-4 px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-      (click)="examen(course.id)">
+      (click)="examen()">
       Realizar Examen
     </button>
   </div>

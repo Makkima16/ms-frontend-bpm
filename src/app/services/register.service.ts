@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environments';
 import { Observable } from 'rxjs';
 import { Records } from '../models/records.model';
 import { Client } from '../models/client.model';
-import { Course } from '../models/course.model';
 import { ModulesClients } from '../models/modules-clients.model';
 
 @Injectable({
@@ -12,7 +11,7 @@ import { ModulesClients } from '../models/modules-clients.model';
 })
 export class RegisterService {
 
-  constructor(private http: HttpClient) { }
+  http = inject(HttpClient)
 
     // Crear Registro Examen
     create(records: Records): Observable<Records> {

@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { environment } from '../../environments/environments';
@@ -9,9 +10,12 @@ import { environment } from '../../environments/environments';
 })
 export class SecurityService {
   theUser = new BehaviorSubject<User>(new User());  // Para emitir la información del usuario
-  constructor(private http: HttpClient) { 
+  constructor() { 
     this.verifyActualSession();  // Verificar si hay sesión al cargar el servicio
+
   }
+  http = inject(HttpClient)
+
 
   /**
    * Realiza la petición al backend con el correo y la contraseña

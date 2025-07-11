@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,18 +18,17 @@ import { Course } from '../../../models/course.model';
 export class AdminEditComponent implements OnInit {
   form: FormGroup;
   examId: number; // ID del examen a actualizar
-  trySend: boolean = false;
-  courseTitle: string = ''; // Nuevo: Nombre del curso
+  trySend: boolean;
+  courseTitle: string; // Nuevo: Nombre del curso
 
-  constructor(
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private examService: ExamService,
-    private questionService: QuestionService,
-    private courseService: CourseService,
-  ) {}
 
+
+  fb=inject(FormBuilder)
+  route=inject(ActivatedRoute)
+  router=inject(Router)
+  examService=inject(ExamService)
+  questionService=inject(QuestionService)
+  courseService=inject(CourseService)
   ngOnInit(): void {
     // Obtener el ID del examen desde la URL
     this.examId = +this.route.snapshot.paramMap.get('id')!;
@@ -141,6 +140,7 @@ export class AdminEditComponent implements OnInit {
     this.examService.update(examData).subscribe({
       next: () => {
         // Procesar las preguntas
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.questionsArray.controls.forEach((questionGroup: any) => {
           const questionData: Questions = questionGroup.value;
 

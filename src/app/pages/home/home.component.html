@@ -1,6 +1,13 @@
+<!-- home.component.html (versión optimizada con flujo de pago manual) -->
+<div
+  *ngIf="notificationMessage"
+  class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-purple-600 text-white px-6 py-3 rounded shadow-lg z-50 transition-opacity duration-300"
+>
+  {{ notificationMessage }}
+</div>
 <body class="font-roboto text-gray-700 text-[2.5vh] m-0 h-full">
-
-  <!-- Título -->
+  
+  <!-- Título principal -->
   <section class="relative flex justify-center items-center h-[20rem] w-full bg-cover bg-center bg-no-repeat" style="background-image: url('/assets/img/dash/fondo.jpg');">
     <div class="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
     <div class="relative z-10 text-center">
@@ -9,152 +16,175 @@
     </div>
   </section>
 
-<!-- Introducción -->
-<div class="flex flex-wrap justify-between mt-5">
-  <section class="flex-1 flex justify-center items-center px-5 min-w-[350px]">
-    <img src="assets/img/dash/doctora.png" alt="modulos" class="max-w-full h-auto object-cover flex-shrink-0">
-  </section>
-  <aside class="flex-1 text-center px-5 min-w-[350px]">
-    <div>
-      <h2 class="text-[6vh] font-bold text-gray-700">Curso Manipulador <br> de Alimentos</h2>
-      <br>
-      <h3 class="text-[4vh] border-solid border text-gray-700">Puedes realizarlo desde la comodidad de tu casa <br> FACIL Y RAPIDO</h3>
-      <h4 class="text-[3vh] mt-4">Recibirás el certificado una vez completes el 100% del curso</h4>
+  <!-- Intro -->
+  <div class="flex flex-wrap justify-between mt-5">
+    <section class="flex-1 flex justify-center items-center px-5 min-w-[350px]">
+      <img src="assets/img/dash/doctora.png" alt="doctora" class="max-w-full h-auto object-cover flex-shrink-0" />
+    </section>
+    <aside class="flex-1 text-center px-5 min-w-[350px]">
+      <h2 class="text-[6vh] font-bold text-gray-700">Curso Manipulador <br />de Alimentos</h2>
+      <h3 class="text-[4vh] border text-gray-700 mt-2">Puedes realizarlo desde la comodidad de tu casa <br />FÁCIL Y RÁPIDO</h3>
+      <h4 class="text-[3vh] mt-4">Recibirás el certificado al completar el 100&nbsp;% del curso</h4>
 
-      <div *ngIf="!isPaid">
-        <h4 class="mt-4 text-[3vh]">Presiona aquí para comenzar el curso</h4>
-        <!-- Botón que abre el modal -->
-        <button type="button" class="btn-primary bg-blue-500 text-white py-2 px-4 rounded mt-2" (click)="openModal()">
-          Comenzar
+      <!-- Bloque para comenzar el curso (solo cuando ya está pagado) -->
+      <div *ngIf="isPaid" class="mt-6">
+        <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded" (click)="openModal()">
+          Comenzar curso
         </button>
       </div>
 
-      <div *ngIf="isPaid">
-        <p>...Aunque antes, tenemos que realizar el pago 💲😁</p>
-        <img src="assets/img/dash/pagar.png" alt="modulos" class="w-64 h-auto mx-auto object-cover">
+      <!-- Aviso de pago pendiente (cuando no ha pagado) -->
+      <div *ngIf="!isPaid" class="mt-6">
+        <p class="text-red-600 font-medium">Tu pago está pendiente 😁/ Recuerda Primero Loguearte</p>
       </div>
-    </div>
-  </aside>
-</div>
-
-<!-- Modal -->
-<div id="courseModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-  <div class="bg-white rounded-lg shadow-lg p-6 w-4/5 max-w-lg text-center">
-    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Elige una opción para continuar</h3>
-    <p class="text-gray-600 mb-6">Selecciona el tipo de Curso al que deseas ingresar:</p>
-    
-    <!-- Opciones de módulos -->
-    <div class="flex flex-col gap-4">
-      <button type="button" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition" (click)="module('Ambulante')">
-        Tipo de Curso: Vendedor Ambulante
-      </button>
-
-      <button type="button" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition" (click)="module('Carnicos')">
-        Tipo de Curso: Manipulador de Carnicos
-      </button>
-
-      <button type="button" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition" (click)="module('Empaquetadores')">
-        Tipo de Curso: Manipulador de Empaques
-      </button>
-    </div>
-
-    <!-- Botón para cerrar el modal -->
-    <button type="button" class="bg-red-500 text-white py-2 px-4 rounded mt-6 hover:bg-red-600 transition" (click)="closeModal()">
-      Cancelar
-    </button>
+    </aside>
   </div>
-</div>
 
+  <!-- Modal de selección de módulo -->
+  <div id="courseModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-4/5 max-w-lg text-center">
+      <h3 class="text-2xl font-semibold text-gray-800 mb-4">Elige una opción para continuar</h3>
+      <p class="text-gray-600 mb-6">Selecciona el tipo de curso al que deseas ingresar:</p>
+
+      <div class="flex flex-col gap-4">
+        <button type="button" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition" (click)="module('Ambulante')">
+          Vendedor Ambulante
+        </button>
+        <button type="button" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition" (click)="module('Carnicos')">
+          Manipulador de Cárnicos
+        </button>
+        <button type="button" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition" (click)="module('Empaquetadores')">
+          Manipulador de Empaques
+        </button>
+      </div>
+
+      <button type="button" class="bg-red-500 text-white py-2 px-6 rounded mt-6 hover:bg-red-600 transition" (click)="closeModal()">
+        Cancelar
+      </button>
+    </div>
+  </div>
 
   <!-- Contenido principal -->
+  <div *ngIf="!exist_paid" class="mt-6">
+
   <section class="max-w-4xl mx-auto mt-10 mb-8 p-4 bg-white shadow-lg rounded-lg">
-
-    <!-- Título y Botón de Pago -->
     <div class="text-center mb-6">
-      <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-700">
-        Curso VIRTUAL para Manipuladores 
-        <br>
-        de Alimentos 
+      <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-700 leading-tight">
+        Curso VIRTUAL para Manipuladores <br />de Alimentos
       </h2>
-      <div *ngIf="isPaid">
-      <button 
-        class="btn btn-success mt-4 px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 text-sm sm:text-base lg:text-lg"
-        (click)="pay()">
-        Realizar el Pago
+    </div>
+
+    <!-- NUEVO BLOQUE DE PAGO MANUAL (se muestra solo si el usuario está logueado y no ha pagado) -->
+
+    <div class="bg-purple-50 p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold text-purple-700 mb-4">Pasos para realizar tu pago</h2>
+
+      <p class="mb-2">
+        1. Transfiere <span class="font-bold">COP $20.000</span> a nuestra cuenta Nequi:<br>
+        <span class="text-purple-700 font-bold text-lg">322 478 3832</span>
+      </p>
+
+      <div class="flex justify-center my-4">
+        <img src="assets/img/dash/qr.png" alt="QR Nequi" class="w-40 h-40 object-contain">
+      </div>
+
+      <label for="paymentRef" class="block mb-2 text-sm font-medium text-gray-700">
+        2. Ingresa la referencia (o adjunta captura) de tu pago:
+      </label>
+
+      <textarea
+        id="paymentRef"
+        [(ngModel)]="paymentReference"
+        rows="3"
+        class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-400 focus:outline-none transition"
+        placeholder="Referencia / comprobante"
+      ></textarea>
+
+      <button
+        class="mt-4 w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 rounded-md transition"
+        (click)="submitReference()"
+      >
+        Enviar referencia
       </button>
-      </div>
- 
-      
-
     </div>
-  
-    <!-- Sección del precio (20,000 pesos) con funcionalidad de acordeón -->
+
+    <!-- Sección de acordeones (precio, duración, tipo) -->
     <div class="mt-6">
-      <div class="flex items-center justify-between cursor-pointer"
-           (click)="toggleInfo('price')">
-        <h3 class="text-base sm:text-lg lg:text-xl font-medium text-gray-700">
-          Precio del Curso: 20,000 Pesos
-        </h3>
-        <svg *ngIf="!isPriceInfoOpen" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      <button
+        type="button"
+        (click)="toggleInfo('price')"
+        class="w-full flex items-center justify-between cursor-pointer focus:outline-none"
+      >
+        <h3 class="text-lg lg:text-xl font-medium text-gray-700">Precio del Curso: 20.000&nbsp;COP</h3>
+        <svg *ngIf="!isPriceInfoOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
-        <svg *ngIf="isPriceInfoOpen" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+        <svg *ngIf="isPriceInfoOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
         </svg>
+      </button>
+
+      <div *ngIf="isPriceInfoOpen" class="mt-2 text-gray-600">
+        <p>El curso incluye todo lo necesario para certificarte en manipulación de alimentos...</p>
       </div>
-  
-      <div *ngIf="isPriceInfoOpen" class="mt-2 text-sm sm:text-base lg:text-lg text-gray-600">
+    </div>
+
+    <!-- Duración -->
+    <div class="mt-6">
+      <button
+        type="button"
+        (click)="toggleInfo('duration')"
+        class="w-full flex items-center justify-between cursor-pointer focus:outline-none"
+      >
+        <h3 class="text-lg lg:text-xl font-medium text-gray-700">
+          Duración del certificado: 1 año
+        </h3>
+        <svg *ngIf="!isDurationInfoOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+        <svg *ngIf="isDurationInfoOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+        </svg>
+      </button>
+
+      <div *ngIf="isDurationInfoOpen" class="mt-2 text-gray-600">
         <p>
-          Este curso te proporciona todo el conocimiento necesario para convertirte en un experto en la manipulación de alimentos, garantizando tu seguridad y la de los demás durante todo el proceso de producción y manejo alimentario.
+          El certificado tendrá vigencia de un año completo para ejercer actividades de manipulación de alimentos.
         </p>
       </div>
     </div>
-  
-    <!-- Sección del tiempo del curso (1 año) con funcionalidad de acordeón -->
-    <div class="mt-6">
-      <div class="flex items-center justify-between cursor-pointer"
-           (click)="toggleInfo('duration')">
-        <h3 class="text-base sm:text-lg lg:text-xl font-medium text-gray-700">
-          Duración del CERTIFICADO del Curso: 1 Año
-        </h3>
-        <svg *ngIf="!isDurationInfoOpen" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
-        <svg *ngIf="isDurationInfoOpen" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
-        </svg>
-      </div>
-  
-      <div *ngIf="isDurationInfoOpen" class="mt-2 text-sm sm:text-base lg:text-lg text-gray-600">
-        <p>
-          Este curso abala un año completo de formación para que puedas trabajar con total confianza en la manipulación de alimentos. El título que recibirás es válido por todo un año.
-        </p>
-      </div>
-    </div>
-  
 
 
+    <!-- Tipo -->
     <div class="mt-6">
-      <div class="flex items-center justify-between cursor-pointer"
-           (click)="toggleInfo('tipo')">
-        <h3 class="text-base sm:text-lg lg:text-xl font-medium text-gray-700">
-          Vendedores Ambulantes
-        </h3>
-        <svg *ngIf="!isTypeInfoOpen" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      <button
+        type="button"
+        (click)="toggleInfo('tipo')"
+        class="w-full flex items-center justify-between cursor-pointer focus:outline-none"
+      >
+        <h3 class="text-lg lg:text-xl font-medium text-gray-700">Aplicable para:</h3>
+        <svg *ngIf="!isTypeInfoOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
-        <svg *ngIf="isTypeInfoOpen" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+        <svg *ngIf="isTypeInfoOpen" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
         </svg>
-      </div>
-  
-      <div *ngIf="isTypeInfoOpen" class="mt-2 text-sm sm:text-base lg:text-lg text-gray-600">
-        <p>
-          Para los vendedores Ambulantes, restaurantes y cafeterias que requieran del curso
-        </p>
+      </button>
+
+      <div *ngIf="isTypeInfoOpen" class="mt-2 text-gray-600">
+        <p>Aplicable a vendedores ambulantes, restaurantes y cafeterías que requieran la certificación.</p>
       </div>
     </div>
+
   </section>
+  </div>
+
   <!-- Servicios -->
   <section class="flex flex-wrap justify-around items-center p-10 bg-white">
     <div class="text-center max-w-xs flex flex-col items-center">

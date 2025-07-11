@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import Swal from 'sweetalert2';
 
 import { Records } from '../../models/records.model';
 import { RegisterService } from '../../services/register.service';
@@ -22,10 +21,13 @@ export class ListRComponent implements OnInit {
 
 
 
-  constructor(private service:RegisterService , private router: Router, private activateRoute: ActivatedRoute, private ClienteServices: ClientsService, private examServices: ExamService) {
 
-  }
 
+  service=inject(RegisterService)
+  router=inject(Router)
+  activateRoute=inject(ActivatedRoute)
+  ClienteServices=inject(ClientsService)
+  examServices=inject(ExamService)
   ngOnInit(): void {
 
     this.list();

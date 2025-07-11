@@ -1,17 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '../../environments/environments';
 import { Course } from '../models/course.model';
-import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
-
-  constructor(private http: HttpClient) { }
-
+  http = inject(HttpClient)
 
   list(): Observable<Course[]> {
     return this.http.get<Course[]>(`${environment.url_ms_modulos}modulos`);

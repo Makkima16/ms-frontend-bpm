@@ -1,0 +1,66 @@
+<div class="container mx-auto mt-10">
+  <h2 class="text-3xl font-bold mb-6 text-red-700 flex items-center gap-2">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M5.121 17.804A11.958 11.958 0 0112 15c2.25 0 4.35.656 6.121 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+    Pacientes Asociados
+  </h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let patient of patients"
+      class="relative bg-white shadow-lg rounded-xl p-6 border hover:shadow-xl transition flex justify-between gap-4">
+
+      <!-- Parte izquierda con datos -->
+      <div class="flex gap-4">
+        <div class="bg-red-100 p-2 rounded-full h-fit">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5.121 17.804A11.958 11.958 0 0112 15c2.25 0 4.35.656 6.121 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800">#{{ patient.id }} - {{ patient.name }}</h3>
+          <p class="text-sm text-gray-500">Edad: {{ patient.age }}</p>
+
+          <div class="mt-3 flex flex-col gap-2">
+            <div *ngIf="patient.tetanos"
+              class="inline-block bg-red-100 text-red-700 text-xs px-3 py-1 rounded-full font-medium">
+              💉 Tétanos
+            </div>
+            <div *ngIf="patient.hepatitis_a"
+              class="inline-block bg-yellow-100 text-yellow-800 text-xs px-3 py-1 rounded-full font-medium">
+              💉 Hepatitis A
+            </div>
+            <div *ngIf="patient.hepatitis_b"
+              class="inline-block bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full font-medium">
+              💉 Hepatitis B
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón de ver -->
+      <div class="pt-2 pr-1">
+        <button (click)="viewPatient(patient.id)" class="text-blue-600 hover:text-blue-800 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Triángulo decorativo -->
+      <svg class="absolute bottom-0 right-0 w-24 h-24 text-red-900 opacity-30 pointer-events-none z-0"
+        viewBox="0 0 100 100" preserveAspectRatio="none">
+        <polygon points="100,0 100,100 0,100" fill="currentColor" />
+      </svg>
+
+    </div>
+  </div>
+</div>

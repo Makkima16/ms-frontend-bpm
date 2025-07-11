@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -24,26 +24,25 @@ export class ManageComponent implements OnInit {
   selectedExamId: number; // ID del examen seleccionado al azar
 
   // Variables de estado para el acordeón
-  isTituloOpen: boolean = false;
-  isIntroduccionOpen: boolean = false;
-  isInformacionOpen: boolean = false;
-  isConclusionOpen: boolean = false;
+  isTituloOpen: boolean ;
+  isIntroduccionOpen: boolean;
+  isInformacionOpen: boolean;
+  isConclusionOpen: boolean;
   email:string;
   constructor(
-    private activateRoute: ActivatedRoute,
-    private service: CourseService,
-    private examServices: ExamService,
-    private clientService: ClientsService,
-    private theFormBuilder: FormBuilder,
-    private router: Router,
-    private sanitizer: DomSanitizer
   ) { 
     this.trySend = false;
     this.mode = 1;
     this.course = { id: 0, link: '', titulo: '', introduccion: '', informacion: '', conclusion: '', pdf_name:'', curso_tipo:'' };
 
   }
-
+  activateRoute=inject(ActivatedRoute);
+  service=inject(CourseService);
+  examServices=inject(ExamService);
+  clientService=inject(ClientsService);
+  theFormBuilder=inject(FormBuilder);
+  router=inject(Router)
+  sanitizer=inject(DomSanitizer)
   ngOnInit(): void {
     const token = sessionStorage.getItem('sesion') ? JSON.parse(sessionStorage.getItem('sesion')).token : null;
   
@@ -160,7 +159,7 @@ export class ManageComponent implements OnInit {
   }
 
     // Método para crear y redirigir al examen
-    examen(courseId: number) {
+    examen() {
       const token = sessionStorage.getItem('sesion') ? JSON.parse(sessionStorage.getItem('sesion')).token : null;
       if (token) {
         // Si hay un token, decodificarlo para extraer la información del usuario
@@ -173,7 +172,7 @@ export class ManageComponent implements OnInit {
           if (client && client.id) {
 
             this.examServices.view(this.selectedExamId).subscribe(
-              (response) => {
+              () => {
                 this.router.navigate([`examen/view/${this.selectedExamId}`],  { queryParams: { module_id: this.selectedExamId, tipo:this.course.curso_tipo } }); // Redirigir a la vista del examen
               },
               (error) => {
@@ -191,6 +190,7 @@ export class ManageComponent implements OnInit {
         }
       );
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     decodeToken(token: string): any {
       const parts = token.split('.');
       if (parts.length !== 3) {
@@ -206,7 +206,7 @@ export class ManageComponent implements OnInit {
       // Llamada al servicio para buscar el cliente por email
       if (!this.email) {
         console.error("No se encontró el cliente activo en SessionStorage.");
-        this.router.navigate(['/dashboard']); // Redirigir al dashboard
+        this.router.navigate(['/home']); // Redirigir al home
       }
       this.clientService.buscarPorEmail(this.email).subscribe({
         next: (client) => {
@@ -217,14 +217,14 @@ export class ManageComponent implements OnInit {
                 if (response.hasAccepted) {
                   return; 
                 } else {
-                  // Si no ha pagado, mostramos el mensaje y lo redirigimos al dashboard
+                  // Si no ha pagado, mostramos el mensaje y lo redirigimos al home
                   Swal.fire({
                     icon: 'error',
                     title: 'Pago requerido',
                     text: 'Debe realizar el pago antes de continuar.',
                     allowOutsideClick: false
                   }).then(() => {
-                    this.router.navigate(['/dashboard']); // Redirigir al dashboard
+                    this.router.navigate(['/home']); // Redirigir al home
                   });
                 }
               },
@@ -250,14 +250,14 @@ export class ManageComponent implements OnInit {
               text: 'Logueese primero por favor.',
               allowOutsideClick: false
             }).then(() => {
-              this.router.navigate(['/login']); // Redirigir al dashboard
+              this.router.navigate(['/login']); // Redirigir al home
             });
           }
     }
 
     verifyModule(courseId: number): void {
       if (!this.email) {
-        this.router.navigate(['/dashboard']); // Redirigir al dashboard si no hay email
+        this.router.navigate(['/home']); // Redirigir al home si no hay email
         return; // Evitar que se ejecute el resto del código
       }
     

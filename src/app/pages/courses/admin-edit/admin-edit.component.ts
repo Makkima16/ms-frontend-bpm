@@ -1,12 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
-import { ExamService } from '../../../services/exam.service';
-import { QuestionService } from '../../../services/question.service';
-import { ModulesClients } from '../../../models/modules-clients.model';
-import { Questions } from '../../../models/questions.model';
 import { CourseService } from '../../../services/course.service';
 import { Course } from '../../../models/course.model';
 
@@ -18,14 +14,15 @@ import { Course } from '../../../models/course.model';
 export class AdminEditComponent implements OnInit {
   form: FormGroup;
   moduloID: number; // ID del examen a actualizar
-  trySend: boolean = false;
+  trySend: boolean ;
 
-  constructor(
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private services: CourseService,
-  ) {}
+
+  fb=inject(FormBuilder);
+  router = inject(Router);
+  route = inject(ActivatedRoute);
+  services = inject(CourseService);
+
+
 
   ngOnInit(): void {
     // Obtener el ID del examen desde la URL

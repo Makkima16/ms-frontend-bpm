@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
@@ -19,9 +19,11 @@ export class ListComponent implements OnInit {
 
 
 
-  constructor(private service: AprobadosService, private router: Router, private activateRoute: ActivatedRoute, private clienteServices: ClientsService) {
-
-  }
+  service = inject(AprobadosService);
+  router = inject(Router);
+  activateRoute = inject(ActivatedRoute);
+  clienteServices = inject(ClientsService);
+  
 
   ngOnInit(): void {
     this.list();
@@ -62,7 +64,7 @@ list() {
     }).then((result) => {
       if (result.isConfirmed) {
         this.service.delete(id).
-          subscribe(data => {
+          subscribe(() => {
             Swal.fire(
               'Eliminado!',
               'El aprobados ha sido eliminada correctamente',

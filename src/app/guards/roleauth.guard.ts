@@ -1,38 +1,34 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { SecurityService } from '../services/security.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleauthGuard implements CanActivate {
 
-  constructor(private router: Router, private securityService: SecurityService) {}
-
-  rolename: string;
+  private router = inject(Router);
+  private rolename: string;
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
-  
+    state: RouterStateSnapshot
+  ): boolean {
     const token = sessionStorage.getItem('sesion') ? JSON.parse(sessionStorage.getItem('sesion')).token : null;
+
     if (!token) {
       this.router.navigate(['/login']);
-      
       return false;
     }
-  
-    const decodedToken = this.decodeToken(token);
-    this.rolename = decodedToken && decodedToken.role && decodedToken.role.name; // Obtener el nombre del rol del usuario
-  
-    if (this.rolename == 'administrador') {
 
+    const decodedToken = this.decodeToken(token);
+    this.rolename = decodedToken && decodedToken.role && decodedToken.role.name;
+
+    if (this.rolename === 'administrador') {
       return true;
     }
-  
-    if (this.rolename == 'cliente') {
 
+    if (this.rolename === 'cliente') {
       if (state.url.includes('/admin')) {
         Swal.fire({
           icon: 'error',
@@ -44,20 +40,19 @@ export class RoleauthGuard implements CanActivate {
       }
       return true;
     }
-  
+
     return false;
   }
-  
 
-  // Método para decodificar el token JWT
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   decodeToken(token: string): any {
     const parts = token.split('.');
     if (parts.length !== 3) {
       throw new Error('Token inválido');
     }
 
-    const payload = parts[1];  // El payload está en la segunda parte
-    const decoded = atob(payload);  // Decodificamos en base64
-    return JSON.parse(decoded);  // Retornamos el payload como objeto
+    const payload = parts[1];
+    const decoded = atob(payload);
+    return JSON.parse(decoded);
   }
 }

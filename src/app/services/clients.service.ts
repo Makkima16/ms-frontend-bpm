@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environments';
@@ -13,10 +14,8 @@ export class ClientsService {
 
   
 
-  constructor(
-    private http: HttpClient
-  ) { 
-  }
+  http = inject(HttpClient)
+
 
   list(): Observable<Client[]> {
     return this.http.get<Client[]>(`${environment.url_ms_modulos}clients`);
@@ -47,7 +46,10 @@ export class ClientsService {
     return this.http.get<any>(`${environment.url_ms_modulos}clients/${data.id}/payments/accepted`);
   }
 
-
+  checkIfPaidExist(data: { id: number }): Observable<any> {
+    // Realiza una solicitud GET a la nueva ruta con el id del cliente
+    return this.http.get<any>(`${environment.url_ms_modulos}clients/${data.id}/payments/exist`);
+  }
 
   security(name: string, email: string, password: string): Observable<Client> {
     return this.http.post<Client>(`${environment.url_ms_security}/users/public`, { name, email, password });

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { User } from '../../models/user.model';
@@ -12,18 +12,14 @@ import { Client } from '../../models/client.model';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class RegisterComponent {
   theUser: User;
   clientes:Client
   mode: number; // 0: normal user, 1: admin user
   token: string;
-  isLoading: boolean = false; // Estado de carga agregado
+  isLoading: boolean; // Estado de carga agregado
 
   constructor(
-    private service: SecurityService,
-    private router: Router,
-    private cliente: ClientsService,
-    private admin:AdminService
   ) {
     this.mode = 0; // Por defecto, modo usuario normal
     this.theUser = {
@@ -37,10 +33,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       cedula:''
     }
   }
+  service=inject(SecurityService);
+  router=inject(Router)
+  cliente=inject(ClientsService)
+  admin=inject(AdminService)
 
-  ngOnInit() {}
 
-  ngOnDestroy() {}
 
   changeMode(mode: number) {
     this.mode = +mode; // Asegúrate de convertir a número
@@ -73,7 +71,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
               this.cliente.create(newClient).subscribe({
                 next: () => {
                   Swal.fire('Éxito', 'Usuario creado con éxito', 'success');
-                  this.router.navigate(['/dashboard']);
+                  this.router.navigate(['/home']);
 
                 },
                 error: (error) => {
@@ -117,7 +115,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
               this.admin.create(newAdmin).subscribe({
                 next: () => {
                   Swal.fire('Éxito', 'Administrador creado con éxito', 'success');
-                  this.router.navigate(['/dashboard']);
+                  this.router.navigate(['/home']);
                 },
                 error: (error) => {
                   this.isLoading = false;

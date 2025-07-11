@@ -14,7 +14,6 @@ import { AppRoutes } from './app.routes';
 import { ComponentsModule } from './components/components.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './pages/register/register.component';
-import { LoginComponent } from './pages/login/login.component';
 import { PayService } from './services/pay.service';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -32,7 +31,7 @@ import { httpInterceptor } from './core/http.interceptor';
     NgbModule,
     RouterModule,
     AppRoutes,
-    ReactiveFormsModule
+    ReactiveFormsModule,
 
   ],
   declarations: [

@@ -30,12 +30,17 @@
 
         <!-- Contenido del formulario -->
         <ng-template #formContent>
-          <a (click)="navigateTo('#')" class="font-medium text-primary-600 hover:underline cursor-pointer">Regresar al Inicio</a>
-
+        <button
+          type="button"
+          (click)="navigateTo('#')"
+          class="font-medium text-primary-600 hover:underline cursor-pointer bg-transparent border-none p-0"
+        >
+          Regresar al Inicio
+        </button>
           <h2 class="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl dark:text-white">
             Inicia Sesión
           </h2>
-          <form class="space-y-4 md:space-y-6" (ngSubmit)="mode == 0 ? login() : secondAuth()">
+          <form class="space-y-4 md:space-y-6" (ngSubmit)="mode === 0 ? login() : secondAuth()">
             
             <!-- Email & Password Fields - First Step -->
             <div *ngIf="mode === 0">
@@ -99,7 +104,13 @@
             <li>
               <p class="text-sm font-light text-gray-400">
                 ¿No tienes cuenta? 
-                <a (click)="navigateTo('register')" class="font-medium text-primary-600 hover:underline cursor-pointer">Regístrate</a>
+                <button
+                  type="button"
+                  (click)="navigateTo('register')"
+                  class="font-medium text-primary-600 hover:underline cursor-pointer bg-transparent border-none p-0"
+                >
+                  Regístrate
+                </button>              
               </p>
             </li>
           </form>

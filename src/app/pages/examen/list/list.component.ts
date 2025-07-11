@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ExamService } from '../../../services/exam.service';
@@ -12,11 +12,13 @@ import { ModulesClients } from '../../../models/modules-clients.model';
 })
 export class ListComponent implements OnInit {
   exams: ModulesClients[] = []; // Lista de exámenes
-  modulesMap: Map<number, string> = new Map(); // Mapa para relacionar module_id con el título del módulo
-  loading: boolean = false;
+  modulesMap: Map<number, string>; // Mapa para relacionar module_id con el título del módulo
+  loading: boolean;
 
-  constructor(private examService: ExamService, private router: Router, private courseService: CourseService) {}
 
+  examService=inject(ExamService);
+  router=inject(Router)
+  courseService=inject(CourseService)
   ngOnInit(): void {
     this.fetchExams();
     this.fetchModules(); // Obtener la lista de módulos
@@ -25,7 +27,9 @@ export class ListComponent implements OnInit {
   fetchExams(): void {
     this.loading = true;
     this.examService.list().subscribe(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (response: any) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.exams = response.data.map((exam: any) => ({
           id: exam.id,
           title: exam.title,
@@ -43,8 +47,10 @@ export class ListComponent implements OnInit {
   
   fetchModules(): void {
     this.courseService.list().subscribe(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (response: any) => {
         if (response.data && Array.isArray(response.data)) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           response.data.forEach((module: any) => {
             this.modulesMap.set(module.id, module.titulo);
           });

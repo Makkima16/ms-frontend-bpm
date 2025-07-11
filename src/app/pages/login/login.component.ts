@@ -1,5 +1,4 @@
-import { Token } from '@angular/compiler';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 //import { error } from 'console';
 import Swal from 'sweetalert2';
@@ -11,14 +10,14 @@ import { SecurityService } from '../../services/security.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent{
   theUser: User;
   mode: number; // 0: first log, 1: second authentication
   token: string;
-  isLoading: boolean = false; // Estado de carga
+  isLoading: boolean; // Estado de carga
 
 
-  constructor(private service: SecurityService, private router: Router) {
+  constructor() {
     this.mode = 0;
     this.theUser = {
       email: "",
@@ -26,10 +25,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     };
   }
 
-  ngOnInit() {
-  }
-  ngOnDestroy() {
-  }
+
+  service=inject(SecurityService)
+  router=inject(Router)
+
 
   login() {
     this.isLoading = true; // Mostrar el estado de carga
@@ -39,7 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.mode = 1;
         this.isLoading = false; // Ocultar el estado de carga
       },
-      error: (error) => {
+      error: () => {
         this.isLoading = false; // Ocultar el estado de carga
         Swal.fire(
           "Autenticación invalida",
@@ -56,9 +55,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       next: (data) => {
         this.isLoading = false; // Ocultar el estado de carga
         this.service.saveSession(data);
-        this.router.navigateByUrl('/dashboard');
+        this.router.navigateByUrl('/home');
       },
-      error: (error) => {
+      error: () => {
         this.isLoading = false; // Ocultar el estado de carga
         Swal.fire(
           "Autenticación invalida",
@@ -75,7 +74,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   back(){
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl('/home');
 
   }
   navigateTo(route: string) {

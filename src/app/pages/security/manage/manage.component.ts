@@ -1,14 +1,11 @@
-import { Token } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
-import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 //import { create } from 'domain';
 //import { json } from 'stream/consumers';
 import Swal from 'sweetalert2';
-import { SecurityService } from '../../../services/security.service';
 import { Security } from '../../../models/security.model';
 import { Login2Service } from '../../../services/login.service';
-import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-manage',
@@ -19,13 +16,13 @@ export class ManageComponent implements OnInit {
   security: Security;
   theFormGroup: FormGroup;
   trySend: boolean;
-  showTokenInput: Boolean = false;
+  showTokenInput: boolean;
   id : string;
-  constructor(private activateRoute: ActivatedRoute,
-    private service: Login2Service,
-    private theFormBuilder: FormBuilder,
-    private router : Router
-  ) { }
+
+
+  service=inject(Login2Service)
+  theFormBuilder=inject(FormBuilder)
+  router=inject(Router)
 
   ngOnInit(): void {
     this.configFormGroup();
@@ -76,7 +73,7 @@ export class ManageComponent implements OnInit {
           this.showTokenInput = false;
           Swal.fire("Exito", "Usuario autenticado", "success");
           sessionStorage.setItem('token', JSON.parse(JSON.stringify(data)).token);
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigateByUrl('/home');
 
         },
         error => {
