@@ -1,3 +1,20 @@
+<!-- Pantalla de carga -->
+<div *ngIf="loading" class="flex items-center justify-center h-screen bg-gray-100">
+  <div class="text-center">
+    <div class="animate-spin h-10 w-10 border-4 border-indigo-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+    <p class="text-gray-700 text-lg">Verificando acceso...</p>
+  </div>
+</div>
+
+<!-- Error de acceso -->
+<div *ngIf="!loading && showError" class="flex items-center justify-center h-screen bg-red-50">
+  <div class="text-center">
+    <p class="text-red-600 text-xl font-semibold mb-2">Acceso denegado</p>
+    <p class="text-gray-600">Serás redirigido en unos segundos...</p>
+  </div>
+</div>
+
+
 <!-- Contenedor principal (con padding-top para evitar superposición con el header fijo) -->
 <div *ngIf="!loading && !showError" class="pt-16">
   <div class="flex flex-col md:flex-row min-h-screen">
