@@ -8,9 +8,6 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from '../../pages/home/home.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // import { ToastrModule } from 'ngx-toastr';
 
@@ -22,9 +19,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HttpClientModule,
     NgbModule,
     ClipboardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSnackBarModule
   ],
   declarations: [
     HomeComponent,
