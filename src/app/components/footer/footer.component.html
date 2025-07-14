@@ -1,29 +1,51 @@
-<footer class="bg-gray-900 text-white py-6 mt-8">
-  <div class="container mx-auto flex flex-wrap justify-between text-center sm:text-left">
-    <!-- Llámanos -->
-    <div class="flex-1 px-4">
-      <h3 class="text-lg font-semibold mb-2">Llámanos</h3>
-      <p class="text-sm">
-        <a href="tel:+5768827023" class="hover:underline">+57 (6) 882 70 23</a>
-      </p>
-      <p class="text-sm">
-        <a href="tel:+57333640000" class="hover:underline">+57 (333) 640 0000</a>
-      </p>
+<footer class="bg-[#0B1225] text-white py-10">
+  <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+    
+    <!-- Logo y redes - alineados y centrados -->
+    <div class="flex flex-col items-center text-center space-y-3">
+      <h2 class="text-2xl font-bold text-white">BPM Valencia</h2>
+      <p class="text-sm text-gray-300">Soluciones en capacitación alimentaria</p>
+
+      <div class="flex gap-4 mt-2">
+        <a href="https://wa.me/573224783832" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="text-white hover:text-green-400 text-xl">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://www.instagram.com/bpm_valencia" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-white hover:text-pink-400 text-xl">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/bpm-valencia" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="text-white hover:text-blue-400 text-xl">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </div>
     </div>
 
-    <!-- Visítanos -->
-    <div class="flex-1 px-4">
-      <h3 class="text-lg font-semibold mb-2">Visítanos en</h3>
-      <p class="text-sm">Cra 21 #24-04 al frente del antiguo INURBE.</p>
-      <p class="text-sm">Manizales - Caldas - Colombia</p>
+    <!-- Información de contacto -->
+    <div class="space-y-3 text-center md:text-left">
+      <h3 class="text-xl font-semibold">Contáctanos</h3>
+      <div class="flex items-center gap-2 justify-center md:justify-start text-gray-300">
+        <i class="fas fa-phone-alt text-blue-400"></i>
+        <span>+57 (313) 836 89 92</span>
+      </div>
+      <div class="flex items-center gap-2 justify-center md:justify-start text-gray-300">
+        <i class="fas fa-map-marker-alt text-blue-400"></i>
+        <span>Cra. 18A #73-62, Manizales, Caldas</span>
+      </div>
+      <div class="flex items-center gap-2 justify-center md:justify-start text-gray-300">
+        <i class="fas fa-envelope text-blue-400"></i>
+        <span>cursosbpmvalencia&#64;gmail.com</span>
+      </div>
     </div>
 
-    <!-- ¿Tienes Dudas? -->
-    <div class="flex-1 px-4">
-      <h3 class="text-lg font-semibold mb-2">¿Tienes Dudas?</h3>
-      <a href="https://wa.me/+573224783832" class="inline-block bg-green-500 hover:bg-green-600 text-white text-sm font-medium py-2 px-6 rounded">
-        Contáctanos
-      </a>
+    <!-- Mensaje adicional -->
+    <div class="text-center md:text-left text-sm text-gray-400 mt-6 lg:mt-0">
+      <p class="leading-relaxed">
+        Certificación avalada por entidades oficiales, con modalidad virtual y presencial. Cumplimos con la normativa vigente (Resolución 2674 de 2013, Decreto 1500).
+      </p>
     </div>
+  </div>
+
+  <!-- Línea inferior -->
+  <div class="mt-10 border-t border-gray-700 pt-6 text-center text-sm text-gray-400">
+    © {{ currentYear }} BPM Valencia. Todos los derechos reservados.
   </div>
 </footer>
