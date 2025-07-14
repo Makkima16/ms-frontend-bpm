@@ -107,8 +107,7 @@ export class CreateComponent {
               cedula: this.clientes.cedula
             };
 
-            this.cliente.create(newAdmin).subscribe();
-            this.admin.create(newAdmin).subscribe({
+            this.cliente.create(newAdmin).subscribe({
               next: () => {
                 this.isLoading = false;
                 Swal.fire('Éxito', 'Administrador creado con éxito', 'success');
