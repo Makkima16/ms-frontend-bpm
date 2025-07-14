@@ -76,6 +76,8 @@ export class ManageComponent implements OnInit, OnDestroy {
       if (client && client.id) {
         this.cliente_id = client.id;
       }
+    // ⏳ **Iniciar el temporizador de 15 minutos**
+    this.startTimer();
 
     });
   
@@ -124,8 +126,7 @@ export class ManageComponent implements OnInit, OnDestroy {
         console.error('module_id es undefined');
       }
     });
-    // ⏳ **Iniciar el temporizador de 15 minutos**
-    this.startTimer();
+
 
   }
   
@@ -139,6 +140,7 @@ export class ManageComponent implements OnInit, OnDestroy {
       if (this.timeLeft > 0) {
         this.timeLeft--;
       } else {
+        console.log(this.timeLeft)
         clearInterval(this.timerInterval);
         Swal.fire({
           title: "Tiempo agotado",
