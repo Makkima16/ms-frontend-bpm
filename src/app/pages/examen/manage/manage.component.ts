@@ -76,8 +76,7 @@ export class ManageComponent implements OnInit, OnDestroy {
       if (client && client.id) {
         this.cliente_id = client.id;
       }
-    // ⏳ **Iniciar el temporizador de 15 minutos**
-    this.startTimer();
+
     });
   
     this.activateRoute.queryParams.subscribe(params => {
@@ -125,7 +124,8 @@ export class ManageComponent implements OnInit, OnDestroy {
         console.error('module_id es undefined');
       }
     });
-
+    // ⏳ **Iniciar el temporizador de 15 minutos**
+    this.startTimer();
 
   }
   
@@ -152,15 +152,16 @@ export class ManageComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  formatTime(): string {
-    if (typeof this.timeLeft !== 'number' || isNaN(this.timeLeft)) {
-      return '00:00';  // o "Cargando..."
-    }
+    formatTime(): string {
+      const time = Number(this.timeLeft);
+      if (!time || isNaN(time)) {
+        return '15:00';  // Valor por defecto si algo sale mal
+      }
 
-    const minutes = Math.floor(this.timeLeft / 60);
-    const seconds = this.timeLeft % 60;
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  }
+      const minutes = Math.floor(time / 60);
+      const seconds = time % 60;
+      return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
   decodeToken(token: string): any {
     const parts = token.split('.');
     if (parts.length !== 3) {
@@ -239,6 +240,9 @@ export class ManageComponent implements OnInit, OnDestroy {
       });
     }
   }
+  isValidTimeLeft(): boolean {
+  return typeof this.timeLeft === 'number' && !isNaN(this.timeLeft);
+}
   
 
 }
