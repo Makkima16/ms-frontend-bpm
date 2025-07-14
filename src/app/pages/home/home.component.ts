@@ -21,11 +21,11 @@ export class HomeComponent implements OnInit {
   cliente_id: number;
   role = '';
   name = '';
-  isLoggedIn = false;
-  isPaid = false;
+  isLoggedIn : boolean;
+  isPaid : boolean;
   paymentReference = '';
   notificationMessage = '';
-  exist_paid=false
+  exist_paid:boolean
 
   router=inject(Router)
   snackBar=inject(MatSnackBar)
