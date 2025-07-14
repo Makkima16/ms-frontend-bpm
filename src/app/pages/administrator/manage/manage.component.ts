@@ -108,6 +108,8 @@ export class ManageComponent implements OnInit {
       'crear-examen': 'examen/admin-createExamen',
       'cursos': 'courses/admin-list',
       'crear-curso': 'courses/admin-crearCursos',
+      'crear-administrador': 'admin/admin-create',
+
     };
 
     const path = routesMap[page];
