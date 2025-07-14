@@ -42,10 +42,10 @@ export class HomeComponent implements OnInit {
   private pingDatabase(): void {
     this.courseService.list().subscribe({
       next: () => {
-        // noop: se usa solo para despertar la base de datos
+        console.log('hello')
       },
       error: () => {
-        // noop: ignorar errores de wake-up
+        console.log('hello')
       }
     });
   }
