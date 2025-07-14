@@ -7,7 +7,7 @@ function shuffleArray(array: any[]): any[] {
   return array;
 }
 
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -22,8 +22,7 @@ import { ClientsService } from '../../../services/clients.service';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.scss']
 })
-export class ManageComponent implements OnInit, OnDestroy {
-  private timerInterval: any; // Guarda la referencia del temporizador
+export class ManageComponent implements OnInit {
 
   mode: number;
   examen: ModulesClients;
@@ -35,9 +34,8 @@ export class ManageComponent implements OnInit, OnDestroy {
   cliente_id:number;
   answer:boolean;
   session = JSON.parse(sessionStorage.getItem('sesion'));  // Usamos sessionStorage para la sesión
-  timeLeft: 900; // 15 minutos en segundos
   tipo:string;
-  private hasStartedTimer = false;
+
 
   constructor(
 
@@ -58,11 +56,7 @@ export class ManageComponent implements OnInit, OnDestroy {
   record=inject(RegisterService)
   clientServices=inject(ClientsService)
 
-  ngOnDestroy(): void {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval); // Detiene el temporizador cuando el usuario se va
-    }
-  }
+
 
   ngOnInit(): void {
     const token = sessionStorage.getItem('sesion') ? JSON.parse(sessionStorage.getItem('sesion')).token : null;
@@ -76,8 +70,7 @@ export class ManageComponent implements OnInit, OnDestroy {
       if (client && client.id) {
         this.cliente_id = client.id;
       }
-    // ⏳ **Iniciar el temporizador de 15 minutos**
-    this.startTimer();
+
 
     });
   
@@ -131,39 +124,11 @@ export class ManageComponent implements OnInit, OnDestroy {
   }
   
 
-  // Método para iniciar el temporizador
-  startTimer(): void {
-    if (this.hasStartedTimer) return; // ⛔ Evita múltiples timers
 
-    this.hasStartedTimer = true;
-    this.timerInterval = setInterval(() => {
-      if (this.timeLeft > 0) {
-        this.timeLeft--;
-      } else {
-        console.log(this.timeLeft)
-        clearInterval(this.timerInterval);
-        Swal.fire({
-          title: "Tiempo agotado",
-          text: "Superaste el límite de tiempo",
-          icon: "warning",
-          confirmButtonText: "Aceptar"
-        }).then(() => {
-          this.router.navigate(['courses/list?type=' + this.tipo]);
-        });
-      }
-    }, 1000);
-  }
 
-    formatTime(): string {
-      const time = Number(this.timeLeft);
-      if (!time || isNaN(time)) {
-        return '15:00';  // Valor por defecto si algo sale mal
-      }
 
-      const minutes = Math.floor(time / 60);
-      const seconds = time % 60;
-      return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    }
+
+
   decodeToken(token: string): any {
     const parts = token.split('.');
     if (parts.length !== 3) {
@@ -242,9 +207,7 @@ export class ManageComponent implements OnInit, OnDestroy {
       });
     }
   }
-  isValidTimeLeft(): boolean {
-  return typeof this.timeLeft === 'number' && !isNaN(this.timeLeft);
-}
+
   
 
 }

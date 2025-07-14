@@ -3,9 +3,7 @@
       <div class="w-full max-w-2xl">
         <!-- Contenedor del formulario de examen -->
         <form [formGroup]="theFormGroup" (ngSubmit)="onSubmit()" class="p-6 bg-white border rounded-lg shadow-lg">
-        <div class="text-center text-xl font-bold text-red-600" *ngIf="isValidTimeLeft()">
-          Tiempo restante: {{ formatTime() }}
-        </div>
+
           <!-- Título del examen -->
           <h2 class="mb-4 text-3xl font-bold text-center text-gray-800">{{ examen.title }}</h2>
           
