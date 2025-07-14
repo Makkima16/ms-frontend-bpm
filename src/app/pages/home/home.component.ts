@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   isDurationInfoOpen = false;
   isTypeInfoOpen = false;
   isModalOpen = false;
+  isLoading = true;
 
   email_client = '';
   cliente_id: number;
@@ -51,37 +52,55 @@ export class HomeComponent implements OnInit {
   }
 
   private decodeAndSetSessionData(): void {
-    const session = sessionStorage.getItem('sesion');
-    if (!session) return;
-
-    const token = JSON.parse(session).token;
-    if (!token) return;
-
-    const decoded = this.decodeToken(token);
-    this.email_client = decoded.email;
-    this.name = decoded.name;
-    this.role = decoded?.role?.name;
-    this.isLoggedIn = !!this.email_client;
-
-    if (this.isLoggedIn) {
-      this.service.list().subscribe(data => {
-        const clientes = data['data'];
-        const found = clientes.find(c => c.email === this.email_client);
-        if (found) {
-          this.cliente_id = found.id;
-
-          this.service.checkIfClientPaid({ id: this.cliente_id }).subscribe(res => {
-            this.isPaid = res.hasAccepted;
-          });
-          this.service.checkIfPaidExist({id:this.cliente_id}).subscribe(res=>{
-            this.exist_paid= res.hasAccepted
-          })
-        } else {
-          sessionStorage.removeItem('sesion');
-        }
-      });
-    }
+  const session = sessionStorage.getItem('sesion');
+  if (!session) {
+    this.isLoading = false;
+    return;
   }
+
+  const token = JSON.parse(session).token;
+  if (!token) {
+    this.isLoading = false;
+    return;
+  }
+
+  const decoded = this.decodeToken(token);
+  this.email_client = decoded.email;
+  this.name = decoded.name;
+  this.role = decoded?.role?.name;
+  this.isLoggedIn = !!this.email_client;
+
+  if (this.isLoggedIn) {
+    this.service.list().subscribe(data => {
+      const clientes = data['data'];
+      const found = clientes.find(c => c.email === this.email_client);
+      if (found) {
+        this.cliente_id = found.id;
+
+        let completed = 0;
+        const finishIfReady = () => {
+          completed++;
+          if (completed === 2) this.isLoading = false;
+        };
+
+        this.service.checkIfClientPaid({ id: this.cliente_id }).subscribe(res => {
+          this.isPaid = res.hasAccepted;
+          finishIfReady();
+        });
+
+        this.service.checkIfPaidExist({ id: this.cliente_id }).subscribe(res => {
+          this.exist_paid = res.hasAccepted;
+          finishIfReady();
+        });
+      } else {
+        sessionStorage.removeItem('sesion');
+        this.isLoading = false;
+      }
+    }, () => this.isLoading = false);
+  } else {
+    this.isLoading = false;
+  }
+}
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private decodeToken(token: string): any {
