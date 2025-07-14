@@ -153,6 +153,10 @@ export class ManageComponent implements OnInit, OnDestroy {
   }
 
   formatTime(): string {
+    if (typeof this.timeLeft !== 'number' || isNaN(this.timeLeft)) {
+      return '00:00';  // o "Cargando..."
+    }
+
     const minutes = Math.floor(this.timeLeft / 60);
     const seconds = this.timeLeft % 60;
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
