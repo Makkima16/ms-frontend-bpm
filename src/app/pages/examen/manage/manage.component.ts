@@ -37,6 +37,8 @@ export class ManageComponent implements OnInit, OnDestroy {
   session = JSON.parse(sessionStorage.getItem('sesion'));  // Usamos sessionStorage para la sesión
   timeLeft: 900; // 15 minutos en segundos
   tipo:string;
+  private hasStartedTimer = false;
+
   constructor(
 
   ) { 
@@ -64,7 +66,7 @@ export class ManageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const token = sessionStorage.getItem('sesion') ? JSON.parse(sessionStorage.getItem('sesion')).token : null;
-  
+
     if (token) {
       const decodedToken = this.decodeToken(token);
       this.email = decodedToken.email;
@@ -74,6 +76,8 @@ export class ManageComponent implements OnInit, OnDestroy {
       if (client && client.id) {
         this.cliente_id = client.id;
       }
+    // ⏳ **Iniciar el temporizador de 15 minutos**
+    this.startTimer();
     });
   
     this.activateRoute.queryParams.subscribe(params => {
@@ -121,18 +125,21 @@ export class ManageComponent implements OnInit, OnDestroy {
         console.error('module_id es undefined');
       }
     });
-      // ⏳ **Iniciar el temporizador de 15 minutos**
-    this.startTimer();
+
 
   }
+  
 
   // Método para iniciar el temporizador
   startTimer(): void {
-    this.timerInterval = setInterval(() => { // Asigna el intervalo a la variable
+    if (this.hasStartedTimer) return; // ⛔ Evita múltiples timers
+
+    this.hasStartedTimer = true;
+    this.timerInterval = setInterval(() => {
       if (this.timeLeft > 0) {
         this.timeLeft--;
       } else {
-        clearInterval(this.timerInterval); // Limpia el intervalo cuando el tiempo se acaba
+        clearInterval(this.timerInterval);
         Swal.fire({
           title: "Tiempo agotado",
           text: "Superaste el límite de tiempo",
