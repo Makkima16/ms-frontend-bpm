@@ -21,6 +21,7 @@ export class ListComponent implements OnInit {
     cedula:string
     name:string
     type:string
+    isLoading = true;
 
     service = inject(CourseService);
     router=inject(Router)
@@ -66,6 +67,9 @@ export class ListComponent implements OnInit {
 
           let approvedCount = 0;
 
+          let completedModules = 0;
+          const totalCourses = this.courses.length;
+
           this.courses.forEach(course => {
             this.ExamServices.checkModuleApproval(client.id, course.id).subscribe(response => {
               course.isApproved = response.has_passed;
@@ -74,39 +78,59 @@ export class ListComponent implements OnInit {
                 approvedCount++;
               }
 
-              if (approvedCount !== this.courses.length) return;
+              completedModules++;
 
-              this.allModulesCompleted = true;
+              // Solo al final de todos los módulos
+              if (completedModules === totalCourses) {
+                if (approvedCount === totalCourses) {
+                  this.allModulesCompleted = true;
 
-              this.AprobadosServices.getAprobadoByClientId(this.clientId).subscribe(aprobado => {
-                if (aprobado?.correo) return;
+                  this.AprobadosServices.getAprobadoByClientId(this.clientId).subscribe(aprobado => {
+                    if (aprobado?.correo) {
+                      this.isLoading = false;
+                      return;
+                    }
 
-                const enviarCorreo = () => {
-                  this.AprobadosServices.correos_automaticos(this.name, this.email, this.cedula).subscribe({
-                    next: () => {
-                      aprobado.correo = true;
-                      this.AprobadosServices.update(aprobado).subscribe({
-                        error: err => console.error('Error al actualizar aprobado:', err)
+                    const enviarCorreo = () => {
+                      this.AprobadosServices.correos_automaticos(this.name, this.email, this.cedula).subscribe({
+                        next: () => {
+                          aprobado.correo = true;
+                          this.AprobadosServices.update(aprobado).subscribe({
+                            complete: () => this.isLoading = false,
+                            error: err => {
+                              console.error('Error al actualizar aprobado:', err);
+                              this.isLoading = false;
+                            }
+                          });
+                        },
+                        error: err => {
+                          console.error('Error al enviar correo automático:', err);
+                          this.isLoading = false;
+                        }
                       });
-                    },
-                    error: err => console.error('Error al enviar correo automático:', err)
-                  });
-                };
+                    };
 
-                if (!aprobado) {
-                  const nuevo = { client_id: this.clientId, correo: false } as Aprobados;
+                    if (!aprobado) {
+                      const nuevo = { client_id: this.clientId, correo: false } as Aprobados;
 
-                  this.AprobadosServices.create(nuevo).subscribe({
-                    next: (nuevoAprobado) => {
-                      aprobado = nuevoAprobado;
+                      this.AprobadosServices.create(nuevo).subscribe({
+                        next: (nuevoAprobado) => {
+                          aprobado = nuevoAprobado;
+                          enviarCorreo();
+                        },
+                        error: err => {
+                          console.error('Error al crear aprobado:', err);
+                          this.isLoading = false;
+                        }
+                      });
+                    } else {
                       enviarCorreo();
-                    },
-                    error: err => console.error('Error al crear aprobado:', err)
+                    }
                   });
                 } else {
-                  enviarCorreo();
+                  this.isLoading = false;
                 }
-              });
+              }
             });
           });
         });
