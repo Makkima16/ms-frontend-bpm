@@ -71,15 +71,22 @@ export class ManageComponent implements OnInit {
     }
 
     if (this.isLoggedIn) {
-      this.service.list().subscribe(data => {
-        const clientes = data['data'];
-        const found = clientes.find(c => c.email === this.email_client);
-        if (found) {
-          this.cliente_id = found.id;
-        } else {
-          sessionStorage.removeItem('sesion');
+      this.service.list().subscribe({
+        next: data => {
+          const clientes = data['data'];
+          const found = clientes.find(c => c.email === this.email_client);
+          if (found) {
+            this.cliente_id = found.id;
+          } else {
+            sessionStorage.removeItem('sesion');
+          }
+          this.loading = false;
+        },
+        error: () => {
+          this.loading = false;
+          this.showError = true;
+          setTimeout(() => this.router.navigate(['/']), 3000);
         }
-        this.loading = false;
       });
     } else {
       this.loading = false;
