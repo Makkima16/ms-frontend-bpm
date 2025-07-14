@@ -2,11 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  selector: 'app-header-visitor',
+  templateUrl: './header-visitor.component.html',
+  styleUrl: './header-visitor.component.css'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderVisitorComponent implements OnInit {
   isMenuOpen: boolean ;
   isUserMenuOpen: boolean ;
   isAdminMenuOpen: boolean ;

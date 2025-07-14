@@ -3,12 +3,23 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { VisitorLayoutComponent } from './layouts/visitor-layout/visitor-layout.component';
 
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'home', // Redirige la ruta raíz a 'home'
+        redirectTo: '', // Redirige la ruta raíz a 'home'
         pathMatch: 'full',
+    },
+        {
+        path: '',
+        component: VisitorLayoutComponent,
+        children: [
+            {
+                path: '',  // Asegúrate de que este es el path correcto
+                loadChildren: () => import('./layouts/visitor-layout/visitor-layout.module').then(m => m.VisitorLayoutModule)
+            }
+        ]
     },
     {
         path: '',
@@ -32,7 +43,7 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'home'  // Redirige cualquier ruta desconocida a 'home'
+        redirectTo: ''  // Redirige cualquier ruta desconocida a 'home'
     }
 ];
 

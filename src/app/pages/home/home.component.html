@@ -34,8 +34,11 @@
       </div>
 
       <!-- Aviso de pago pendiente (cuando no ha pagado) -->
-      <div *ngIf="!isPaid" class="mt-6">
-        <p class="text-red-600 font-medium">Tu pago está pendiente 😁/ Recuerda Primero Loguearte</p>
+      <div *ngIf="!isPaid && isLoggedIn" class="mt-6">
+        <p class="text-red-600 font-medium">Tu pago está pendiente 😁</p>
+      </div>
+      <div *ngIf="!isLoggedIn" class="mt-6">
+        <p class="text-red-600 font-medium">Registrate o inicia Sesión para realizar los cursos</p>
       </div>
     </aside>
   </div>
@@ -70,13 +73,13 @@
   <section class="max-w-4xl mx-auto mt-10 mb-8 p-4 bg-white shadow-lg rounded-lg">
     <div class="text-center mb-6">
       <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-700 leading-tight">
-        Curso VIRTUAL para Manipuladores <br />de Alimentos
+        Detalles del curso virtual
       </h2>
     </div>
 
     <!-- NUEVO BLOQUE DE PAGO MANUAL (se muestra solo si el usuario está logueado y no ha pagado) -->
 
-    <div class="bg-purple-50 p-6 rounded-lg shadow-md">
+    <div *ngIf="isLoggedIn" class="bg-purple-50 p-6 rounded-lg shadow-md">
       <h2 class="text-xl font-semibold text-purple-700 mb-4">Pasos para realizar tu pago</h2>
 
       <p class="mb-2">

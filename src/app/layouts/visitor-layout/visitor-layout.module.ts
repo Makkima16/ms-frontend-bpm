@@ -5,23 +5,29 @@ import { FormsModule } from '@angular/forms';
 
 import { ClipboardModule } from 'ngx-clipboard';
 
-import { AdminLayoutRoutes } from './admin-layout.routing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HomeComponent } from '../../pages/home/home.component';
+import { VisitorLayoutRoutes } from './visitor-layout.routing';
+import { CompanyComponent } from '../../pages/company/company.component';
+import { AboutComponent } from '../../pages/about/about.component';
 
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(AdminLayoutRoutes),
+    RouterModule.forChild(VisitorLayoutRoutes),
     FormsModule,
     HttpClientModule,
     NgbModule,
     ClipboardModule,
   ],
   declarations: [
+    HomeComponent,
+    CompanyComponent,
+    AboutComponent
 
   ]
 })
 
-export class AdminLayoutModule {}
+export class VisitorLayoutModule { }

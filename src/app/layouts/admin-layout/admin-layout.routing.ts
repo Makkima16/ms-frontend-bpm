@@ -2,11 +2,9 @@ import { Routes } from '@angular/router';
 
 import { AuthGuard } from '../../guards/auth.guard';
 import { ListRComponent } from '../../pages/list-r/list-r.component';
-import { HomeComponent } from '../../pages/home/home.component';
 
 //Rutas para ir hacia las diferentes partes de la Pagina
 export const AdminLayoutRoutes: Routes = [
-    { path: 'home', component: HomeComponent },
 
     {
         path: "courses",canActivate:[AuthGuard],

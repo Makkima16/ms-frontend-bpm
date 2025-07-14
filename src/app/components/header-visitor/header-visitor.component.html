@@ -6,7 +6,39 @@
 
     <!-- Menú principal (escritorio) -->
     <ul class="hidden md:flex list-none space-x-5">
+
+      
       <li><a href="#" class="text-white text-lg no-underline hover:underline cursor-pointer">Inicio</a></li>
+      
+      <!-- Nosotros -->
+
+      <li>
+        <a 
+          (click)="navigateTo('nosotros')" 
+          (keydown.enter)="navigateTo('nosotros')" 
+          tabindex="0" 
+          role="button"
+          class="text-white text-lg no-underline hover:underline cursor-pointer flex items-center"
+        >
+          Nosotros
+          <i class="fas fa-cog text-white ml-1"></i>
+        </a>
+      </li>
+      
+      <!-- Empresa -->
+      <li>
+        <a 
+          (click)="navigateTo('empresa')" 
+          (keydown.enter)="navigateTo('empresa')" 
+          tabindex="0" 
+          role="button"
+          class="text-white text-lg no-underline hover:underline cursor-pointer flex items-center"
+        >
+          Empresa
+          <i class="fas fa-cog text-white ml-1"></i>
+        </a>
+      </li>
+
       <li *ngIf="!userName">
       <a
         role="button"
@@ -76,7 +108,7 @@
 
   <!-- Menú desplegable (móvil) -->
   <ul 
-    class="dropdown-menu absolute top-14 left-0 w-full bg-custom-blue list-none py-2 space-y-2 md:hidden" 
+    class="dropdown-menu absolute top-full left-0 w-full bg-custom-blue list-none py-2 space-y-2 md:hidden"
     [class.block]="isMenuOpen" 
     [class.hidden]="!isMenuOpen"
   >
@@ -85,6 +117,34 @@
     </li>
     <li class="text-center">
     </li>
+
+    <!-- Nosotros simple (móvil) -->
+    <li class="text-center">
+      <a 
+        (click)="navigateTo('nosotros')" 
+        (keydown.enter)="navigateTo('nosotros')" 
+        tabindex="0"
+        role="button"
+        class="text-white text-lg no-underline hover:underline cursor-pointer flex items-center justify-center gap-2"
+      >
+        Nosotros
+        <i class="fas fa-cog"></i>
+      </a>
+    </li>
+        <!-- Empresa simple (móvil) -->
+    <li class="text-center">
+      <a 
+        (click)="navigateTo('empresa')" 
+        (keydown.enter)="navigateTo('empresa')" 
+        tabindex="0"
+        role="button"
+        class="text-white text-lg no-underline hover:underline cursor-pointer flex items-center justify-center gap-2"
+      >
+        Empresa
+        <i class="fas fa-cog"></i>
+      </a>
+    </li>
+    
     <li *ngIf="!userName" class="text-center">
       <a 
         (click)="goToLogin()" 

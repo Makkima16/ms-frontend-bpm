@@ -40,7 +40,7 @@ export class AuthInterceptor implements HttpInterceptor {
             icon: 'error',
             timer: 5000
           });
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/');
         } else if (err.status >= 400) {
           Swal.fire({
             title: 'Existe un error, contacte al administrador',

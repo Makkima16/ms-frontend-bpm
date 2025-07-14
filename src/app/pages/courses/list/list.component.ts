@@ -128,7 +128,7 @@ export class ListComponent implements OnInit {
     module(courseId: number): void {
       if (!this.email) {
         console.error('No se encontró el cliente activo en SessionStorage.');
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
         return;
       }
     
@@ -178,7 +178,7 @@ export class ListComponent implements OnInit {
     hasPaid(): void {
       if (!this.email) {
         console.error('No se encontró el cliente activo en SessionStorage.');
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       }
   
       this.clientService.buscarPorEmail(this.email).subscribe({
@@ -193,7 +193,7 @@ export class ListComponent implements OnInit {
                     text: 'Debe realizar el pago antes de continuar.',
                     allowOutsideClick: false,
                   }).then(() => {
-                    this.router.navigate(['/home']);
+                    this.router.navigate(['/']);
                   });
                 }
               },

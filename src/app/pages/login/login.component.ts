@@ -55,7 +55,7 @@ export class LoginComponent{
       next: (data) => {
         this.isLoading = false; // Ocultar el estado de carga
         this.service.saveSession(data);
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/');
       },
       error: () => {
         this.isLoading = false; // Ocultar el estado de carga
@@ -74,7 +74,7 @@ export class LoginComponent{
   }
 
   back(){
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/');
 
   }
   navigateTo(route: string) {

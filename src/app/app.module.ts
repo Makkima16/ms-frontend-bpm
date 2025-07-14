@@ -20,6 +20,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { WebSocketService } from './services/web-socket.service';
 import { ListRComponent } from './pages/list-r/list-r.component';
 import { httpInterceptor } from './core/http.interceptor';
+import { VisitorLayoutComponent } from './layouts/visitor-layout/visitor-layout.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { httpInterceptor } from './core/http.interceptor';
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
+    VisitorLayoutComponent,
     RegisterComponent,
     ListRComponent,
       ],

@@ -73,7 +73,7 @@ export class ManageComponent implements OnInit {
           this.showTokenInput = false;
           Swal.fire("Exito", "Usuario autenticado", "success");
           sessionStorage.setItem('token', JSON.parse(JSON.stringify(data)).token);
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/');
 
         },
         error => {
