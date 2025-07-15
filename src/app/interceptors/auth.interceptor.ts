@@ -6,7 +6,8 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, catchError } from 'rxjs';
+import { Observable, throwError, timer } from 'rxjs';
+import { catchError, retryWhen, mergeMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SecurityService } from '../services/security.service';
@@ -21,7 +22,6 @@ export class AuthInterceptor implements HttpInterceptor {
     const theUser = this.securityService.activeUserSession;
     const token = theUser["token"];
 
-    // Si la solicitud es para login o validación de token, no añadir header
     if (request.url.includes('/login') || request.url.includes('/token-validation')) {
       return next.handle(request);
     }
@@ -33,6 +33,17 @@ export class AuthInterceptor implements HttpInterceptor {
     });
 
     return next.handle(authRequest).pipe(
+      retryWhen(errors =>
+        errors.pipe(
+          mergeMap((error, retryCount) => {
+            if (retryCount < 2 && error.status === 500) {
+              // Esperar 2 segundos y reintentar hasta 2 veces
+              return timer(2000);
+            }
+            return throwError(() => error);
+          })
+        )
+      ),
       catchError((err: HttpErrorResponse) => {
         if (err.status === 401) {
           Swal.fire({
@@ -48,7 +59,7 @@ export class AuthInterceptor implements HttpInterceptor {
             timer: 5000
           });
         }
-        return new Observable<never>();
+        return throwError(() => err);
       })
     );
   }

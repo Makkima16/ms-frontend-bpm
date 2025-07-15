@@ -5,6 +5,7 @@ import { ClientsService } from '../../services/clients.service';
 import { CourseService } from '../../services/course.service';
 import { PayService } from '../../services/pay.service';
 import { Payments } from '../../models/payments.model';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -33,21 +34,17 @@ export class HomeComponent implements OnInit {
   service=inject(ClientsService)
   courseService=inject(CourseService)
   payService=inject(PayService)
+  http=inject(HttpClient)
   ngOnInit(): void {
     this.decodeAndSetSessionData();
     this.pingDatabase();
 
 
   }
-
   private pingDatabase(): void {
-    this.courseService.list().subscribe({
-      next: () => {
-        console.log('hello')
-      },
-      error: () => {
-        console.log('hello')
-      }
+    this.http.get('https://ms-negocio-bpm-production.up.railway.app/modulos').subscribe({
+      next: () => console.log('Servidor despierto'),
+      error: () => console.log('Servidor aún dormido...')
     });
   }
 
