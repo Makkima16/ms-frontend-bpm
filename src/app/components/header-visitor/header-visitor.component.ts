@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
   styleUrl: './header-visitor.component.css'
 })
 export class HeaderVisitorComponent implements OnInit {
+  @ViewChild('userMenu') userMenuRef: ElementRef;
+  @ViewChild('menuTrigger') menuTriggerRef: ElementRef;
   isMenuOpen: boolean ;
   isUserMenuOpen: boolean ;
   isAdminMenuOpen: boolean ;
@@ -14,6 +16,8 @@ export class HeaderVisitorComponent implements OnInit {
   isListMenuOpen: boolean ;
   userName: string | null = null;
   userRole: string | null = null;
+  userEmail: string | null = null;
+
   isAdminMode: boolean;
 
 
@@ -22,13 +26,14 @@ export class HeaderVisitorComponent implements OnInit {
 
 
   ngOnInit(): void {
-    const token = sessionStorage.getItem('sesion') ? JSON.parse(sessionStorage.getItem('sesion')).token : null;
-
+    const session = sessionStorage.getItem('sesion');
+    const token = session ? JSON.parse(session).token : null;
     if (token) {
       const decodedToken = this.decodeToken(token);
-      this.userName = this.decodeUtf8(decodedToken.name); // Transformar el nombre
-      this.userRole = decodedToken && decodedToken.role && decodedToken.role.name; // Obtener el nombre del rol del usuario
-      this.isAdminMode = this.userRole === 'Administrador'; // Activa el modo admin si el rol es "Administrador"
+      this.userName = this.decodeUtf8(decodedToken.name);
+      this.userEmail = this.decodeUtf8(decodedToken.email); // <--- Ahora usamos el email
+      this.userRole = decodedToken?.role?.name;
+      this.isAdminMode = this.userRole === 'Administrador';
     }
   }
 
@@ -60,6 +65,18 @@ export class HeaderVisitorComponent implements OnInit {
 
   toggleUserMenu() {
     this.isUserMenuOpen = !this.isUserMenuOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (
+      this.isUserMenuOpen &&
+      this.userMenuRef &&
+      !this.userMenuRef.nativeElement.contains(event.target) &&
+      !this.menuTriggerRef.nativeElement.contains(event.target)
+    ) {
+      this.isUserMenuOpen = false;
+    }
   }
 
   toggleAdminMenu() {
