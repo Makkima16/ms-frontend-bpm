@@ -25,11 +25,11 @@ export class ListComponent implements OnInit{
         // Decodifica cualquier texto mal codificado
         this.payments = data["data"].map((payment: Payments) => ({
           ...payment,
-          name: this.decodeText(payment.name),
-          email: this.decodeText(payment.email),
-          product: this.decodeText(payment.product),
-          state: this.decodeText(payment.state),
-          ref: this.decodeText(payment.ref),
+          name: payment.name,
+          email: payment.email,
+          product: payment.product,
+          state: payment.state,
+          ref: payment.ref,
         }));
       }
     });
