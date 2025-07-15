@@ -28,10 +28,11 @@ export class HeaderVisitorComponent implements OnInit {
   ngOnInit(): void {
     const session = sessionStorage.getItem('sesion');
     const token = session ? JSON.parse(session).token : null;
+
     if (token) {
       const decodedToken = this.decodeToken(token);
       this.userName = this.decodeUtf8(decodedToken.name);
-      this.userEmail = this.decodeUtf8(decodedToken.email); // <--- Ahora usamos el email
+      this.userEmail = this.decodeUtf8(decodedToken.email); // usamos el email
       this.userRole = decodedToken?.role?.name;
       this.isAdminMode = this.userRole === 'Administrador';
     }
@@ -42,7 +43,7 @@ export class HeaderVisitorComponent implements OnInit {
     try {
       return decodeURIComponent(escape(value));
     } catch {
-      return value; // Retorna el valor original si ocurre un error
+      return value;
     }
   }
 
@@ -93,13 +94,17 @@ export class HeaderVisitorComponent implements OnInit {
 
   navigateTo(route: string) {
     this.router.navigate([route]);
+    this.isUserMenuOpen = false;
   }
+
 
   logout() {
     sessionStorage.clear();
     this.userName = null;
     this.userRole = null;
+    this.userEmail = null;
     this.isAdminMode = false;
+    this.isUserMenuOpen = false;
     this.router.navigate(['']);
   }
 
