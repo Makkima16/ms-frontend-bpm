@@ -4,7 +4,7 @@ export class Company {
     business?:string;
     email?:string
     tel?:number
-    collab?:number
+    collabs?:number
 
 
 

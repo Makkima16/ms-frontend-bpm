@@ -14,7 +14,7 @@ export class CompanyComponent {
     business:'',
     email: '',
     tel: undefined,
-    collab: undefined,
+    collabs: undefined,
   };
 
   companyService = inject(CompanyService)
@@ -33,7 +33,7 @@ export class CompanyComponent {
           email: '',
           business:'',
           tel: undefined,
-          collab: undefined,
+          collabs: undefined,
         };
       },
       error: (err) => {
