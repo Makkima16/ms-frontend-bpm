@@ -32,7 +32,7 @@ export class CompanyComponent {
           name: '',
           email: '',
           business:'',
-          tel: undefined,
+          tel: '',
           collabs: undefined,
         };
       },

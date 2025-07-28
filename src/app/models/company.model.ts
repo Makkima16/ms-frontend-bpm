@@ -3,7 +3,7 @@ export class Company {
     name?:string;
     business?:string;
     email?:string
-    tel?:number
+    tel?:string
     collabs?:number
 
 
