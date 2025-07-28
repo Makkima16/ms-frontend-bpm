@@ -13,21 +13,21 @@ export class CompanyService {
   http = inject(HttpClient)
 
   list(): Observable<Company[]> {
-    return this.http.get<Company[]>(`${environment.url_ms_modulos}company`);
+    return this.http.get<Company[]>(`${environment.url_ms_modulos}companies`);
   }
 
   view(id: number): Observable<Company> {
-    return this.http.get<Company>(`${environment.url_ms_modulos}company/${id}`);
+    return this.http.get<Company>(`${environment.url_ms_modulos}companies/${id}`);
   }
   create(CompanyData: Company): Observable<any> {
-    return this.http.post(`${environment.url_ms_modulos}company`, CompanyData);
+    return this.http.post(`${environment.url_ms_modulos}companies`, CompanyData);
   }
   
   update(Company:Company): Observable<Company> {
-    return this.http.put<Company>(`${environment.url_ms_modulos}company/${Company.id}`, Company);
+    return this.http.put<Company>(`${environment.url_ms_modulos}companies/${Company.id}`, Company);
   }
   delete(id: number): Observable<Company> {
-    return this.http.delete<Company>(`${environment.url_ms_modulos}company/${id}`);
+    return this.http.delete<Company>(`${environment.url_ms_modulos}companies/${id}`);
   }
 
   
