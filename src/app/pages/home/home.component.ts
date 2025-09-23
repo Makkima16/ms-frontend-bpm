@@ -6,6 +6,9 @@ import { CourseService } from '../../services/course.service';
 import { PayService } from '../../services/pay.service';
 import { Payments } from '../../models/payments.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environments';
+import { v4 as uuidv4 } from 'uuid';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +21,9 @@ export class HomeComponent implements OnInit {
   isTypeInfoOpen = false;
   isModalOpen = false;
   isLoading = true;
-
+  handler: any;
+  Paydata: any;
+  
   email_client = '';
   cliente_id: number;
   role = '';
@@ -167,4 +172,84 @@ private showNotification(message: string): void {
     this.notificationMessage = '';
   }, 4000); // desaparecer después de 4 segundos
 }
+//función que al momento de inicializar el boton cargara los datos necesarios para el pago por epayco
+  initializeEpaycoButton(): void {
+    if ((window as any).ePayco) {
+      this.handler = (window as any).ePayco.checkout.configure({
+        key: environment.epayco_public_key,
+        test: true,
+      });
+      const invoiceNumber = uuidv4();
+      // Configuración del pago
+      this.Paydata = {
+        name: 'Curso Manipulación De alimentos',
+        description: 'Curso Manipulación De alimentos',
+        invoice: invoiceNumber,
+        currency: 'cop',
+        amount: '20000',
+        tax_base: '20000',
+        tax: '',
+        tax_ico: '0',
+        country: 'co',
+        lang: 'es',
+        external: true,
+        name_billing: '',
+        address_billing: '',
+        type_doc_billing: 'cc',
+        mobilephone_billing: '',
+        number_doc_billing: '',
+        email_billing: this.email_client,
+        extra1: this.cliente_id // Asegúrate de que se almacene como string en el pago
+      };
+    } else {
+      console.error('ePayco script no cargó correctamente');
+    }
+  }
+  // funcion que se encarga de ejecutar la pasarela de pagos de epayco
+  pay(): void {
+    if(this.cliente_id==undefined){
+      Swal.fire({
+        icon: 'error',
+        title: 'Acceso denegado',
+        text: 'Primero Logueese por favor',
+        allowOutsideClick: false
+      });
+
+    }else{
+      // Llamamos al método checkIfClientPaid para verificar si el cliente ha realizado el pago
+      this.service.checkIfClientPaid({ id: this.cliente_id }).subscribe(
+        (response) => {
+          // Si el cliente ha realizado el pago (hasAccepted es true)
+          if (response.hasAccepted) {
+            // Si ya pagó, mostramos un mensaje de error y no dejamos continuar
+            Swal.fire({
+              icon: 'error',
+              title: 'Acceso denegado',
+              text: 'Usted ya ha realizado el pago, si tiene alguna duda o problema contactese con nuestro soporte',
+              allowOutsideClick: false
+            });
+          } else {
+            // Si no ha pagado, abrimos el formulario de pago
+            if (this.handler) {
+              this.handler.open(this.Paydata);
+            } else {
+              console.error('ePayco handler no está configurado');
+            }
+          }
+
+        },
+        (error) => {
+          // Manejo de errores en caso de que la solicitud falle
+          console.error('Error al verificar el pago:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Hubo un problema al verificar el pago. Inténtelo nuevamente.',
+            allowOutsideClick: false
+          });
+        }
+      );
+    }
+  }
+
 }

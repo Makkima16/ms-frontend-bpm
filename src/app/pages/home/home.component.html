@@ -108,33 +108,12 @@
     <div *ngIf="isLoggedIn" class="bg-purple-50 p-6 rounded-lg shadow-md">
       <h2 class="text-xl font-semibold text-purple-700 mb-4">Pasos para realizar tu pago</h2>
 
-      <p class="mb-2">
-        1. Transfiere <span class="font-bold">COP $20.000</span> a nuestra cuenta Nequi:<br>
-        <span class="text-purple-700 font-bold text-lg">322 478 3832</span>
-      </p>
-
-      <div class="flex justify-center my-4">
-        <img src="assets/img/dash/qr.png" alt="QR Nequi" class="w-40 h-40 object-contain">
-      </div>
-
-      <label for="paymentRef" class="block mb-2 text-sm font-medium text-gray-700">
-        2. Ingresa la referencia (o adjunta captura) de tu pago:
-      </label>
-
-      <textarea
-        id="paymentRef"
-        [(ngModel)]="paymentReference"
-        rows="3"
-        class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-400 focus:outline-none transition"
-        placeholder="Referencia / comprobante"
-      ></textarea>
-
-      <button
-        class="mt-4 w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 rounded-md transition"
-        (click)="submitReference()"
-      >
-        Enviar referencia
+            <button 
+        class="btn btn-success mt-4 px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 text-sm sm:text-base lg:text-lg"
+        (click)="pay()">
+        Realizar el Pago
       </button>
+
     </div>
 
     <!-- Sección de acordeones (precio, duración, tipo) -->

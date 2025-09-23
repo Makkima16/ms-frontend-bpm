@@ -8,7 +8,7 @@ export const environment = {
     url_ms_modulos:"https://ms-negocio-bpm-production.up.railway.app/",
     url_ms_correos:"https://ms-correos-production.up.railway.app",
 
-    epayco_public_key:"2dc7c0f531e3a8dcd6b58cedafb75f51"
+    epayco_public_key:"b3003e12757f6376391cadc979f9eed6"
 
   };
     
