@@ -91,40 +91,25 @@ export class ListComponent implements OnInit {
                       return;
                     }
 
-                    const enviarCorreo = () => {
-                      this.AprobadosServices.correos_automaticos(this.name, this.email, this.cedula).subscribe({
-                        next: () => {
-                          aprobado.correo = true;
-                          this.AprobadosServices.update(aprobado).subscribe({
-                            complete: () => this.isLoading = false,
-                            error: err => {
-                              console.error('Error al actualizar aprobado:', err);
-                              this.isLoading = false;
-                            }
-                          });
-                        },
-                        error: err => {
-                          console.error('Error al enviar correo automático:', err);
-                          this.isLoading = false;
-                        }
-                      });
-                    };
-
                     if (!aprobado) {
-                      const nuevo = { client_id: this.clientId, correo: false } as Aprobados;
+                      const nuevo = { client_id: this.clientId, correo: false, type:this.type } as Aprobados;
 
                       this.AprobadosServices.create(nuevo).subscribe({
-                        next: (nuevoAprobado) => {
-                          aprobado = nuevoAprobado;
-                          enviarCorreo();
-                        },
+                        complete: () => this.isLoading = false,
                         error: err => {
                           console.error('Error al crear aprobado:', err);
                           this.isLoading = false;
                         }
                       });
                     } else {
-                      enviarCorreo();
+                      aprobado.correo = false; // o mantener el valor original
+                      this.AprobadosServices.update(aprobado).subscribe({
+                        complete: () => this.isLoading = false,
+                        error: err => {
+                          console.error('Error al actualizar aprobado:', err);
+                          this.isLoading = false;
+                        }
+                      });
                     }
                   });
                 } else {
