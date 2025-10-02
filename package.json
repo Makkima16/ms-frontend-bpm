@@ -29,6 +29,7 @@
     "epayco-sdk-node": "^1.4.0",
     "frontend": "file:",
     "jwt-decode": "^4.0.0",
+    "logrocket": "^10.1.0",
     "ngx-clipboard": "^16.0.0",
     "ngx-socket-io": "^4.7.0",
     "rxjs": "~7.8.0",
