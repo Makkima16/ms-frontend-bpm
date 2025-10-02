@@ -178,7 +178,7 @@ private showNotification(message: string): void {
     if ((window as any).ePayco) {
       this.handler = (window as any).ePayco.checkout.configure({
         key: environment.epayco_public_key,
-        test: true,
+        test: false,
       });
       const invoiceNumber = uuidv4();
       // Configuración del pago
