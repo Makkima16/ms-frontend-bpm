@@ -2,3 +2,49 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Animación para el logo */
+@keyframes logo-spin {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+.spin-logo {
+  animation: logo-spin 3s linear infinite; /* 3s más lento y elegante */
+  transform-style: preserve-3d;
+}
+
+#global-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0f172a; /* Fondo oscuro */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-loader {
+  width: 200px;
+  margin-bottom: 20px;
+  animation: fadeIn 1s ease-in-out, logo-spin 3s linear infinite; /* 🚀 fade + spin */
+  transform-style: preserve-3d;
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
