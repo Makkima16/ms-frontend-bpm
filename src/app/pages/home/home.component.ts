@@ -43,7 +43,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.decodeAndSetSessionData();
     this.pingDatabase();
-    this.initializeEpaycoButton();
 
 
   }
@@ -79,6 +78,7 @@ export class HomeComponent implements OnInit {
       const found = clientes.find(c => c.email === this.email_client);
       if (found) {
         this.cliente_id = found.id;
+        this.initializeEpaycoButton();
 
         let completed = 0;
         const finishIfReady = () => {
